@@ -1,15 +1,16 @@
 # FERIT raspored
 
-A personal FERIT schedule app that runs locally on your phone and fetches timetable updates directly from FERIT.
+A schedule app for FERIT students. Choose your study programme, year and LV group for each subject. The app remembers your choices on your phone and opens today’s schedule automatically.
 
 ## Install on Android
 
 [Download FERIT-raspored.apk](https://github.com/KTihana/FERIT-raspored/releases/download/v1.0.0-android-test/FERIT-raspored.apk)
 
-1. Sign into GitHub as **KTihana** on your Android phone; this repository is private.
-2. Download the APK above, or open [the release page](https://github.com/KTihana/FERIT-raspored/releases/tag/v1.0.0-android-test) and select **FERIT-raspored.apk** under Assets.
-3. Open the downloaded file and install it.
-4. Choose your study, year and LV groups. Your choices are saved on the phone, and reopening shows today’s schedule.
+1. Open the download link on your Android phone, or select **FERIT-raspored.apk** under Assets on [the release page](https://github.com/KTihana/FERIT-raspored/releases/tag/v1.0.0-android-test).
+2. Open the downloaded file and install it. If Android asks, allow installation from the browser you used to download it.
+3. Choose your study programme, year and LV groups. Your choices and personal schedule changes are saved on your phone.
+
+The app runs locally on your phone. Internet is needed to fetch schedule updates directly from FERIT.
 
 This is a signed Android test build for Android 7.0 or newer. All 12 automated tests and APK signature verification pass. Real-phone testing is pending.
 
