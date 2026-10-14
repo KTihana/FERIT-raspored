@@ -48,7 +48,7 @@ U **Postavke → LV grupe** odaberi svoju grupu zasebno za svaki predmet. Može�
 
 ## Ispiti i provjere na jednom mjestu
 
-Otvori **Postavke → Ispiti i provjere** za nadolazeće ispite i druge provjere iz svojeg odabranog rasporeda. **Najskoriji termin je prvi.** Uz svaki predmet vidiš dan i datum, za koliko je dana, vrijeme i lokaciju. Dodirni karticu za nastavnika, grupu i ostale objavljene podatke. **Prikaži u rasporedu** otvara isti termin u rasporedu.
+Otvori **Postavke → Ispiti i provjere** za nadolazeće ispite i druge provjere iz svojeg odabranog rasporeda. **Najskoriji termin je prvi.** Svaka kartica odmah prikazuje sve dostupne podatke: dan i datum, za koliko je dana, vrijeme, lokaciju, nastavnika, vrstu i grupu, šifru predmeta, redni broj termina i napomenu. Gumb **Prikaži u rasporedu** nalazi se na dnu svake kartice i otvara isti termin u rasporedu.
 
 Filtri koriste stvarne oznake iz FERIT rasporeda, primjerice **kontrolna zadaća**, **Kolokvij** ili **teorijski kolokvij**, kada su objavljene. Oznake su vidljive i na terminima u dnevnom i tjednom rasporedu, čak i kada je vrsta nastave AV, PR ili LV.
 
