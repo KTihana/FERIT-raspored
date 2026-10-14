@@ -52,7 +52,7 @@ Otvori **Postavke → Ispiti i provjere** za nadolazeće ispite i druge provjere
 
 Filtri koriste stvarne oznake iz FERIT rasporeda, primjerice **kontrolna zadaća**, **Kolokvij** ili **teorijski kolokvij**, kada su objavljene. Oznake su vidljive i na terminima u dnevnom i tjednom rasporedu, čak i kada je vrsta nastave AV, PR ili LV.
 
-Popis pri otvaranju i osvježavanju provjerava trenutačni i sljedećih 15 tjedana. Ako neki tjedan nije dostupan, vidiš upozorenje da popis može biti nepotpun. Bez interneta mogu se prikazati prethodno spremljeni tjedni.
+Popis pri otvaranju i osvježavanju provjerava trenutačni i sljedećih 15 tjedana. Ako FERIT još priprema raspored za neki tjedan, vidiš njegove datume i obavijest da je raspored još u izradi na FERIT stranici. Problemi s dohvatom imaju zasebno upozorenje da popis može biti nepotpun. Bez interneta mogu se prikazati prethodno spremljeni tjedni.
 
 <img src="19-upcoming-exams.png" width="280" alt="Ispiti i provjere s izvornim oznakama, datumima, odbrojavanjem, vremenom i lokacijom"> <img src="20-assessment-in-schedule.png" width="280" alt="Kontrolna zadaća iz Digitalnih komunikacija ostaje označena u dnevnom rasporedu">
 
