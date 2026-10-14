@@ -1,8 +1,8 @@
 # FERIT raspored — vodič sa slikama
 
-[Preuzmi Android aplikaciju](https://github.com/KTihana/FERIT-raspored/releases/download/v1.0.11-android-test/FERIT-raspored.apk)
+[Preuzmi Android aplikaciju](https://github.com/KTihana/FERIT-raspored/releases/download/v1.0.12-android-test/FERIT-raspored.apk)
 
-Snimke prikazuju izgled aplikacije. Trenutačna verzija: **1.0.11**. Dodane konzultacije i pomaknuti termin primjeri su korištenja aplikacije, a ne obavijesti fakulteta.
+Snimke prikazuju izgled aplikacije. Trenutačna verzija: **1.0.12**. Dodane konzultacije i pomaknuti termin primjeri su korištenja aplikacije, a ne obavijesti fakulteta.
 
 ## Otvaranje aplikacije
 
@@ -25,6 +25,14 @@ Povuci prst **ulijevo za sljedeći dan**, a **udesno za prethodni**. Možeš i *
 Dodirni datum za kalendar. Povuci **ulijevo za sljedeći mjesec** ili **udesno za prethodni**, odaberi datum pa dodirni **Prikaži**.
 
 <img src="15-calendar.jpg" width="280" alt="Centrirani kalendar s odabranim datumom i podrškom za pomicanje između mjeseci">
+
+## Nastavni tjedan i spremljeni raspored
+
+Oznaka **nastavnog tjedna** nalazi se desno u postojećem donjem retku, u dnevnom i vodoravnom prikazu. Preuzima se iz FERIT rasporeda za prikazani tjedan.
+
+Svaki uspješno preuzet tjedan ostaje spremljen na telefonu. Ako FERIT nije dostupan ili nemaš internet, prikazuje se spremljeni raspored s oznakom **Spremljeno** i vremenom posljednjeg preuzimanja. Osobni događaji, izmjene i LV odabiri ostaju vidljivi. Pri otvaranju aplikacije, ako današnji tjedan nije spremljen, aplikacija otvara posljednji spremljeni tjedan za isti studij s njegovim stvarnim datumima. Za druge nepreuzete tjedne nudi povratak na spremljeni tjedan. Raspored za tjedan koji još nije preuzet treba internet.
+
+<img src="17-offline-week.jpg" width="900" alt="Spremljeni tjedni raspored s vidljivom oznakom nastavnog tjedna, dostupan kad FERIT nije dostupan">
 
 ## Svijetla i tamna tema
 
