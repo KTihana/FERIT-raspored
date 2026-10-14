@@ -1,8 +1,14 @@
 # FERIT raspored — vodič sa slikama
 
-[Preuzmi Android aplikaciju](https://github.com/KTihana/FERIT-raspored/releases/download/v1.0.10-android-test/FERIT-raspored.apk)
+[Preuzmi Android aplikaciju](https://github.com/KTihana/FERIT-raspored/releases/download/v1.0.11-android-test/FERIT-raspored.apk)
 
-Snimke prikazuju izgled aplikacije. Trenutačna verzija: **1.0.10**. Dodane konzultacije i pomaknuti termin primjeri su korištenja aplikacije, a ne obavijesti fakulteta.
+Snimke prikazuju izgled aplikacije. Trenutačna verzija: **1.0.11**. Dodane konzultacije i pomaknuti termin primjeri su korištenja aplikacije, a ne obavijesti fakulteta.
+
+## Otvaranje aplikacije
+
+Početni zaslon s vektorskim logotipom i nazivom **FERIT raspored** automatski prelazi na tvoj današnji raspored, ili na odabir rasporeda pri prvom otvaranju.
+
+<img src="16-loading-screen.png" width="280" alt="Početni zaslon FERIT rasporeda s velikim prozirnim vektorskim logotipom">
 
 ## Odaberi svoj raspored
 
