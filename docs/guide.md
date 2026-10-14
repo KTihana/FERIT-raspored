@@ -1,8 +1,8 @@
 # FERIT raspored — vodič sa slikama
 
-[Preuzmi Android aplikaciju](https://github.com/KTihana/FERIT-raspored/releases/download/v1.0.12-android-test/FERIT-raspored.apk)
+[Preuzmi Android aplikaciju](https://github.com/KTihana/FERIT-raspored/releases/download/v1.0.13-android-test/FERIT-raspored.apk)
 
-Snimke prikazuju izgled aplikacije. Trenutačna verzija: **1.0.12**. Dodane konzultacije i pomaknuti termin primjeri su korištenja aplikacije, a ne obavijesti fakulteta.
+Snimke prikazuju izgled aplikacije. Trenutačna verzija: **1.0.13**. Dodane konzultacije i pomaknuti termin primjeri su korištenja aplikacije, a ne obavijesti fakulteta.
 
 ## Otvaranje aplikacije
 
@@ -48,13 +48,13 @@ U **Postavke → LV grupe** odaberi svoju grupu zasebno za svaki predmet. Može�
 
 ## Dodaj vlastiti događaj
 
-Dodirni **+** i unesi naziv, datum, početak, kraj i lokaciju. Za vrijeme dodirni **Početak** ili **Kraj**. U većem odabiru pomakni sate ili minute, ili dodirni **Upiši vrijeme** za brojčanu tipkovnicu. **Primijeni** potvrđuje vrijeme; zatvaranje odabira odbacuje promjenu. Odaberi boju i dodaj napomenu — primjerice, što trebaš ponijeti na konzultacije.
+Dodirni **+** i unesi naziv, datum, početak, kraj i lokaciju. Polje **Datum** otvara isti kalendar kao datum iznad rasporeda: odaberi dan pa dodirni **Odaberi**. Zatvaranje kalendara odbacuje nepotvrđen izbor. Za vrijeme dodirni **Početak** ili **Kraj**. U odabiru pomakni sate ili minute, ili dodirni **Upiši vrijeme** za brojčanu tipkovnicu. **Primijeni** potvrđuje vrijeme; zatvaranje odabira odbacuje promjenu. Odaberi boju i dodaj napomenu — primjerice, što trebaš ponijeti na konzultacije.
 
 Napomena se prikazuje ispod naslova u dnevnom rasporedu. Dodir u dnevnom prikazu ne otvara dodatni panel; za uređivanje zadrži prst na događaju.
 
-<img src="04-add-event.jpg" width="280" alt="Dodavanje konzultacija s vremenom, lokacijom, bojom i napomenom">
+<img src="18-editor-calendar.jpg" width="280" alt="Kalendar za datum u uređivanju koristi isti izgled, hrvatske oznake i boje kao kalendar rasporeda">
 
-<img src="13-time-wheels.jpg" width="280" alt="Veći odabir sati i minuta pomicanjem"> <img src="14-time-typing.jpg" width="280" alt="Točan upis vremena uz brojčanu tipkovnicu">
+<img src="13-time-wheels.jpg" width="280" alt="Odabir sati i minuta pomicanjem"> <img src="14-time-typing.jpg" width="280" alt="Točan upis vremena uz brojčanu tipkovnicu">
 
 ## Prilagodi termin kad profesor promijeni vrijeme
 
@@ -62,7 +62,7 @@ Napomena se prikazuje ispod naslova u dnevnom rasporedu. Dodir u dnevnom prikazu
 
 Spremljeni termin dobiva oznaku **Osobna izmjena**. Izmjena se sprema na tvom uređaju; ne mijenja raspored na FERIT stranici.
 
-<img src="05-edit-class.jpg" width="280" alt="Uređivanje termina s novim početkom u 09:00 i izvornim vremenom u 08:00"> <img src="06-changed-class.jpg" width="280" alt="Pomaknuti termin u rasporedu označen kao osobna izmjena">
+<img src="06-changed-class.jpg" width="280" alt="Pomaknuti termin u rasporedu označen kao osobna izmjena">
 
 ## Cijeli tjedan u vodoravnom prikazu
 
