@@ -1,8 +1,8 @@
 # FERIT raspored — vodič sa slikama
 
-[Preuzmi Android aplikaciju](https://github.com/KTihana/FERIT-raspored/releases/download/v1.0.8-android-test/FERIT-raspored.apk)
+[Preuzmi Android aplikaciju](https://github.com/KTihana/FERIT-raspored/releases/download/v1.0.9-android-test/FERIT-raspored.apk)
 
-Snimke prikazuju sučelje verzije **1.0.8**. Dodane konzultacije i pomaknuti termin primjeri su korištenja aplikacije, a ne obavijesti fakulteta.
+Snimke prikazuju izgled aplikacije. Trenutačna verzija: **1.0.9**. Dodane konzultacije i pomaknuti termin primjeri su korištenja aplikacije, a ne obavijesti fakulteta.
 
 ## Odaberi svoj raspored
 
@@ -12,7 +12,7 @@ Odaberi studij i godinu. Aplikacija pamti odabir i pri sljedećem otvaranju prik
 
 ## Jučer i sutra jednim potezom
 
-Povuci prst **ulijevo za sljedeći dan**, a **udesno za prethodni**. Za određeni datum dodirni datum na vrhu. Položaj i duljina obojenih termina pokazuju trajanje nastave i slobodno vrijeme između termina.
+Povuci prst **ulijevo za sljedeći dan**, a **udesno za prethodni**. Možeš i **dodirnuti desni rub za sljedeći dan ili lijevi rub za prethodni**, čak i preko obojenog termina. Dugim pritiskom i dalje otvaraš uređivanje. Za određeni datum dodirni datum na vrhu. Položaj i duljina obojenih termina pokazuju trajanje nastave i slobodno vrijeme između termina.
 
 <img src="01-day.jpg" width="280" alt="Dnevni raspored s dodanim konzultacijama i vidljivom napomenom"> <img src="02-next-day.jpg" width="280" alt="Sljedeći dan nakon pomicanja prsta ulijevo">
 
