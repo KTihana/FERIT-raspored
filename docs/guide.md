@@ -16,6 +16,12 @@ Povuci prst **ulijevo za sljedeći dan**, a **udesno za prethodni**. Za određen
 
 <img src="01-day.jpg" width="280" alt="Dnevni raspored s dodanim konzultacijama i vidljivom napomenom"> <img src="02-next-day.jpg" width="280" alt="Sljedeći dan nakon pomicanja prsta ulijevo">
 
+## Svijetla i tamna tema
+
+U **Postavke → Izgled** odaberi **Svijetla** ili **Tamna**. Aplikacija pamti odabranu temu.
+
+<img src="12-dark-mode.jpg" width="280" alt="Dnevni FERIT raspored u tamnoj temi">
+
 ## Prikaži svoju LV grupu
 
 U **Postavke → LV grupe** odaberi svoju grupu zasebno za svaki predmet. Možeš biti, primjerice, **LV3 iz Programskog inženjerstva**, a **LV2 iz Web programiranja**. Raspored zatim prikazuje samo odabrane laboratorijske grupe za te predmete; zajednička predavanja ostaju vidljiva.
