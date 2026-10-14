@@ -1,8 +1,8 @@
 # FERIT raspored — vodič sa slikama
 
-[Preuzmi Android aplikaciju](https://github.com/KTihana/FERIT-raspored/releases/download/v1.0.13-android-test/FERIT-raspored.apk)
+[Preuzmi Android aplikaciju](https://github.com/KTihana/FERIT-raspored/releases/download/v1.0.14-android-test/FERIT-raspored.apk)
 
-Snimke prikazuju izgled aplikacije. Trenutačna verzija: **1.0.13**. Dodane konzultacije i pomaknuti termin primjeri su korištenja aplikacije, a ne obavijesti fakulteta.
+Snimke prikazuju izgled aplikacije. Trenutačna verzija: **1.0.14**. Dodane konzultacije i pomaknuti termin primjeri su korištenja aplikacije, a ne obavijesti fakulteta.
 
 ## Otvaranje aplikacije
 
@@ -46,9 +46,23 @@ U **Postavke → LV grupe** odaberi svoju grupu zasebno za svaki predmet. Može�
 
 <img src="03-lv-groups.jpg" width="280" alt="LV3 odabrana za Programsko inženjerstvo i LV2 za Web programiranje">
 
+## Ispiti i provjere na jednom mjestu
+
+Otvori **Postavke → Ispiti i provjere** za nadolazeće ispite i druge provjere iz svojeg odabranog rasporeda. **Najskoriji termin je prvi.** Uz svaki predmet vidiš dan i datum, za koliko je dana, vrijeme i lokaciju. Dodirni karticu za nastavnika, grupu i ostale objavljene podatke. **Prikaži u rasporedu** otvara isti termin u rasporedu.
+
+Filtri koriste stvarne oznake iz FERIT rasporeda, primjerice **kontrolna zadaća**, **Kolokvij** ili **teorijski kolokvij**, kada su objavljene. Oznake su vidljive i na terminima u dnevnom i tjednom rasporedu, čak i kada je vrsta nastave AV, PR ili LV.
+
+Popis pri otvaranju i osvježavanju provjerava trenutačni i sljedećih 15 tjedana. Ako neki tjedan nije dostupan, vidiš upozorenje da popis može biti nepotpun. Bez interneta mogu se prikazati prethodno spremljeni tjedni.
+
+<img src="19-upcoming-exams.png" width="280" alt="Ispiti i provjere s izvornim oznakama, datumima, odbrojavanjem, vremenom i lokacijom"> <img src="20-assessment-in-schedule.png" width="280" alt="Kontrolna zadaća iz Digitalnih komunikacija ostaje označena u dnevnom rasporedu">
+
 ## Dodaj vlastiti događaj
 
 Dodirni **+** i unesi naziv, datum, početak, kraj i lokaciju. Polje **Datum** otvara isti kalendar kao datum iznad rasporeda: odaberi dan pa dodirni **Odaberi**. Zatvaranje kalendara odbacuje nepotvrđen izbor. Za vrijeme dodirni **Početak** ili **Kraj**. U odabiru pomakni sate ili minute, ili dodirni **Upiši vrijeme** za brojčanu tipkovnicu. **Primijeni** potvrđuje vrijeme; zatvaranje odabira odbacuje promjenu. Odaberi boju i dodaj napomenu — primjerice, što trebaš ponijeti na konzultacije.
+
+Ispod **Napomena** možeš uključiti **Dodaj u Ispiti i provjere**. Takav osobni događaj prikazuje se u filtrima **Sve** i **Ostalo**, a ostaje i u tvojem rasporedu. Isključi opciju pri uređivanju ako ga želiš ukloniti samo s popisa provjera.
+
+<img src="21-add-to-assessments.png" width="280" alt="Opcija Dodaj u Ispiti i provjere ispod Napomene u osobnom događaju">
 
 Napomena se prikazuje ispod naslova u dnevnom rasporedu. Dodir u dnevnom prikazu ne otvara dodatni panel; za uređivanje zadrži prst na događaju.
 
