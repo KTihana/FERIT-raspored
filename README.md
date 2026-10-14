@@ -2,6 +2,8 @@
 
 Your FERIT timetable on your phone.
 
+[Vodič sa slikama — korištenje aplikacije](docs/guide.md)
+
 ## Install on Android
 
 [Download APK — version 1.0.8](https://github.com/KTihana/FERIT-raspored/releases/download/v1.0.8-android-test/FERIT-raspored.apk) · Android 7.0+
