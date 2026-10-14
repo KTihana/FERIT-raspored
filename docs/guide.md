@@ -1,8 +1,8 @@
 # FERIT raspored — vodič sa slikama
 
-[Preuzmi Android aplikaciju](https://github.com/KTihana/FERIT-raspored/releases/download/v1.0.9-android-test/FERIT-raspored.apk)
+[Preuzmi Android aplikaciju](https://github.com/KTihana/FERIT-raspored/releases/download/v1.0.10-android-test/FERIT-raspored.apk)
 
-Snimke prikazuju izgled aplikacije. Trenutačna verzija: **1.0.9**. Dodane konzultacije i pomaknuti termin primjeri su korištenja aplikacije, a ne obavijesti fakulteta.
+Snimke prikazuju izgled aplikacije. Trenutačna verzija: **1.0.10**. Dodane konzultacije i pomaknuti termin primjeri su korištenja aplikacije, a ne obavijesti fakulteta.
 
 ## Odaberi svoj raspored
 
@@ -15,6 +15,10 @@ Odaberi studij i godinu. Aplikacija pamti odabir i pri sljedećem otvaranju prik
 Povuci prst **ulijevo za sljedeći dan**, a **udesno za prethodni**. Možeš i **dodirnuti desni rub za sljedeći dan ili lijevi rub za prethodni**, čak i preko obojenog termina. Dugim pritiskom i dalje otvaraš uređivanje. Za određeni datum dodirni datum na vrhu. Položaj i duljina obojenih termina pokazuju trajanje nastave i slobodno vrijeme između termina.
 
 <img src="01-day.jpg" width="280" alt="Dnevni raspored s dodanim konzultacijama i vidljivom napomenom"> <img src="02-next-day.jpg" width="280" alt="Sljedeći dan nakon pomicanja prsta ulijevo">
+
+Dodirni datum za kalendar. Povuci **ulijevo za sljedeći mjesec** ili **udesno za prethodni**, odaberi datum pa dodirni **Prikaži**.
+
+<img src="15-calendar.jpg" width="280" alt="Centrirani kalendar s odabranim datumom i podrškom za pomicanje između mjeseci">
 
 ## Svijetla i tamna tema
 
@@ -30,11 +34,13 @@ U **Postavke → LV grupe** odaberi svoju grupu zasebno za svaki predmet. Može�
 
 ## Dodaj vlastiti događaj
 
-Dodirni **+** i unesi naziv, datum, početak, kraj i lokaciju. Vrijeme možeš **upisati izravno** ili **pomaknuti kotačiće gore i dolje** za male promjene sati i minuta. Odaberi boju i dodaj napomenu — primjerice, što trebaš ponijeti na konzultacije.
+Dodirni **+** i unesi naziv, datum, početak, kraj i lokaciju. Za vrijeme dodirni **Početak** ili **Kraj**. U većem odabiru pomakni sate ili minute, ili dodirni **Upiši vrijeme** za brojčanu tipkovnicu. **Primijeni** potvrđuje vrijeme; zatvaranje odabira odbacuje promjenu. Odaberi boju i dodaj napomenu — primjerice, što trebaš ponijeti na konzultacije.
 
 Napomena se prikazuje ispod naslova u dnevnom rasporedu. Dodir u dnevnom prikazu ne otvara dodatni panel; za uređivanje zadrži prst na događaju.
 
 <img src="04-add-event.jpg" width="280" alt="Dodavanje konzultacija s vremenom, lokacijom, bojom i napomenom">
+
+<img src="13-time-wheels.jpg" width="280" alt="Veći odabir sati i minuta pomicanjem"> <img src="14-time-typing.jpg" width="280" alt="Točan upis vremena uz brojčanu tipkovnicu">
 
 ## Prilagodi termin kad profesor promijeni vrijeme
 
