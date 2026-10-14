@@ -12,7 +12,7 @@ Open the downloaded file and install it. Install over the previous app to keep y
 
 ## Upcoming exams
 
-Open **Postavke → Ispiti i provjere** to see upcoming exams and assessments for your selected timetable, with the soonest first. Each item shows the date, days remaining, time and location; tap it for all published details or **Prikaži u rasporedu** to open its day. The original FERIT labels also appear in the timetable.
+Open **Postavke → Ispiti i provjere** to see upcoming exams and assessments for your selected timetable, with the soonest first. Each card shows all available details directly, including the date, days remaining, time, location, teacher, group and notes. Use **Prikaži u rasporedu** at the bottom of a card to open its day. The original FERIT labels also appear in the timetable.
 
 When adding a personal event, check **Dodaj u Ispiti i provjere** below **Napomena** to include it under **Sve** and **Ostalo**.
 
