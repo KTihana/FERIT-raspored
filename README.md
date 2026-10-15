@@ -10,14 +10,6 @@ Your FERIT timetable on your phone.
 
 Open the downloaded file and install it. Install over the previous app to keep your saved choices. The app runs locally; internet is needed for FERIT timetable data and update checks.
 
-## Upcoming exams
-
-Open **Postavke → Ispiti i provjere** to see upcoming exams and assessments for your selected timetable, with the soonest first. Each card shows all available details directly, including the date, days remaining, time, location, teacher, group and notes. Use **Prikaži u rasporedu** at the bottom of a card to open its day. The original FERIT labels also appear in the timetable.
-
-When adding a personal event, check **Dodaj u Ispiti i provjere** below **Napomena** to include it under **Sve** and **Ostalo**.
-
-<img src="docs/19-upcoming-exams.png" width="280" alt="Upcoming FERIT assessments with dates, countdowns, times and locations">
-
 ## Updates
 
 When **Dostupno ažuriranje** appears, tap **Preuzmi** and confirm installation on Android. Manual check: **Postavke → Ažuriranja aplikacije → Provjeri ažuriranja**.
