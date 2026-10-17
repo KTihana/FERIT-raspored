@@ -24,7 +24,7 @@ U **Ispiti i provjere** vidiš što te uskoro čeka — najbliži termin je prvi
 
 Možeš dodati i svoje događaje, odabrati boju, zapisati napomenu i uključiti ih u popis provjera. Ako se promijeni vrijeme ili lokacija nastave, zadrži prst na terminu i prilagodi ga u svom rasporedu.
 
-<img src="docs/19-upcoming-exams-full.png" width="280" height="606" alt="Nadolazeći ispiti i provjere s datumima, odbrojavanjem, vremenima i lokacijama"> <img src="docs/21-add-to-assessments.png" width="280" height="606" alt="Dodavanje osobnog događaja s napomenom i opcijom za uključivanje u Ispiti i provjere">
+<img src="docs/19-upcoming-exams-complete.png" width="280" height="606" alt="Nadolazeći ispiti i provjere s datumima, odbrojavanjem, vremenima i lokacijama"> <img src="docs/21-add-to-assessments.png" width="280" height="606" alt="Dodavanje osobnog događaja s napomenom i opcijom za uključivanje u Ispiti i provjere">
 
 ## Prilagodi raspored sebi
 
