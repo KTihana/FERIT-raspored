@@ -28,7 +28,7 @@ Povuci lijevo ili desno za drugi dan. Dodirni datum za odabir dana u kalendaru.
 
 Prati nadolazeće ispite i provjere, dodaj svoje događaje, boje i napomene te prilagodi termine nastave.
 
-<img src="docs/19-upcoming-exams-complete.png" width="280" height="606" alt="Nadolazeći ispiti i provjere s datumima, odbrojavanjem, vremenima i lokacijama"> <img src="docs/21-add-to-assessments.png" width="280" height="606" alt="Dodavanje osobnog događaja s napomenom i opcijom za uključivanje u Ispiti i provjere">
+<img src="docs/19-upcoming-exams-mobile.png" width="280" height="606" alt="Nadolazeći ispiti i provjere s datumima, odbrojavanjem, vremenima i lokacijama"> <img src="docs/21-add-to-assessments.png" width="280" height="606" alt="Dodavanje osobnog događaja s napomenom i opcijom za uključivanje u Ispiti i provjere">
 
 ## Prilagodi raspored sebi
 
