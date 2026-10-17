@@ -18,7 +18,7 @@ Dodirni datum za kalendar. Povuci **ulijevo za sljedeći mjesec** ili **udesno z
 
 Oznaka **nastavnog tjedna** nalazi se desno u postojećem donjem retku, u dnevnom i vodoravnom prikazu. Preuzima se iz FERIT rasporeda za prikazani tjedan.
 
-Svaki uspješno preuzet tjedan ostaje spremljen na telefonu. Ako FERIT nije dostupan ili nemaš internet, prikazuje se spremljeni raspored s oznakom **Spremljeno** i vremenom posljednjeg preuzimanja. Osobni događaji, izmjene i LV odabiri ostaju vidljivi. Pri otvaranju aplikacije, ako današnji tjedan nije spremljen, aplikacija otvara posljednji spremljeni tjedan za isti studij s njegovim stvarnim datumima. Za druge nepreuzete tjedne nudi povratak na spremljeni tjedan. Raspored za tjedan koji još nije preuzet treba internet.
+Svaki uspješno preuzet tjedan ostaje spremljen na mobitelu. Ako FERIT nije dostupan ili nemaš internet, prikazuje se spremljeni raspored s oznakom **Spremljeno** i vremenom posljednjeg preuzimanja. Osobni događaji, izmjene i LV odabiri ostaju vidljivi. Pri otvaranju aplikacije, ako današnji tjedan nije spremljen, aplikacija otvara posljednji spremljeni tjedan za isti studij s njegovim stvarnim datumima. Za druge nepreuzete tjedne nudi povratak na spremljeni tjedan. Raspored za tjedan koji još nije preuzet treba internet.
 
 ## Svijetla i tamna tema
 
@@ -48,11 +48,11 @@ Napomena se prikazuje ispod naslova u dnevnom rasporedu. Dodir u dnevnom prikazu
 
 **Zadrži prst na terminu** da otvoriš uređivanje. Možeš promijeniti datum, vrijeme ili lokaciju i zapisati napomenu. Na primjeru je termin pomaknut s **08:00–11:00 na 09:00–12:00**, uz prikaz izvornog FERIT termina.
 
-Spremljeni termin dobiva oznaku **Osobna izmjena**. Izmjena se sprema na tvom uređaju; ne mijenja raspored na FERIT stranici.
+Spremljeni termin dobiva oznaku **Osobna izmjena**. Izmjena se sprema na tvom mobitelu; ne mijenja raspored na FERIT stranici.
 
 ## Cijeli tjedan u vodoravnom prikazu
 
-Uz uključenu automatsku rotaciju, **okreni telefon** za pregled cijelog tjedna. Možeš odabrati i **Tjedan**. Svih sedam dana i vremenska os stanu u jedan pregled, a razmaci između termina ostaju vidljivi.
+Uz uključenu automatsku rotaciju, **okreni mobitel** za pregled cijelog tjedna. Možeš odabrati i **Tjedan**. Svih sedam dana i vremenska os stanu u jedan pregled, a razmaci između termina ostaju vidljivi.
 
 **Dodirni bilo koji termin u tjednom prikazu** za puni naziv, vrijeme, podebljanu lokaciju, LV grupu, nastavnika i ostale podatke. Detalji se otvaraju preko rasporeda. Dugim pritiskom i dalje otvaraš uređivanje.
 
