@@ -1,49 +1,48 @@
-# FERIT raspored
+<p align="center">
+  <img src="docs/ferit-logo.svg" width="96" height="96" alt="FERIT logotip">
+</p>
+<h1 align="center">FERIT raspored</h1>
+<p align="center">Nastava, ispiti i tvoji događaji u jednom kalendaru.</p>
+<p align="center">
+  <a href="https://github.com/KTihana/FERIT-raspored/releases/download/v1.0.14-android-test/FERIT-raspored.apk"><img src="docs/download-android.svg" width="244" height="56" alt="Preuzmi za Android"></a>
+</p>
+<p align="center">Android 7.0+ · Otvori APK i instaliraj preko postojeće aplikacije da zadržiš svoje odabire.</p>
 
-Tvoj FERIT raspored na mobitelu — nastava, ispiti i osobni događaji u jednom kalendaru.
+## Pogled u aplikaciju
 
-## Instalacija na Android
+**Cijeli tjedan** — nastava, pauze i tvoji događaji na jednom mjestu.
 
-[Preuzmi APK — verzija 1.0.14](https://github.com/KTihana/FERIT-raspored/releases/download/v1.0.14-android-test/FERIT-raspored.apk) · Android 7.0 ili noviji
+<img src="docs/07-week.jpg" width="700" height="323" alt="Tjedni raspored sa svih sedam dana, nastavom, pauzama i osobnim događajem">
 
-Otvori APK i instaliraj aplikaciju. Novu verziju instaliraj preko postojeće da zadržiš svoje odabire.
+**Detalji termina** — dodirni termin za predmet, vrijeme, lokaciju i nastavnika.
 
-## Cijeli tjedan na jednom mjestu
+<img src="docs/08-week-details.jpg" width="700" height="323" alt="Tjedni raspored s otvorenim detaljima termina u bočnom panelu">
 
-Okreni mobitel ili odaberi **Tjedan** za pregled nastave i pauza.
+<table>
+  <tr><th>Dnevni raspored</th><th>Kalendar</th></tr>
+  <tr>
+    <td><img src="docs/01-day.jpg" width="280" height="606" alt="Dnevni raspored s vremenima, lokacijama i osobnim konzultacijama"></td>
+    <td><img src="docs/15-calendar.jpg" width="280" height="606" alt="Mjesečni kalendar za odabir dana"></td>
+  </tr>
+  <tr><th>Ispiti i provjere</th><th>Tvoji događaji i napomene</th></tr>
+  <tr>
+    <td><img src="docs/19-upcoming-exams-loaded.png" width="280" height="606" alt="Potpuno učitan popis provjera s datumima, vremenima i lokacijama"></td>
+    <td><img src="docs/21-add-to-assessments.png" width="280" height="606" alt="Osobni događaj s bojom, napomenom i opcijom za dodavanje u provjere"></td>
+  </tr>
+  <tr><th>LV grupa za svaki predmet</th><th>Tamna tema</th></tr>
+  <tr>
+    <td><img src="docs/03-lv-groups.jpg" width="280" height="606" alt="Odabir vlastite laboratorijske grupe zasebno za svaki predmet"></td>
+    <td><img src="docs/12-dark-mode.jpg" width="280" height="606" alt="Dnevni raspored u tamnoj temi"></td>
+  </tr>
+  <tr><th>Osobne izmjene termina</th><th>Odabir vremena</th></tr>
+  <tr>
+    <td><img src="docs/06-changed-class.jpg" width="280" height="606" alt="Pomaknuti termin s oznakom Osobna izmjena i izvornim vremenom nastave"></td>
+    <td><img src="docs/13-time-wheels.jpg" width="280" height="606" alt="Odabir sati i minuta za vlastiti događaj"></td>
+  </tr>
+</table>
 
-<img src="docs/07-week.jpg" width="700" height="323" alt="Tjedni kalendar s nastavom, osobnim događajem i slobodnim vremenom između termina">
+**Raspored bez interneta** — preuzeti tjedni ostaju na mobitelu.
 
-Dodirni termin za detalje u bočnom panelu. Za uređivanje zadrži prst na terminu.
-
-<img src="docs/08-week-details.jpg" width="700" height="323" alt="Tjedni raspored nakon dodira termina, s otvorenim bočnim panelom za Web programiranje">
-
-## Dnevni raspored i kalendar
-
-Povuci lijevo ili desno za drugi dan. Dodirni datum za odabir dana u kalendaru.
-
-<img src="docs/01-day.jpg" width="280" height="606" alt="Dnevni raspored s vremenima nastave, lokacijama i osobnim konzultacijama"> <img src="docs/15-calendar.jpg" width="280" height="606" alt="Mjesečni kalendar za odabir određenog datuma">
-
-## Ispiti i osobni događaji
-
-Prati nadolazeće ispite i provjere, dodaj svoje događaje, boje i napomene te prilagodi termine nastave.
-
-<img src="docs/19-upcoming-exams-loaded.png" width="280" height="606" alt="Nadolazeći ispiti i provjere s datumima, odbrojavanjem, vremenima i lokacijama"> <img src="docs/21-add-to-assessments.png" width="280" height="606" alt="Dodavanje osobnog događaja s napomenom i opcijom za uključivanje u Ispiti i provjere">
-
-## Prilagodi raspored sebi
-
-Odaberi LV grupu za svaki predmet i svijetlu ili tamnu temu. Preuzeti tjedni dostupni su i bez interneta.
-
-<img src="docs/03-lv-groups.jpg" width="280" height="606" alt="Odabir laboratorijske grupe zasebno za svaki predmet"> <img src="docs/12-dark-mode.jpg" width="280" height="606" alt="Dnevni raspored u tamnoj temi">
-
-Osobne izmjene ostaju na tvom mobitelu i ne mijenjaju službeni FERIT raspored.
+<img src="docs/17-offline-week.jpg" width="700" height="323" alt="Spremljeni tjedni raspored dostupan bez interneta, s oznakom nastavnog tjedna">
 
 [Vodič za korištenje](docs/guide.md)
-
-## Ažuriranja
-
-Kad se pojavi **Dostupno ažuriranje**, dodirni **Preuzmi**. Ručna provjera: **Postavke → Ažuriranja aplikacije → Provjeri ažuriranja**.
-
-Vrati početni raspored: **Postavke → Vrati izvorni raspored**.
-
-[Izvorni projekt](https://github.com/KTihana/FERIT-raspored/releases/download/v1.0.14-android-test/FERIT-raspored-source.zip) · iPhone: potreban je Xcode i Appleovo potpisivanje.
