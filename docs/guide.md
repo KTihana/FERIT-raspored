@@ -1,8 +1,8 @@
 # FERIT raspored — vodič za korištenje
 
-[Preuzmi Android aplikaciju](https://github.com/KTihana/FERIT-raspored/releases/download/v1.0.16-android-test/FERIT-raspored.apk)
+[Preuzmi Android aplikaciju](https://github.com/KTihana/FERIT-raspored/releases/download/v1.0.17-android-test/FERIT-raspored.apk)
 
-Trenutačna verzija: **1.0.16**. [Pregled aplikacije i snimke zaslona](../README.md).
+Trenutačna verzija: **1.0.17**. [Pregled aplikacije i snimke zaslona](../README.md).
 
 ## Odaberi svoj raspored
 
@@ -34,11 +34,11 @@ U **Postavke → Ponavljački predmeti** odmah se prikazuje popis predmeta. Ozna
 
 Svaki predmet nudi samo vrste pronađene u svojim objavljenim ili spremljenim terminima, pod nazivima koje koristi FERIT, primjerice **PR - predavanja**, **LV - laboratorijske vježbe**, AV ili KV kada postoje. Možeš ostaviti samo predavanja, samo vježbe ili željenu kombinaciju. Odznačavanje zadnje vrste uklanja odabir predmeta. Ako odabereš LV, svoju grupu postavi u **Postavke → LV grupe**.
 
-Odabir vrijedi za dnevni i tjedni raspored te **Ispiti i provjere**. Pamti se zasebno za svaki glavni raspored, a već preuzeti termini i vrste nastave dostupni su i bez interneta. Ako dio rasporeda nije dostupan, prikazuje se obavijest. Vrste nastave koje još nisu provjerene ne dodaju se napamet.
+Odabir vrijedi za dnevni i tjedni raspored te **Ispiti i provjere**. Pamti se zasebno za svaki glavni raspored, a već preuzeti termini i vrste nastave dostupni su i bez interneta. Ako dio rasporeda nije dostupan, prikazuje se obavijest. Vrste nastave koje još nisu provjerene ne dodaju se napamet. Pri otvaranju i osvježavanju rasporeda više se ne pojavljuju kratke trake o učitavanju ili spremljenim ponavljačkim predmetima. Dodir kućice za odabir ne ostavlja dodatni okvir.
 
 <img src="22-repeating-subjects.png" width="280" alt="Programiranje u Javi odabrano samo za predavanja, bez laboratorijskih vježbi"> <img src="23-repeating-in-schedule.png" width="280" alt="Predavanja iz Programiranja u Javi prikazana uz treću godinu, bez LV termina">
 
-**Verzija 1.0.16:** otvori **Postavke → Provjeri ažuriranja** za preuzimanje kroz aplikaciju. Instaliraj APK preko postojeće aplikacije da zadržiš svoje odabire. Ručna provjera odmah traži najnovije izdanje.
+**Verzija 1.0.17:** otvori **Postavke → Provjeri ažuriranja** za preuzimanje kroz aplikaciju. Instaliraj APK preko postojeće aplikacije da zadržiš svoje odabire. Ručna provjera odmah traži najnovije izdanje.
 
 ## Ispiti i provjere na jednom mjestu
 
