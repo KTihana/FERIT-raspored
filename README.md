@@ -4,7 +4,7 @@
 <h1 align="center">FERIT raspored</h1>
 <p align="center">Nastava, ispiti i tvoji događaji u jednom kalendaru.</p>
 <p align="center">
-  <a href="https://github.com/KTihana/FERIT-raspored/releases/download/v1.0.15-android-test/FERIT-raspored.apk"><img src="docs/download-android.svg" width="244" height="56" alt="Preuzmi za Android"></a>
+  <a href="https://github.com/KTihana/FERIT-raspored/releases/download/v1.0.16-android-test/FERIT-raspored.apk"><img src="docs/download-android.svg" width="244" height="56" alt="Preuzmi za Android"></a>
 </p>
 <p align="center">Android 7.0+ · Otvori APK i instaliraj preko postojeće aplikacije da zadržiš svoje odabire.</p>
 

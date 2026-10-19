@@ -1,8 +1,8 @@
 # FERIT raspored — vodič za korištenje
 
-[Preuzmi Android aplikaciju](https://github.com/KTihana/FERIT-raspored/releases/download/v1.0.15-android-test/FERIT-raspored.apk)
+[Preuzmi Android aplikaciju](https://github.com/KTihana/FERIT-raspored/releases/download/v1.0.16-android-test/FERIT-raspored.apk)
 
-Trenutačna verzija: **1.0.15**. [Pregled aplikacije i snimke zaslona](../README.md).
+Trenutačna verzija: **1.0.16**. [Pregled aplikacije i snimke zaslona](../README.md).
 
 ## Odaberi svoj raspored
 
@@ -38,7 +38,7 @@ Odabir vrijedi za dnevni i tjedni raspored te **Ispiti i provjere**. Pamti se za
 
 <img src="22-repeating-subjects.png" width="280" alt="Programiranje u Javi odabrano samo za predavanja, bez laboratorijskih vježbi"> <img src="23-repeating-in-schedule.png" width="280" alt="Predavanja iz Programiranja u Javi prikazana uz treću godinu, bez LV termina">
 
-**Osvježena verzija 1.0.15 (build 21):** ako već imaš 1.0.15, ponovno preuzmi APK i instaliraj preko postojeće aplikacije. Broj verzije ostaje isti pa se nova obavijest o ažuriranju neće pojaviti.
+**Verzija 1.0.16:** otvori **Postavke → Provjeri ažuriranja** za preuzimanje kroz aplikaciju. Instaliraj APK preko postojeće aplikacije da zadržiš svoje odabire. Ručna provjera odmah traži najnovije izdanje.
 
 ## Ispiti i provjere na jednom mjestu
 
