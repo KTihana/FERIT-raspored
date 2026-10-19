@@ -30,13 +30,15 @@ U **Postavke → LV grupe** odaberi svoju grupu zasebno za svaki predmet. Može�
 
 ## Ponavljački predmeti
 
-U **Postavke → Ponavljački predmeti** uključi **Prikaži ponavljačke predmete**, označi predmete koje ponovno slušaš i dodirni **Spremi odabir**. Dostupna je samo godina neposredno ispod tvoje, unutar istog studija: uz 3. godinu možeš dodati predmete s 2. godine, a uz 2. godinu predmete s 1. godine. Za 1. godinu nema ranije godine za odabir.
+U **Postavke → Ponavljački predmeti** odmah se prikazuje popis predmeta. Označi predmet, zatim vrste nastave koje želiš vidjeti i dodirni **Spremi odabir**. Dostupna je samo godina neposredno ispod tvoje, unutar istog studija: uz 3. godinu možeš dodati predmete s 2. godine, a uz 2. godinu predmete s 1. godine. Za 1. godinu nema ranije godine za odabir.
 
-Jedan odabir uključuje predavanja, vježbe i provjere iz tog predmeta. Prikazuju se uz tvoju godinu u dnevnom i tjednom rasporedu te u **Ispiti i provjere**, s oznakom izvorne godine. Za ponavljački predmet odaberi svoju grupu u **Postavke → LV grupe**.
+Svaki predmet nudi samo vrste pronađene u svojim objavljenim ili spremljenim terminima, pod nazivima koje koristi FERIT, primjerice **PR - predavanja**, **LV - laboratorijske vježbe**, AV ili KV kada postoje. Možeš ostaviti samo predavanja, samo vježbe ili željenu kombinaciju. Odznačavanje zadnje vrste uklanja odabir predmeta. Ako odabereš LV, svoju grupu postavi u **Postavke → LV grupe**.
 
-Isključivanje prikaza čuva označene predmete. Odabir se pamti zasebno za svaki glavni raspored, a već preuzeti termini dostupni su i bez interneta. Popis predmeta ovisi o dostupnim i spremljenim objavljenim tjednima; ako dio rasporeda nije dostupan, prikazuje se obavijest.
+Odabir vrijedi za dnevni i tjedni raspored te **Ispiti i provjere**. Pamti se zasebno za svaki glavni raspored, a već preuzeti termini i vrste nastave dostupni su i bez interneta. Ako dio rasporeda nije dostupan, prikazuje se obavijest. Vrste nastave koje još nisu provjerene ne dodaju se napamet.
 
-<img src="22-repeating-subjects.png" width="280" alt="Odabir Programiranja u Javi kao ponavljačkog predmeta s druge godine"> <img src="23-repeating-in-schedule.png" width="280" alt="Programiranje u Javi s druge godine prikazano uz predmete treće godine">
+<img src="22-repeating-subjects.png" width="280" alt="Programiranje u Javi odabrano samo za predavanja, bez laboratorijskih vježbi"> <img src="23-repeating-in-schedule.png" width="280" alt="Predavanja iz Programiranja u Javi prikazana uz treću godinu, bez LV termina">
+
+**Osvježena verzija 1.0.15 (build 21):** ako već imaš 1.0.15, ponovno preuzmi APK i instaliraj preko postojeće aplikacije. Broj verzije ostaje isti pa se nova obavijest o ažuriranju neće pojaviti.
 
 ## Ispiti i provjere na jednom mjestu
 

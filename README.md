@@ -45,7 +45,7 @@
 
 <img src="docs/17-offline-week.jpg" width="700" height="323" alt="Spremljeni tjedni raspored dostupan bez interneta, s oznakom nastavnog tjedna">
 
-**Ponavljački predmeti** — označi predmete s godine neposredno ispod tvoje i prikaži ih uz svoj raspored.
+**Ponavljački predmeti** — označi predmet s godine neposredno ispod tvoje i odaberi njegove objavljene vrste nastave: samo predavanja, samo vježbe ili željenu kombinaciju.
 
 <img src="docs/22-repeating-subjects.png" width="280" height="606" alt="Odabir ponavljačkih predmeta iz prethodne godine"> <img src="docs/23-repeating-in-schedule.png" width="280" height="606" alt="Programiranje u Javi prikazano uz treću godinu">
 
