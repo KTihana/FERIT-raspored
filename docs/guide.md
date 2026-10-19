@@ -1,8 +1,8 @@
 # FERIT raspored — vodič za korištenje
 
-[Preuzmi Android aplikaciju](https://github.com/KTihana/FERIT-raspored/releases/download/v1.0.14-android-test/FERIT-raspored.apk)
+[Preuzmi Android aplikaciju](https://github.com/KTihana/FERIT-raspored/releases/download/v1.0.15-android-test/FERIT-raspored.apk)
 
-Trenutačna verzija: **1.0.14**. [Pregled aplikacije i snimke zaslona](../README.md).
+Trenutačna verzija: **1.0.15**. [Pregled aplikacije i snimke zaslona](../README.md).
 
 ## Odaberi svoj raspored
 
@@ -27,6 +27,16 @@ U **Postavke → Izgled** odaberi **Svijetla** ili **Tamna**. Aplikacija pamti o
 ## Prikaži svoju LV grupu
 
 U **Postavke → LV grupe** odaberi svoju grupu zasebno za svaki predmet. Možeš biti, primjerice, **LV3 iz Programskog inženjerstva**, a **LV2 iz Web programiranja**. Raspored zatim prikazuje samo odabrane laboratorijske grupe za te predmete; zajednička predavanja ostaju vidljiva.
+
+## Ponavljački predmeti
+
+U **Postavke → Ponavljački predmeti** uključi **Prikaži ponavljačke predmete**, označi predmete koje ponovno slušaš i dodirni **Spremi odabir**. Dostupna je samo godina neposredno ispod tvoje, unutar istog studija: uz 3. godinu možeš dodati predmete s 2. godine, a uz 2. godinu predmete s 1. godine. Za 1. godinu nema ranije godine za odabir.
+
+Jedan odabir uključuje predavanja, vježbe i provjere iz tog predmeta. Prikazuju se uz tvoju godinu u dnevnom i tjednom rasporedu te u **Ispiti i provjere**, s oznakom izvorne godine. Za ponavljački predmet odaberi svoju grupu u **Postavke → LV grupe**.
+
+Isključivanje prikaza čuva označene predmete. Odabir se pamti zasebno za svaki glavni raspored, a već preuzeti termini dostupni su i bez interneta. Popis predmeta ovisi o dostupnim i spremljenim objavljenim tjednima; ako dio rasporeda nije dostupan, prikazuje se obavijest.
+
+<img src="22-repeating-subjects.png" width="280" alt="Odabir Programiranja u Javi kao ponavljačkog predmeta s druge godine"> <img src="23-repeating-in-schedule.png" width="280" alt="Programiranje u Javi s druge godine prikazano uz predmete treće godine">
 
 ## Ispiti i provjere na jednom mjestu
 

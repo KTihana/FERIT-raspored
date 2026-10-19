@@ -4,7 +4,7 @@
 <h1 align="center">FERIT raspored</h1>
 <p align="center">Nastava, ispiti i tvoji događaji u jednom kalendaru.</p>
 <p align="center">
-  <a href="https://github.com/KTihana/FERIT-raspored/releases/download/v1.0.14-android-test/FERIT-raspored.apk"><img src="docs/download-android.svg" width="244" height="56" alt="Preuzmi za Android"></a>
+  <a href="https://github.com/KTihana/FERIT-raspored/releases/download/v1.0.15-android-test/FERIT-raspored.apk"><img src="docs/download-android.svg" width="244" height="56" alt="Preuzmi za Android"></a>
 </p>
 <p align="center">Android 7.0+ · Otvori APK i instaliraj preko postojeće aplikacije da zadržiš svoje odabire.</p>
 
@@ -44,5 +44,9 @@
 **Raspored bez interneta** — preuzeti tjedni ostaju na mobitelu.
 
 <img src="docs/17-offline-week.jpg" width="700" height="323" alt="Spremljeni tjedni raspored dostupan bez interneta, s oznakom nastavnog tjedna">
+
+**Ponavljački predmeti** — označi predmete s godine neposredno ispod tvoje i prikaži ih uz svoj raspored.
+
+<img src="docs/22-repeating-subjects.png" width="280" height="606" alt="Odabir ponavljačkih predmeta iz prethodne godine"> <img src="docs/23-repeating-in-schedule.png" width="280" height="606" alt="Programiranje u Javi prikazano uz treću godinu">
 
 [Vodič za korištenje](docs/guide.md)
