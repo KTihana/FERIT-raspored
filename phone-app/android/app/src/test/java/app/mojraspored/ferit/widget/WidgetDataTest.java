@@ -47,6 +47,64 @@ public class WidgetDataTest {
         WidgetData.State s=WidgetData.state(Collections.emptyList(),at("11:15"));
         assertEquals("Danas nema nastave",s.emptyTitle);assertEquals("20. listopada",s.dateLabel);
     }
+    @Test public void tomorrowShowsFirstClassAndStaysStillUntilMidnight() throws Exception{
+        List<JSONObject> tomorrow=day();for(JSONObject l:tomorrow)l.put("date","2026-10-21");
+        long now=at("11:15");
+        WidgetData.State s=WidgetData.state(tomorrow,now,"2026-10-21");
+        assertEquals("Sutra",s.dayLabel);assertEquals("21. listopada",s.dateLabel);
+        assertEquals("Prvi termin",s.status);assertFalse(s.active);assertEquals(0,s.progress);
+        assertEquals("a",s.hero.getString("id"));assertEquals(2,s.next.size());assertEquals("3 termina sutra",s.footer);
+        assertEquals(WidgetData.time("2026-10-21","00:00")+100,WidgetData.clockUpdateAt(s,now));
+        WidgetData.State later=WidgetData.state(tomorrow,at("23:59"),"2026-10-21");
+        assertEquals(s.status,later.status);assertEquals(s.footer,later.footer);assertEquals(0,later.progress);
+        assertEquals("Sutra nema nastave",WidgetData.state(Collections.emptyList(),now,"2026-10-21").emptyTitle);
+    }
+    @Test public void selectedTomorrowBecomesTodayWithoutSkippingAMorning() throws Exception{
+        List<JSONObject> tomorrow=day();for(JSONObject l:tomorrow)l.put("date","2026-10-21");
+        WidgetData.State s=WidgetData.state(tomorrow,WidgetData.time("2026-10-21","11:15"),"2026-10-21");
+        assertEquals("Danas",s.dayLabel);assertTrue(s.active);assertEquals(6250,s.progress);
+        assertEquals("2026-10-22",WidgetData.displayDate("2026-10-21",WidgetData.time("2026-10-22","00:01")));
+        assertEquals("2026-10-20",WidgetData.displayDate("invalid",at("11:15")));
+        assertEquals("2026-10-25",WidgetData.displayDate("2026-10-25",at("11:15")));
+        assertEquals("2026-10-20",WidgetData.displayDate("2026-10-27",at("11:15")));
+    }
+    @Test public void sevenDaysReuseAtMostTwoWeeksAcrossYearAndDstBoundaries() {
+        assertEquals(new LinkedHashSet<>(Arrays.asList("2026-10-19","2026-10-26")),WidgetData.weeks(at("11:15")));
+        assertEquals(new LinkedHashSet<>(Arrays.asList("2026-10-19","2026-10-26")),WidgetData.weeks(WidgetData.time("2026-10-25","23:59")));
+        assertEquals(Collections.singleton("2026-10-26"),WidgetData.weeks(WidgetData.time("2026-10-26","00:01")));
+        assertEquals(new LinkedHashSet<>(Arrays.asList("2026-12-28","2027-01-04")),WidgetData.weeks(WidgetData.time("2027-01-03","12:00")));
+        assertEquals(25*60*60*1000L,WidgetData.midnight(WidgetData.time("2026-10-25","00:00"))-WidgetData.time("2026-10-25","00:00"));
+    }
+    @Test public void arrowsBrowseExactlySevenDaysAndClampAtEitherEnd() {
+        long now=at("11:15");String date=WidgetData.today(now);
+        assertEquals(date,WidgetData.shiftDate(date,-1,now));
+        for(int index=1;index<WidgetData.VISIBLE_DAYS;index++){
+            date=WidgetData.shiftDate(date,1,now);
+            assertEquals(index,WidgetData.dayIndex(date,now));
+        }
+        assertEquals("2026-10-26",date);assertEquals(date,WidgetData.shiftDate(date,1,now));
+        for(int index=5;index>=0;index--){date=WidgetData.shiftDate(date,-1,now);assertEquals(index,WidgetData.dayIndex(date,now));}
+        assertEquals("2026-10-20",date);
+        long endOfYear=WidgetData.time("2026-12-29","11:15");
+        assertEquals("2027-01-04",WidgetData.lastDate(endOfYear));
+        assertEquals("2027-01-04",WidgetData.displayDate("2027-01-04",endOfYear));
+    }
+    @Test public void laterWeekdaysShowAStaticFullScheduleAndRetainTheirDate() throws Exception{
+        long now=at("11:15");
+        List<JSONObject> future=day();for(JSONObject l:future)l.put("date","2026-10-26");
+        WidgetData.State s=WidgetData.state(future,now,"2026-10-26");
+        assertEquals("Ponedjeljak",s.dayLabel);assertEquals(6,s.dayIndex);
+        assertTrue(s.future);assertFalse(s.tomorrow);assertFalse(s.active);assertEquals(0,s.progress);
+        assertEquals("Prvi termin",s.status);assertEquals(2,s.next.size());assertEquals("3 termina ukupno",s.footer);
+        assertEquals(WidgetData.midnight(now)+100,WidgetData.clockUpdateAt(s,now));
+        assertEquals("2026-10-26",WidgetData.displayDate("2026-10-26",WidgetData.time("2026-10-21","00:01")));
+        assertEquals("Nema nastave",WidgetData.state(Collections.emptyList(),now,"2026-10-26").emptyTitle);
+        String[] labels={"Danas","Sutra","Četvrtak","Petak","Subota","Nedjelja","Ponedjeljak"};
+        for(int index=0;index<labels.length;index++){
+            String date=java.time.LocalDate.parse("2026-10-20").plusDays(index).toString();
+            assertEquals(labels[index],WidgetData.state(Collections.emptyList(),now,date).dayLabel);
+        }
+    }
     @Test public void personalMovesHiddenAndGroupSelections() throws Exception{
         JSONObject p=prefs(), a=lesson("a","10:00","12:00"), b=lesson("b","12:15","13:00");
         JSONObject moved=lesson("other-week","14:00","16:00"), original=new JSONObject(moved.toString()).put("date","2026-10-13");

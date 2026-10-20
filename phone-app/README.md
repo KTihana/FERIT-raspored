@@ -1,5 +1,37 @@
 # FERIT raspored
 
+## Android 1.0.21 — Settings order and the actual 4×4 widget preview
+
+Settings now list **Studij i godina → LV grupe → Ispiti i provjere → Ponavljački predmeti → Vrati izvorni raspored → Izvorni FERIT raspored → Widget na početnom zaslonu → Ažuriranja aplikacije**. The appearance controls remain above the list.
+
+The add-widget preview shows a native-rendered **4×4** widget example with Programsko inženjerstvo in progress, a 62.5% progress bar, 45 minutes remaining and two upcoming events. The installed widget continues to use the real schedule and phone time. Preview examples are never saved to preferences and make no downloads or background updates.
+
+The preview image is exported directly from the real `WidgetRenderer` on Android, preserving the FERIT vector, typography, colors and transparency. `WidgetPreview.java` passes that render to the pin dialog, and `widget_pin_preview.xml` uses an aspect-preserving image so launcher constraints cannot stretch or clip the card. Android 12+ widget pickers use the same preview layout; older launchers use `drawable-nodpi/widget_preview.png`. Regenerate the image by running `renderAllStatesAndSizesUsingRealRemoteViews` and pulling `widget-qa/widget-preview.png` from the app's external files into the drawable directory.
+
+Verified on Android 16: the launcher labels it 4×4 and displays the complete square card, including the progress bar and upcoming classes. The settings sequence was checked in the running app. TypeScript, 120 app tests, 18 native unit tests, preview instrumentation and the native layout checks pass; Android lint reports no errors.
+
+Android version **1.0.21**, build **27**, is available in the [GitHub release](https://github.com/KTihana/FERIT-raspored/releases/tag/v1.0.21-android-test), signed with the same identity as the previous APK. Install it over the current app to keep saved preferences. This release includes the seven-day navigation introduced in the local 1.0.19 and 1.0.20 builds.
+
+## Android 1.0.20 — A full week, one day at a time
+
+The Android widget now browses **today and the next six days** with the left/right arrows. The headings use **Danas**, **Sutra** and then Croatian weekday names with the selected date. Tap the day heading or date to return to today. The arrows dim at the ends of the seven-day window. Each widget keeps its own selected date, and tapping the card or calendar opens that date in the app.
+
+The seven-day window uses at most two FERIT weekly schedules. The existing single hourly job checks each distinct source week once, including selected repeating-subject sources. Day switching reads the cache; only missing weeks trigger the existing throttled fetch. Future days show their first class, remaining classes and breaks without minute redraws. Today retains its clock-based progress, with no visual redraws while the screen is off. Selected future dates stay fixed as they approach; after a selected date expires, the widget returns to today. Midnight updates the headings and the rolling window.
+
+Android version **1.0.20**, build **26**, is a local build that installs over the previous APK with the same signing identity. The last published GitHub release remains 1.0.18.
+
+Verified with TypeScript, 120 app tests, 18 native unit tests and all 4 widget instrumentation tests on an Android 16 emulator. The tests cover the seven-day arrow round trip, bounds, return to today, independent widgets, no downloads for cached browsing, static future views across minute ticks, screen-off/wake timing, week/year/DST boundaries, all weekday headers at standard and compact sizes, and opening the last displayed day from a cold or warm app. Android lint reports no errors. Physical-phone battery use has not been measured.
+
+## Android 1.0.19 — Today and tomorrow widget
+
+This local Android build adds arrows for **Danas** and **Sutra** to the existing glass widget. Each widget saves its own selected date. Tomorrow shows the first class, its start time, following classes and breaks, without an active progress bar or minute-by-minute redraws. At midnight, the selected tomorrow becomes today, so the widget can show the morning's live timetable. Missing and unpublished weeks remain distinct from a day with no classes.
+
+Both days reuse the same weekly cache and the same persisted hourly refresh job. Only the Sunday/Monday boundary needs a second source week. Switching days reads local data; if a required week is missing, one throttled request downloads only the missing schedules. Repeated taps do not repeatedly download valid cached weeks. Manual refresh checks the two days together. The non-waking clock alarm is scheduled for midnight while only tomorrow views are displayed; today views retain their existing minute updates. No progress redraws run while the screen is off.
+
+Tapping the card or calendar opens the selected date in the app. Android version **1.0.19**, build **25**, can be installed over the previous APK with the same signing identity. This build is local; the last published GitHub release remains 1.0.18.
+
+Verified with TypeScript, 120 app tests, 16 native unit tests and 4 widget instrumentation checks on an Android 16 emulator. Real RemoteViews were checked at standard, tall and compact sizes. The checks cover cached day switching, independent widget choices, no tomorrow minute redraw, screen-off/wake timing, Sunday/Monday cache boundaries, and cold/warm opening of the selected date. Android lint reports no errors; physical-phone battery use has not been measured.
+
 ## Android 1.0.18 — Danas home widget
 
 The Android widget uses the approved translucent dark card with the actual FERIT vector, Inter type, a peach in-class progress bar, upcoming start times and rooms, and the refresh/calendar controls.
@@ -20,7 +52,7 @@ The pale blue launch screen uses the oversized translucent vector logo and the t
 
 ## Download on your Android phone
 
-Open [the Android test release](https://github.com/KTihana/FERIT-raspored/releases/tag/v1.0.18-android-test) and download **FERIT-raspored.apk** under Assets. Open the downloaded APK to install it. Install it over the previous version to keep your saved choices and personal changes. This signed development build awaits real-phone testing.
+Open [the Android test release](https://github.com/KTihana/FERIT-raspored/releases/tag/v1.0.21-android-test) and download **FERIT-raspored.apk** under Assets. Open the downloaded APK to install it. Install it over the previous version to keep your saved choices and personal changes. This signed development build awaits real-phone testing.
 
 The Android app checks GitHub for updates. You can also use **Provjeri ažuriranja** in **Postavke**. Download the APK and confirm installation on the phone; Android updates are not installed silently.
 
@@ -38,7 +70,7 @@ Study/year, per-subject LV groups, personal entries and edits are saved in nativ
 - Direct FERIT transport and parsing: `lib/phone-runtime.ts`, `lib/direct-ferit.ts`, `lib/ferit.ts`
 - Local web assets: `dist-mobile/`, generated by the build and copied into both native projects
 
-The Android APK is built at `artifacts/FERIT-Moj-Raspored.apk` (also copied to `../FERIT-raspored.apk`). Native compilation, APK signature verification, alignment and bundled-asset checks pass. All 117 app tests, 13 native unit tests and 2 Android widget instrumentation tests pass. Android lint reports no errors. Screen-off/wake timing, offline preservation and a live FERIT refresh were verified on an Android 16 emulator; physical-phone testing remains outstanding. The iPhone project is synchronized but still needs Xcode and Apple signing before an installable iPhone build can be produced. The APK update checker is unavailable on iPhone.
+The Android APK is built at `artifacts/FERIT-Moj-Raspored.apk` (also copied to `../FERIT-raspored.apk`). Native compilation, APK signature verification, alignment and bundled-asset checks pass. All 120 app tests, 18 native unit tests, widget navigation/layout checks and the native 4×4 preview instrumentation check pass. Android lint reports no errors. Screen-off/wake timing, offline preservation and a live FERIT refresh were verified on an Android 16 emulator; physical-phone testing remains outstanding. The iPhone project is synchronized but still needs Xcode and Apple signing before an installable iPhone build can be produced. The APK update checker is unavailable on iPhone.
 
 ## Prepare the project
 

@@ -33,6 +33,33 @@ public final class WidgetData {
     }
     public static String selection(JSONObject prefs) { return obj(prefs, "selection").optString("key"); }
     public static String today(long now) { return Instant.ofEpochMilli(now).atZone(ZONE).toLocalDate().toString(); }
+    public static String tomorrow(long now) { return LocalDate.parse(today(now)).plusDays(1).toString(); }
+    public static final int VISIBLE_DAYS = 7;
+    public static String lastDate(long now) { return LocalDate.parse(today(now)).plusDays(VISIBLE_DAYS-1).toString(); }
+    /** Keep an absolute selected date as it approaches; expired choices return to today. */
+    public static String displayDate(String saved, long now) {
+        try {
+            LocalDate date=LocalDate.parse(saved),first=LocalDate.parse(today(now));
+            if(!date.isBefore(first) && !date.isAfter(first.plusDays(VISIBLE_DAYS-1)))return date.toString();
+        } catch(RuntimeException ignored) {}
+        return today(now);
+    }
+    public static int dayIndex(String date,long now) {
+        return (int)java.time.temporal.ChronoUnit.DAYS.between(LocalDate.parse(today(now)),LocalDate.parse(displayDate(date,now)));
+    }
+    public static String shiftDate(String date,int direction,long now) {
+        int index=Math.max(0,Math.min(VISIBLE_DAYS-1,dayIndex(date,now)+Integer.signum(direction)));
+        return LocalDate.parse(today(now)).plusDays(index).toString();
+    }
+    public static Set<String> weeks(long now) {
+        Set<String> weeks = new LinkedHashSet<>();
+        weeks.add(monday(today(now))); weeks.add(monday(lastDate(now)));
+        return weeks;
+    }
+    public static long midnight(long now) { return time(tomorrow(now), "00:00"); }
+    public static long clockUpdateAt(State state, long now) {
+        return !state.future && state.hero != null ? (now / 60000 + 1) * 60000 + 100 : midnight(now) + 100;
+    }
     public static String monday(String date) {
         return LocalDate.parse(date).with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY)).toString();
     }
@@ -142,45 +169,53 @@ public final class WidgetData {
         return result;
     }
     public static final class State {
-        public String date, dateLabel, status, footer, emptyTitle, emptyBody;
+        public String date, dateLabel, dayLabel, status, footer, emptyTitle, emptyBody;
         public JSONObject hero;
         public List<JSONObject> next = new ArrayList<>();
-        public boolean active;
-        public int progress, remaining, total;
+        public boolean active, tomorrow, future;
+        public int progress, remaining, total, dayIndex;
         public long end, nextChange;
     }
     public static State state(List<JSONObject> lessons, long now) {
+        return state(lessons, now, today(now));
+    }
+    public static State state(List<JSONObject> lessons, long now, String selectedDate) {
         State s = new State();
-        s.date = today(now);
+        s.date = displayDate(selectedDate, now);
+        s.dayIndex=dayIndex(s.date,now);
+        s.future=s.dayIndex>0;
+        s.tomorrow = s.date.equals(tomorrow(now));
         LocalDate day=LocalDate.parse(s.date);
+        String[] weekdays={"Ponedjeljak","Utorak","Srijeda","Četvrtak","Petak","Subota","Nedjelja"};
+        s.dayLabel = !s.future ? "Danas" : s.tomorrow ? "Sutra" : weekdays[day.getDayOfWeek().getValue()-1];
         String[] months={"siječnja","veljače","ožujka","travnja","svibnja","lipnja","srpnja","kolovoza","rujna","listopada","studenoga","prosinca"};
         s.dateLabel = day.getDayOfMonth()+". "+months[day.getMonthValue()-1];
-        s.total = lessons.size();
-        s.nextChange = LocalDate.parse(s.date).plusDays(1).atStartOfDay(ZONE).toInstant().toEpochMilli();
+        s.nextChange = midnight(now);
         List<JSONObject> remaining = new ArrayList<>();
         for (JSONObject l : lessons) {
             if (!s.date.equals(l.optString("date"))) continue;
+            s.total++;
             long start = time(s.date, l.optString("start")), end = time(s.date, l.optString("end"));
             if (end > now) remaining.add(l);
             if (start > now) s.nextChange = Math.min(s.nextChange, start);
             if (end > now) s.nextChange = Math.min(s.nextChange, end);
         }
         if (remaining.isEmpty()) {
-            s.emptyTitle = lessons.isEmpty() ? "Danas nema nastave" : "Gotovo za danas";
-            s.emptyBody = lessons.isEmpty() ? "Uživaj u slobodnom danu." : "Svi današnji termini su završili.";
-            s.footer = lessons.isEmpty() ? "Nema termina danas" : "Svi termini završeni";
+            s.emptyTitle = s.total == 0 ? (s.dayIndex>1 ? "Nema nastave" : s.dayLabel + " nema nastave") : "Gotovo za danas";
+            s.emptyBody = s.total == 0 ? "Uživaj u slobodnom danu." : "Svi današnji termini su završili.";
+            s.footer = s.total == 0 ? (s.dayIndex>1 ? "Nema termina za odabrani dan" : "Nema termina " + (s.tomorrow ? "sutra" : "danas")) : "Svi termini završeni";
             return s;
         }
         s.hero = remaining.remove(0);
         long start = time(s.date, s.hero.optString("start"));
         s.end = time(s.date, s.hero.optString("end"));
-        s.active = now >= start;
+        s.active = !s.future && now >= start;
         s.progress = s.active ? (int)Math.max(0, Math.min(10000, (now-start)*10000/(s.end-start))) : 0;
         s.remaining = (int)Math.max(0, ((s.active ? s.end : start)-now+59999)/60000);
-        s.status = s.active ? "U tijeku" : "Za " + duration(s.remaining);
+        s.status = s.future ? "Prvi termin" : s.active ? "U tijeku" : "Za " + duration(s.remaining);
         s.next = remaining;
         s.footer = s.active ? "Još " + remaining.size() + " " + termWord(remaining.size()) + " nakon ovog"
-            : (remaining.size()+1) + " " + termWord(remaining.size()+1) + " danas";
+            : (remaining.size()+1) + " " + termWord(remaining.size()+1) + (s.tomorrow ? " sutra" : s.future ? " ukupno" : " danas");
         if(s.active&&remaining.isEmpty())s.footer="Posljednji termin danas";
         return s;
     }

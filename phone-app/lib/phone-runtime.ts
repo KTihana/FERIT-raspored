@@ -13,6 +13,21 @@ export async function addHomeWidget(){
  const widget=registerPlugin<{pin:()=>Promise<{requested:boolean}>}>('ScheduleWidget');
  return (await widget.pin()).requested;
 }
+export function widgetDateFromUrl(value:unknown):string|null{
+ if(typeof value!=='string')return null;
+ const date=value.match(/^ferit:\/\/widget\/(\d{4}-\d{2}-\d{2})$/)?.[1];
+ if(!date)return null;
+ const parsed=new Date(date+'T12:00:00Z');
+ return Number.isFinite(parsed.getTime())&&parsed.toISOString().slice(0,10)===date?date:null;
+}
+export function onWidgetOpen(callback:(date:string)=>void):()=>void{
+ if(!supportsHomeWidget())return()=>{};
+ let disposed=false;
+ const accept=(url:unknown)=>{const date=widgetDateFromUrl(url);if(date&&!disposed)callback(date);};
+ const handle=App.addListener('appUrlOpen',event=>accept(event.url));
+ void App.getLaunchUrl().then(result=>accept(result?.url)).catch(()=>{});
+ return()=>{disposed=true;void handle.then(h=>h.remove());};
+}
 const direct=createDirectFeritClient(async url=>{
  const response=await CapacitorHttp.get({url,headers:{Accept:'text/html'},responseType:'text',connectTimeout:15000,readTimeout:15000});
  if(response.status<200||response.status>=300||typeof response.data!=='string')throw new Error('FERIT trenutno nije dostupan.');

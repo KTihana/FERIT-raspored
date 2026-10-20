@@ -13,6 +13,8 @@ public final class WidgetRuntime {
     private static android.content.SharedPreferences.OnSharedPreferenceChangeListener preferencesListener;
     private static Runnable pendingRender;
     private static long lastMinute=-1;
+    private static long nextClockUpdate;
+    private static String lastDay="";
     private static PendingIntent tick(Context c) {
         return PendingIntent.getBroadcast(c,4103,new Intent(c,ScheduleWidgetProvider.class).setAction(ScheduleWidgetProvider.TICK),
             PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE);
@@ -32,8 +34,8 @@ public final class WidgetRuntime {
                 @Override public void onReceive(Context context,Intent intent){
                     if(Intent.ACTION_SCREEN_OFF.equals(intent.getAction()))return;
                     boolean minute=Intent.ACTION_TIME_TICK.equals(intent.getAction());
-                    long bucket=System.currentTimeMillis()/60000;
-                    if(!minute || bucket!=lastMinute)render(c);
+                    if(minute && System.currentTimeMillis()<nextClockUpdate)return;
+                    if(minute)clockTick(c);else render(c);
                     scheduleTick(c);
                 }
             };
@@ -46,7 +48,8 @@ public final class WidgetRuntime {
     public static boolean screenOn(Context c){return c.getSystemService(PowerManager.class).isInteractive();}
     public static void clockTick(Context c){
         // TIME_TICK and our process-restart fallback can arrive at the same boundary.
-        if(System.currentTimeMillis()/60000!=lastMinute)render(c);
+        long now=System.currentTimeMillis();
+        if(now>=nextClockUpdate && now/60000!=lastMinute)render(c,true);
     }
     public static void postRender(Context context) {
         Context c=context.getApplicationContext();
@@ -57,18 +60,28 @@ public final class WidgetRuntime {
         });
     }
     public static void render(Context c){
+        render(c,false);
+    }
+    private static void render(Context c,boolean clockOnly){
         if(!ScheduleWidgetProvider.hasWidgets(c)||!screenOn(c))return;
         long now=System.currentTimeMillis(); lastMinute=now/60000;
-        WidgetStore.Snapshot snapshot=WidgetStore.read(c,now);
+        boolean dayChanged=!WidgetData.today(now).equals(lastDay);lastDay=WidgetData.today(now);
         AppWidgetManager manager=AppWidgetManager.getInstance(c);
-        for(int id:ScheduleWidgetProvider.ids(c))
-            manager.updateAppWidget(id,WidgetRenderer.views(c,snapshot,now,manager.getAppWidgetOptions(id)));
+        for(int id:ScheduleWidgetProvider.ids(c)){
+            WidgetStore.Snapshot snapshot=WidgetStore.read(c,now,WidgetStore.date(c,id,now));
+            if(!clockOnly || dayChanged || (!snapshot.state.future && snapshot.state.hero!=null))
+                manager.updateAppWidget(id,WidgetRenderer.views(c,snapshot,now,manager.getAppWidgetOptions(id),id));
+        }
     }
     public static void scheduleTick(Context c) {
         if(!ScheduleWidgetProvider.hasWidgets(c))return;
         long now=System.currentTimeMillis();
-        WidgetData.State state=WidgetStore.read(c,now).state;
-        long at=state.hero!=null ? (now/60000+1)*60000+100 : state.nextChange+100;
+        long at=WidgetData.midnight(now)+100;
+        for(int id:ScheduleWidgetProvider.ids(c)){
+            WidgetData.State state=WidgetStore.read(c,now,WidgetStore.date(c,id,now)).state;
+            at=Math.min(at,WidgetData.clockUpdateAt(state,now));
+        }
+        nextClockUpdate=at;
         AlarmManager alarm=c.getSystemService(AlarmManager.class);
         long elapsed=SystemClock.elapsedRealtime()+Math.max(1000,at-now);
         try{

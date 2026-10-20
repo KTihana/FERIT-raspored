@@ -1,4 +1,4 @@
-export const APP_VERSION='1.0.18';
+export const APP_VERSION='1.0.21';
 export const GITHUB_RELEASES_API='https://api.github.com/repos/KTihana/FERIT-raspored/releases?per_page=30';
 
 export type AppUpdate={version:string;tag:string;apkUrl:string;releaseUrl:string;notes:string};

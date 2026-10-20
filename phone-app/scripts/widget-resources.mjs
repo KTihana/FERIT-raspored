@@ -23,7 +23,7 @@ ${divider}
 ${text(`widget_next_time${n}`,n===1?'12:15':'13:15',15).replace('layout_width="wrap_content"','layout_width="47dp"')}
 <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:orientation="vertical">
 ${text(`widget_next_title${n}`,n===1?'Konzultacije':'Web programiranje',15,'android:textStyle="bold" android:maxLines="1" android:ellipsize="end"').replace('#BDD3F2','#FFFFFF').replace('layout_width="wrap_content"','layout_width="match_parent"')}
-${n===1?text('widget_next_detail1','Za 1 h · 15 min pauze',12,'android:layout_marginTop="3dp" android:maxLines="2" android:ellipsize="end"').replace('layout_width="wrap_content"','layout_width="match_parent"'):''}
+${text(`widget_next_detail${n}`,n===1?'Za 1 h · 15 min pauze':'13:15 – 15:00',12,`android:layout_marginTop="3dp" android:maxLines="2" android:ellipsize="end"${n===2?' android:visibility="gone"':''}`).replace('layout_width="wrap_content"','layout_width="match_parent"')}
 </LinearLayout>
 ${text(`widget_next_room${n}`,n===1?'T2-14':'T2-31',14,'android:maxWidth="65dp" android:layout_marginStart="7dp" android:maxLines="1" android:ellipsize="end"')}
 </LinearLayout></LinearLayout>`;
@@ -37,9 +37,11 @@ const layout=`<?xml version="1.0" encoding="utf-8"?>
   ${text('','\\u0020raspored',16,'android:layout_weight="1"').replace('layout_width="wrap_content"','layout_width="0dp"')}
   <ImageView android:id="@+id/widget_refresh" android:layout_width="40dp" android:layout_height="40dp" android:padding="8dp" android:src="@drawable/widget_refresh" android:contentDescription="@string/widget_refresh"/>
  </LinearLayout>
- <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:layout_marginTop="6dp" android:layout_marginBottom="8dp">
-  ${text('','Danas',24,'android:textStyle="bold"').replace('#BDD3F2','#FFFFFF')}
-  ${text('widget_date','20. listopada',18,'android:layout_marginStart="12dp" android:maxLines="1" android:ellipsize="end" android:layout_weight="1"').replace('layout_width="wrap_content"','layout_width="0dp"')}
+ <LinearLayout android:layout_width="match_parent" android:layout_height="32dp" android:gravity="center_vertical" android:layout_marginTop="4dp" android:layout_marginBottom="4dp">
+  <ImageView android:id="@+id/widget_previous" android:layout_width="28dp" android:layout_height="match_parent" android:padding="5dp" android:layout_marginEnd="6dp" android:src="@drawable/widget_previous" android:contentDescription="@string/widget_previous"/>
+  ${text('widget_day','Danas',24,'android:textStyle="bold"').replace('#BDD3F2','#FFFFFF')}
+  ${text('widget_date','20. listopada',17,'android:layout_marginStart="8dp" android:maxLines="1" android:ellipsize="end" android:layout_weight="1"').replace('layout_width="wrap_content"','layout_width="0dp"')}
+  <ImageView android:id="@+id/widget_next_day" android:layout_width="28dp" android:layout_height="match_parent" android:padding="5dp" android:src="@drawable/widget_next_day" android:contentDescription="@string/widget_next_day"/>
  </LinearLayout>
  ${divider}
  <LinearLayout android:id="@+id/widget_hero" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:layout_marginBottom="8dp">
@@ -52,6 +54,10 @@ const layout=`<?xml version="1.0" encoding="utf-8"?>
     ${text('widget_room','K3-12',15,'android:maxWidth="100dp" android:maxLines="1" android:ellipsize="end"')}
    </LinearLayout>
    ${text('widget_group','LV · SR-LV3',14,'android:layout_marginTop="3dp" android:maxLines="1" android:ellipsize="end"').replace('layout_width="wrap_content"','layout_width="match_parent"')}
+   <LinearLayout android:id="@+id/widget_tomorrow_start_row" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="5dp" android:gravity="center_vertical" android:visibility="gone">
+    <ImageView android:layout_width="16dp" android:layout_height="16dp" android:layout_marginEnd="6dp" android:src="@drawable/widget_clock" android:importantForAccessibility="no"/>
+    ${text('widget_tomorrow_start','Počinje sutra u 09:00',12,'android:layout_weight="1" android:maxLines="1" android:ellipsize="end"').replace('layout_width="wrap_content"','layout_width="0dp"')}
+   </LinearLayout>
    <LinearLayout android:id="@+id/widget_progress_row" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:gravity="center_vertical">
     <ProgressBar android:id="@+id/widget_progress" style="?android:attr/progressBarStyleHorizontal" android:layout_width="0dp" android:layout_weight="1" android:layout_height="6dp" android:max="10000" android:progress="6250" android:indeterminate="false" android:progressDrawable="@drawable/widget_progress" android:progressTint="#FFB987" android:progressBackgroundTint="#4D9BB1CA"/>
     ${text('widget_remaining','Još 45 min',13,'android:layout_marginStart="10dp"')}

@@ -1,5 +1,8 @@
 <resources>
-    <string name="widget_description">Današnji raspored, tijek nastave i sljedeći termini. Automatska provjera rasporeda svaki sat.</string>
+    <string name="widget_description">Sedam dana rasporeda, dan po dan strelicama. Tijek nastave i sljedeći termini. Automatska provjera rasporeda svaki sat.</string>
     <string name="widget_refresh">Osvježi FERIT raspored</string>
-    <string name="widget_open">Otvori današnji raspored</string>
+    <string name="widget_open">Otvori odabrani raspored</string>
+    <string name="widget_previous">Prethodni dan</string>
+    <string name="widget_next_day">Sljedeći dan</string>
+    <string name="widget_preview">Widget 4 × 4. U tijeku: Programsko inženjerstvo. Još 45 min. Dva sljedeća termina.</string>
 </resources>

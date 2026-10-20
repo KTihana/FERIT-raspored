@@ -4,17 +4,17 @@
 <h1 align="center">FERIT raspored</h1>
 <p align="center">Nastava, ispiti i tvoji događaji u jednom kalendaru.</p>
 <p align="center">
-  <a href="https://github.com/KTihana/FERIT-raspored/releases/download/v1.0.18-android-test/FERIT-raspored.apk"><img src="docs/download-android.svg" width="244" height="56" alt="Preuzmi za Android"></a>
+  <a href="https://github.com/KTihana/FERIT-raspored/releases/download/v1.0.21-android-test/FERIT-raspored.apk"><img src="docs/download-android.svg" width="244" height="56" alt="Preuzmi za Android"></a>
 </p>
 <p align="center">Android 7.0+ · Otvori APK i instaliraj preko postojeće aplikacije da zadržiš svoje odabire.</p>
 
 ## Raspored na početnom zaslonu
 
-**Widget FERIT · Danas** prikazuje trenutačnu nastavu, preostalo vrijeme i sljedeće termine. Traka napretka prati vrijeme mobitela: osvježava se svake minute dok je zaslon uključen i usklađuje se pri ponovnom uključivanju zaslona.
+**Widget FERIT · Danas** prikazuje trenutačnu nastavu, preostalo vrijeme i sljedeće termine. Strelicama pregledaj **danas i sljedećih šest dana**, jedan dan odjednom; dodir naslova vraća na danas. Traka napretka prati vrijeme mobitela: osvježava se svake minute dok je zaslon uključen i usklađuje se pri ponovnom uključivanju zaslona.
 
 <img src="docs/24-widget.png" width="420" alt="Widget FERIT Danas s nastavom u tijeku, trakom napretka, preostalim vremenom i sljedećim terminima">
 
-Dodaj ga kroz **Postavke → Widget na početnom zaslonu**. Raspored se provjerava približno svakih sat vremena; dodir ikone za osvježavanje traži novu provjeru. Android može odgoditi pozadinsko preuzimanje dok je mobitel u dubokom mirovanju ili bez interneta. Spremljeni raspored ostaje dostupan.
+Dodaj ga kroz **Postavke → Widget na početnom zaslonu**, iznad ažuriranja aplikacije. Pretpregled prikazuje stvarni widget u veličini **4×4**, s nastavom u tijeku, trakom napretka i sljedećim terminima. Raspored se provjerava približno svakih sat vremena; dodir ikone za osvježavanje traži novu provjeru. Android može odgoditi pozadinsko preuzimanje dok je mobitel u dubokom mirovanju ili bez interneta. Spremljeni raspored ostaje dostupan.
 
 ## Pogled u aplikaciju
 
