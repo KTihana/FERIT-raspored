@@ -1,0 +1,59 @@
+.launch-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  overflow: hidden;
+  color-scheme: light;
+  background: #e9f5ff;
+  color: #124a73;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+.launch-screen__logo {
+  position: absolute;
+  width: 180%;
+  max-width: none;
+  height: auto;
+  left: 0;
+  top: -4%;
+  opacity: .11;
+  pointer-events: none;
+}
+.launch-screen__title {
+  position: absolute;
+  left: max(8%, env(safe-area-inset-left));
+  bottom: calc(10.5% + env(safe-area-inset-bottom));
+  margin: 0;
+  font-size: clamp(36px, 12.8vw, 72px);
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -.045em;
+}
+.launch-screen__title span { display: block; }
+.launch-screen__progress {
+  position: absolute;
+  left: max(8%, env(safe-area-inset-left));
+  bottom: calc(5% + env(safe-area-inset-bottom));
+  width: 44%;
+  height: 4px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: #c7e3fb;
+}
+.launch-screen__progress::after {
+  content: '';
+  display: block;
+  width: 33%;
+  height: 100%;
+  border-radius: inherit;
+  background: #569fec;
+  animation: launch-progress 1.4s ease-in-out infinite alternate;
+}
+@keyframes launch-progress { to { transform: translateX(200%); } }
+@media (orientation: landscape) {
+  .launch-screen__logo { width: 100%; left: 32%; top: -45%; }
+  .launch-screen__title { font-size: clamp(36px, 12vh, 64px); bottom: 22%; }
+  .launch-screen__progress { width: 28%; bottom: 12%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .launch-screen__progress::after { animation: none; }
+}

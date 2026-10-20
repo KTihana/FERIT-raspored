@@ -1,0 +1,15 @@
+import {existsSync,mkdirSync,copyFileSync} from 'node:fs';
+import {homedir} from 'node:os';
+import {join,resolve} from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {spawnSync} from 'node:child_process';
+const root=resolve(fileURLToPath(new URL('..',import.meta.url)));
+const javaHomes=[process.env.JAVA_HOME,'/opt/homebrew/opt/openjdk@21/libexec/openjdk.jdk/Contents/Home','/Applications/Android Studio.app/Contents/jbr/Contents/Home'];
+const javaHome=javaHomes.find(p=>p&&existsSync(join(p,'bin',process.platform==='win32'?'java.exe':'java')));
+const defaultSdk=process.platform==='darwin'?join(homedir(),'Library/Android/sdk'):process.platform==='win32'?join(process.env.LOCALAPPDATA??homedir(),'Android/Sdk'):join(homedir(),'Android/Sdk');
+const sdk=process.env.ANDROID_HOME??process.env.ANDROID_SDK_ROOT??defaultSdk;
+if(!existsSync(join(sdk,'platforms/android-36')))throw new Error('Install Android SDK Platform 36 and set ANDROID_HOME to the SDK folder.');
+const result=spawnSync(process.platform==='win32'?'gradlew.bat':'./gradlew',['assembleDebug','--no-daemon','--console=plain'],{cwd:join(root,'android'),stdio:'inherit',shell:process.platform==='win32',env:{...process.env,...(javaHome?{JAVA_HOME:javaHome}:{}),ANDROID_HOME:sdk}});
+if(result.error)throw result.error;
+if(result.status!==0)process.exit(result.status??1);
+const output=join(root,'artifacts/FERIT-Moj-Raspored.apk');mkdirSync(join(root,'artifacts'),{recursive:true});copyFileSync(join(root,'android/app/build/outputs/apk/debug/app-debug.apk'),output);console.log(`APK ready: ${output}`);

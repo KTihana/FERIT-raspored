@@ -1,0 +1,625 @@
+{
+  "source": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita",
+  "asOf": "2026-10-13",
+  "programmes": [
+    {
+      "name": "Sveučilišni prijediplomski studij Elektrotehnika i informacijska tehnologija",
+      "options": [
+        {
+          "label": "IKT 1.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/1-65#raspored",
+          "year": 1,
+          "scheduleId": "65",
+          "legacy": false
+        },
+        {
+          "label": "ET 1.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/1-64#raspored",
+          "year": 1,
+          "scheduleId": "64",
+          "legacy": false
+        },
+        {
+          "label": "1.g. (stari)",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/1-1#raspored",
+          "year": 1,
+          "scheduleId": "1",
+          "legacy": true
+        },
+        {
+          "label": "IKT 2.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/2-65#raspored",
+          "year": 2,
+          "scheduleId": "65",
+          "legacy": false
+        },
+        {
+          "label": "ET 2.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/2-64#raspored",
+          "year": 2,
+          "scheduleId": "64",
+          "legacy": false
+        },
+        {
+          "label": "EE 2.g. (stari)",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/2-1#raspored",
+          "year": 2,
+          "scheduleId": "1",
+          "legacy": true
+        },
+        {
+          "label": "KI 2.g. (stari)",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/2-21#raspored",
+          "year": 2,
+          "scheduleId": "21",
+          "legacy": true
+        },
+        {
+          "label": "IKT 3.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/3-65#raspored",
+          "year": 3,
+          "scheduleId": "65",
+          "legacy": false
+        },
+        {
+          "label": "ET 3.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/3-64#raspored",
+          "year": 3,
+          "scheduleId": "64",
+          "legacy": false
+        },
+        {
+          "label": "EE 3.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/3-1#raspored",
+          "year": 3,
+          "scheduleId": "1",
+          "legacy": false
+        },
+        {
+          "label": "KI 3.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/3-21#raspored",
+          "year": 3,
+          "scheduleId": "21",
+          "legacy": false
+        }
+      ]
+    },
+    {
+      "name": "Sveučilišni prijediplomski studij Računarstvo",
+      "options": [
+        {
+          "label": "1.g. PI",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/1-59#raspored",
+          "year": 1,
+          "scheduleId": "59",
+          "legacy": false
+        },
+        {
+          "label": "1.g. RI",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/1-60#raspored",
+          "year": 1,
+          "scheduleId": "60",
+          "legacy": false
+        },
+        {
+          "label": "2.g. PI",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/2-59#raspored",
+          "year": 2,
+          "scheduleId": "59",
+          "legacy": false
+        },
+        {
+          "label": "2.g. RI",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/2-60#raspored",
+          "year": 2,
+          "scheduleId": "60",
+          "legacy": false
+        },
+        {
+          "label": "3.g. PI",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/3-59#raspored",
+          "year": 3,
+          "scheduleId": "59",
+          "legacy": false
+        },
+        {
+          "label": "3.g. RI",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/3-60#raspored",
+          "year": 3,
+          "scheduleId": "60",
+          "legacy": false
+        },
+        {
+          "label": "3.g. (stari)",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/3-2#raspored",
+          "year": 3,
+          "scheduleId": "2",
+          "legacy": true
+        }
+      ]
+    },
+    {
+      "name": "Sveučilišni diplomski studij Elektrotehnika, smjer Komunikacije i informatika",
+      "options": [
+        {
+          "label": "DKA 1.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/1-94#raspored",
+          "year": 1,
+          "scheduleId": "94",
+          "legacy": false
+        },
+        {
+          "label": "DKA 2.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/2-94#raspored",
+          "year": 2,
+          "scheduleId": "94",
+          "legacy": false
+        },
+        {
+          "label": "DKB 1.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/1-95#raspored",
+          "year": 1,
+          "scheduleId": "95",
+          "legacy": false
+        },
+        {
+          "label": "DKB 1.g. (stari 2024)",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/1-35#raspored",
+          "year": 1,
+          "scheduleId": "35",
+          "legacy": true
+        },
+        {
+          "label": "DKB 1.g. (stari)",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/1-69#raspored",
+          "year": 1,
+          "scheduleId": "69",
+          "legacy": true
+        },
+        {
+          "label": "DKB 2.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/2-35#raspored",
+          "year": 2,
+          "scheduleId": "35",
+          "legacy": false
+        },
+        {
+          "label": "IKT 1.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/1-102#raspored",
+          "year": 1,
+          "scheduleId": "102",
+          "legacy": false
+        },
+        {
+          "label": "IKT 2.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/2-102#raspored",
+          "year": 2,
+          "scheduleId": "102",
+          "legacy": false
+        }
+      ]
+    },
+    {
+      "name": "Sveučilišni diplomski studij Elektrotehnika, smjer Elektroenergetika",
+      "options": [
+        {
+          "label": "DEA 1.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/1-96#raspored",
+          "year": 1,
+          "scheduleId": "96",
+          "legacy": false
+        },
+        {
+          "label": "DEA 2.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/2-96#raspored",
+          "year": 2,
+          "scheduleId": "96",
+          "legacy": false
+        },
+        {
+          "label": "DEA 2.g. (ispiti)",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/2-31#raspored",
+          "year": 2,
+          "scheduleId": "31",
+          "legacy": false
+        },
+        {
+          "label": "DEB 1.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/1-97#raspored",
+          "year": 1,
+          "scheduleId": "97",
+          "legacy": false
+        },
+        {
+          "label": "DEB 2.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/2-97#raspored",
+          "year": 2,
+          "scheduleId": "97",
+          "legacy": false
+        },
+        {
+          "label": "DEB 2.g. (ispiti)",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/2-32#raspored",
+          "year": 2,
+          "scheduleId": "32",
+          "legacy": false
+        },
+        {
+          "label": "DEC 1.g. (stari)",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/1-33#raspored",
+          "year": 1,
+          "scheduleId": "33",
+          "legacy": true
+        }
+      ]
+    },
+    {
+      "name": "Sveučilišni diplomski studij Elektrotehnika, smjer Automatizacija industrijskih sustava",
+      "options": [
+        {
+          "label": "1.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/1-98#raspored",
+          "year": 1,
+          "scheduleId": "98",
+          "legacy": false
+        },
+        {
+          "label": "2.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/2-98#raspored",
+          "year": 2,
+          "scheduleId": "98",
+          "legacy": false
+        },
+        {
+          "label": "2.g. (ispiti)",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/2-67#raspored",
+          "year": 2,
+          "scheduleId": "67",
+          "legacy": false
+        }
+      ]
+    },
+    {
+      "name": "Sveučilišni diplomski studij Računarstvo",
+      "options": [
+        {
+          "label": "DRA 1.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/1-72#raspored",
+          "year": 1,
+          "scheduleId": "72",
+          "legacy": false
+        },
+        {
+          "label": "DRA 2.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/2-72#raspored",
+          "year": 2,
+          "scheduleId": "72",
+          "legacy": false
+        },
+        {
+          "label": "DRA (stari) 1.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/1-36#raspored",
+          "year": 1,
+          "scheduleId": "36",
+          "legacy": true
+        },
+        {
+          "label": "DRA (stari) 2.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/2-36#raspored",
+          "year": 2,
+          "scheduleId": "36",
+          "legacy": true
+        },
+        {
+          "label": "DRB 1.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/1-75#raspored",
+          "year": 1,
+          "scheduleId": "75",
+          "legacy": false
+        },
+        {
+          "label": "DRB 2.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/2-75#raspored",
+          "year": 2,
+          "scheduleId": "75",
+          "legacy": false
+        },
+        {
+          "label": "DRB (stari) 1.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/1-54#raspored",
+          "year": 1,
+          "scheduleId": "54",
+          "legacy": true
+        },
+        {
+          "label": "DRB (stari) 2.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/2-54#raspored",
+          "year": 2,
+          "scheduleId": "54",
+          "legacy": true
+        },
+        {
+          "label": "DRC 1.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/1-73#raspored",
+          "year": 1,
+          "scheduleId": "73",
+          "legacy": false
+        },
+        {
+          "label": "DRC 2.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/2-73#raspored",
+          "year": 2,
+          "scheduleId": "73",
+          "legacy": false
+        },
+        {
+          "label": "DRC (stari) 1.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/1-38#raspored",
+          "year": 1,
+          "scheduleId": "38",
+          "legacy": true
+        },
+        {
+          "label": "DRC (stari) 2.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/2-38#raspored",
+          "year": 2,
+          "scheduleId": "38",
+          "legacy": true
+        },
+        {
+          "label": "DRD 1.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/1-74#raspored",
+          "year": 1,
+          "scheduleId": "74",
+          "legacy": false
+        },
+        {
+          "label": "DRD 2.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/2-74#raspored",
+          "year": 2,
+          "scheduleId": "74",
+          "legacy": false
+        },
+        {
+          "label": "DRD (stari) 1.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/1-39#raspored",
+          "year": 1,
+          "scheduleId": "39",
+          "legacy": true
+        },
+        {
+          "label": "DRD (stari) 2.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/2-39#raspored",
+          "year": 2,
+          "scheduleId": "39",
+          "legacy": true
+        }
+      ]
+    },
+    {
+      "name": "Sveučilišni diplomski studij Automobilsko računarstvo i komunikacije na hrvatskom jeziku",
+      "options": [
+        {
+          "label": "DA 1.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/1-52#raspored",
+          "year": 1,
+          "scheduleId": "52",
+          "legacy": false
+        },
+        {
+          "label": "DA 2.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/2-52#raspored",
+          "year": 2,
+          "scheduleId": "52",
+          "legacy": false
+        }
+      ]
+    },
+    {
+      "name": "Sveučilišni diplomski studij Automobilsko računarstvo i komunikacije na engleskom jeziku",
+      "options": [
+        {
+          "label": "DA 1.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/1-58#raspored",
+          "year": 1,
+          "scheduleId": "58",
+          "legacy": false
+        },
+        {
+          "label": "DA 2.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/2-58#raspored",
+          "year": 2,
+          "scheduleId": "58",
+          "legacy": false
+        }
+      ]
+    },
+    {
+      "name": "Stručni studij Računarstvo",
+      "options": [
+        {
+          "label": "1.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/1-53#raspored",
+          "year": 1,
+          "scheduleId": "53",
+          "legacy": false
+        },
+        {
+          "label": "2.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/2-53#raspored",
+          "year": 2,
+          "scheduleId": "53",
+          "legacy": false
+        },
+        {
+          "label": "3.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/3-53#raspored",
+          "year": 3,
+          "scheduleId": "53",
+          "legacy": false
+        }
+      ]
+    },
+    {
+      "name": "Stručni studij Računarstvo - Vinkovci",
+      "options": [
+        {
+          "label": "1.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/1-62#raspored",
+          "year": 1,
+          "scheduleId": "62",
+          "legacy": false
+        },
+        {
+          "label": "2.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/2-62#raspored",
+          "year": 2,
+          "scheduleId": "62",
+          "legacy": false
+        },
+        {
+          "label": "3.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/3-62#raspored",
+          "year": 3,
+          "scheduleId": "62",
+          "legacy": false
+        }
+      ]
+    },
+    {
+      "name": "Stručni studij Elektrotehnika, smjer Automatika",
+      "options": [
+        {
+          "label": "1.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/1-8#raspored",
+          "year": 1,
+          "scheduleId": "8",
+          "legacy": false
+        },
+        {
+          "label": "2.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/2-8#raspored",
+          "year": 2,
+          "scheduleId": "8",
+          "legacy": false
+        },
+        {
+          "label": "3.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/3-8#raspored",
+          "year": 3,
+          "scheduleId": "8",
+          "legacy": false
+        }
+      ]
+    },
+    {
+      "name": "Stručni studij Elektrotehnika, smjer Elektroenergetika",
+      "options": [
+        {
+          "label": "1.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/1-9#raspored",
+          "year": 1,
+          "scheduleId": "9",
+          "legacy": false
+        },
+        {
+          "label": "2.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/2-9#raspored",
+          "year": 2,
+          "scheduleId": "9",
+          "legacy": false
+        },
+        {
+          "label": "3.g.",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/3-9#raspored",
+          "year": 3,
+          "scheduleId": "9",
+          "legacy": false
+        }
+      ]
+    },
+    {
+      "name": "Razlikovne obveze, modul Računarstvo",
+      "options": [
+        {
+          "label": "RZ-25-R",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/1-101#raspored",
+          "year": 1,
+          "scheduleId": "101",
+          "legacy": false
+        }
+      ]
+    },
+    {
+      "name": "Razlikovne obveze, modul Elektrotehnika",
+      "options": [
+        {
+          "label": "RZ-25-ET",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/1-99#raspored",
+          "year": 1,
+          "scheduleId": "99",
+          "legacy": false
+        }
+      ]
+    },
+    {
+      "name": "Razlikovne obveze, modul Informacijske i komunikacijske tehnologije",
+      "options": [
+        {
+          "label": "RZ-25-IKT",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/1-100#raspored",
+          "year": 1,
+          "scheduleId": "100",
+          "legacy": false
+        }
+      ]
+    },
+    {
+      "name": "Razlikovne obveze, stari programi",
+      "options": [
+        {
+          "label": "Rač. izb. blok „A“",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/1-24#raspored",
+          "year": 1,
+          "scheduleId": "24",
+          "legacy": false
+        },
+        {
+          "label": "Rač. izb. blok „I“",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/1-42#raspored",
+          "year": 1,
+          "scheduleId": "42",
+          "legacy": false
+        },
+        {
+          "label": "Ene. izb. blok „A“",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/1-23#raspored",
+          "year": 1,
+          "scheduleId": "23",
+          "legacy": false
+        },
+        {
+          "label": "Ene. izb. blok „E“",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/1-41#raspored",
+          "year": 1,
+          "scheduleId": "41",
+          "legacy": false
+        },
+        {
+          "label": "Kom.Inf. izb. blok „A“",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/1-22#raspored",
+          "year": 1,
+          "scheduleId": "22",
+          "legacy": false
+        },
+        {
+          "label": "Kom.Inf. izb. blok „I“",
+          "url": "https://www.ferit.unios.hr/studenti/raspored-nastave-i-ispita/2026-10-13/1-40#raspored",
+          "year": 1,
+          "scheduleId": "40",
+          "legacy": false
+        }
+      ]
+    }
+  ]
+}

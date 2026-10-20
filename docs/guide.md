@@ -1,8 +1,22 @@
 # FERIT raspored — vodič za korištenje
 
-[Preuzmi Android aplikaciju](https://github.com/KTihana/FERIT-raspored/releases/download/v1.0.17-android-test/FERIT-raspored.apk)
+[Preuzmi Android aplikaciju](https://github.com/KTihana/FERIT-raspored/releases/download/v1.0.18-android-test/FERIT-raspored.apk)
 
-Trenutačna verzija: **1.0.17**. [Pregled aplikacije i snimke zaslona](../README.md).
+Trenutačna verzija: **1.0.18**. [Pregled aplikacije i snimke zaslona](../README.md).
+
+## Dodaj widget na početni zaslon
+
+Nakon instalacije verzije **1.0.18**, u aplikaciji otvori **Postavke → Widget na početnom zaslonu** i potvrdi dodavanje. Ako mobitel ne nudi taj dijalog, zadrži prst na praznom dijelu početnog zaslona, otvori **Widgeti** i odaberi **FERIT · Danas**. Widget možeš rastegnuti; manji prikaz daje prednost trenutačnom i sljedećem terminu.
+
+<img src="24-widget.png" width="420" alt="FERIT Danas na početnom zaslonu s trakom napretka nastave u tijeku">
+
+Widget koristi tvoj studij, LV grupe, ponavljačke predmete i vrste nastave, osobne događaje te spremljene pomake i uklanjanja. Prije nastave prikazuje sljedeći termin; tijekom nastave prikazuje **U tijeku**, traku napretka i preostalo vrijeme. Ispod se vide sljedeći termini, njihova vremena i lokacije te pauza do idućeg termina. Nakon zadnjeg termina pokazuje da je nastava za danas gotova.
+
+Traka računa napredak iz stvarnog vremena mobitela i početka i kraja termina. **Osvježava se svake minute dok je zaslon uključen. Dok je zaslon isključen nema osvježavanja trake; pri uključivanju se vrijeme ponovno izračuna.** Nije potrebno ručno osvježavati da bi vrijeme napredovalo.
+
+Pozadinska provjera rasporeda zakazana je **približno svakih sat vremena**. Android je može odgoditi u dubokom mirovanju ili bez interneta. Dodir **ikone za osvježavanje** u gornjem desnom kutu traži provjeru odmah, a donji redak prikazuje njezin status. Ako preuzimanje ne uspije, ostaje posljednji spremljeni raspored. Dodir kartice ili ikone kalendara otvara aplikaciju na današnjem datumu.
+
+Widget je dostupan na Androidu. Snimka je iz stvarnog izvornog Android prikaza s oglednim terminima.
 
 ## Odaberi svoj raspored
 
@@ -38,7 +52,7 @@ Odabir vrijedi za dnevni i tjedni raspored te **Ispiti i provjere**. Pamti se za
 
 <img src="22-repeating-subjects.png" width="280" alt="Programiranje u Javi odabrano samo za predavanja, bez laboratorijskih vježbi"> <img src="23-repeating-in-schedule.png" width="280" alt="Predavanja iz Programiranja u Javi prikazana uz treću godinu, bez LV termina">
 
-**Verzija 1.0.17:** otvori **Postavke → Provjeri ažuriranja** za preuzimanje kroz aplikaciju. Instaliraj APK preko postojeće aplikacije da zadržiš svoje odabire. Ručna provjera odmah traži najnovije izdanje.
+**Verzija 1.0.18:** otvori **Postavke → Provjeri ažuriranja** za preuzimanje kroz aplikaciju. Instaliraj APK preko postojeće aplikacije da zadržiš svoje odabire. Ručna provjera odmah traži najnovije izdanje.
 
 ## Ispiti i provjere na jednom mjestu
 

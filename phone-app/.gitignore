@@ -1,0 +1,10 @@
+node_modules/
+dist-mobile/
+.DS_Store
+.env*
+*.apk
+*.ipa
+*.jks
+*.keystore
+
+artifacts/

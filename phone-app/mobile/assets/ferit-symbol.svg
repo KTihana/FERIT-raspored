@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" fill="none">
+  <title>FERIT symbol</title>
+  <desc>Vector recreation of the FERIT college emblem, without its wordmark. The background and open grid cells are transparent.</desc>
+  <defs>
+    <clipPath id="inner-hexagon">
+      <path d="M256 44.5 439.166 150.25V361.75L256 467.5 72.834 361.75V150.25Z"/>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#inner-hexagon)">
+    <path stroke="#1A517B" stroke-width="8" stroke-linejoin="miter" d="M160.737 91V421M256 36V476M351.263 91V421
+      M256 36 446.526 146M160.737 91 446.526 256M65.474 146 446.526 366M65.474 256 351.263 421M65.474 366 256 476
+      M256 36 65.474 146M351.263 91 65.474 256M446.526 146 65.474 366M446.526 256 160.737 421M446.526 366 256 476"/>
+    <path fill="#E63832" stroke="#1A517B" stroke-width="8" stroke-linejoin="miter" d="M160.737 201 256 146V256L160.737 311Z"/>
+    <path fill="#1A517B" stroke="#1A517B" stroke-width="8" stroke-linejoin="miter" d="M256 256 351.263 201V311L256 366Z"/>
+  </g>
+  <path fill="#1A517B" fill-rule="evenodd" d="M256 19.5 460.815 137.75V374.25L256 492.5 51.185 374.25V137.75Z
+    M256 44.5 439.166 150.25V361.75L256 467.5 72.834 361.75V150.25Z"/>
+</svg>

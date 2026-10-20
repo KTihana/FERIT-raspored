@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17132" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+ <device id="retina4_7" orientation="portrait" appearance="light"/>
+ <dependencies><deployment identifier="iOS"/><plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17105"/><capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/></dependencies>
+ <scenes><scene sceneID="EHf-IW-A2E"><objects>
+  <viewController id="01J-lp-oVM" sceneMemberID="viewController">
+   <view key="view" contentMode="scaleToFill" id="launch-view">
+    <rect key="frame" x="0" y="0" width="375" height="667"/>
+    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+    <subviews>
+     <imageView userInteractionEnabled="NO" alpha="0.11" contentMode="scaleAspectFit" image="LaunchLogo" translatesAutoresizingMaskIntoConstraints="NO" id="launch-logo"><rect key="frame" x="0" y="-27" width="675" height="675"/></imageView>
+     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="FERIT&#10;raspored" numberOfLines="2" translatesAutoresizingMaskIntoConstraints="NO" id="launch-title"><rect key="frame" x="30" y="510" width="320" height="110"/><fontDescription key="fontDescription" type="system" weight="bold" pointSize="48"/><color key="textColor" red="0.0706" green="0.2902" blue="0.4510" alpha="1" colorSpace="custom" customColorSpace="sRGB"/></label>
+     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="launch-track"><rect key="frame" x="30" y="630" width="165" height="4"/><color key="backgroundColor" red="0.7804" green="0.8902" blue="0.9843" alpha="1" colorSpace="custom" customColorSpace="sRGB"/><subviews><view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="launch-fill"><rect key="frame" x="0" y="0" width="55" height="4"/><color key="backgroundColor" red="0.3373" green="0.6235" blue="0.9255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/></view></subviews><constraints><constraint firstItem="launch-fill" firstAttribute="leading" secondItem="launch-track" secondAttribute="leading" id="fill-left"/><constraint firstItem="launch-fill" firstAttribute="top" secondItem="launch-track" secondAttribute="top" id="fill-top"/><constraint firstItem="launch-fill" firstAttribute="height" secondItem="launch-track" secondAttribute="height" id="fill-height"/><constraint firstItem="launch-fill" firstAttribute="width" secondItem="launch-track" secondAttribute="width" multiplier="0.33" id="fill-width"/></constraints></view>
+    </subviews>
+    <viewLayoutGuide key="safeArea" id="launch-safe"/>
+    <color key="backgroundColor" red="0.9137" green="0.9608" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+    <constraints>
+     <constraint firstItem="launch-logo" firstAttribute="width" secondItem="launch-view" secondAttribute="width" multiplier="1.8" id="logo-width"/><constraint firstItem="launch-logo" firstAttribute="height" secondItem="launch-logo" secondAttribute="width" id="logo-height"/><constraint firstItem="launch-logo" firstAttribute="leading" secondItem="launch-view" secondAttribute="leading" id="logo-left"/><constraint firstItem="launch-logo" firstAttribute="top" secondItem="launch-view" secondAttribute="top" constant="-27" id="logo-top"/>
+     <constraint firstItem="launch-title" firstAttribute="leading" secondItem="launch-safe" secondAttribute="leading" constant="30" id="title-left"/><constraint firstItem="launch-safe" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="launch-title" secondAttribute="trailing" constant="20" id="title-right"/><constraint firstItem="launch-safe" firstAttribute="bottom" secondItem="launch-title" secondAttribute="bottom" constant="70" id="title-bottom"/>
+     <constraint firstItem="launch-track" firstAttribute="leading" secondItem="launch-title" secondAttribute="leading" id="track-left"/><constraint firstItem="launch-safe" firstAttribute="bottom" secondItem="launch-track" secondAttribute="bottom" constant="33" id="track-bottom"/><constraint firstItem="launch-track" firstAttribute="width" secondItem="launch-view" secondAttribute="width" multiplier="0.44" id="track-width"/><constraint firstItem="launch-track" firstAttribute="height" constant="4" id="track-height"/>
+    </constraints>
+   </view>
+  </viewController><placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+ </objects></scene></scenes>
+ <resources><image name="LaunchLogo" width="1024" height="1024"/></resources>
+</document>
