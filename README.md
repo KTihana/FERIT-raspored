@@ -1,60 +1,40 @@
-<p align="center">
-  <img src="docs/ferit-logo.svg" width="96" height="96" alt="FERIT logotip">
-</p>
+<p align="center"><img src="docs/ferit-logo.svg" width="76" alt="FERIT"></p>
 <h1 align="center">FERIT raspored</h1>
-<p align="center">Nastava, ispiti i tvoji događaji u jednom kalendaru.</p>
-<p align="center">
-  <a href="https://github.com/KTihana/FERIT-raspored/releases/download/v1.0.21-android-test/FERIT-raspored.apk"><img src="docs/download-android.svg" width="244" height="56" alt="Preuzmi za Android"></a>
-</p>
-<p align="center">Android 7.0+ · Otvori APK i instaliraj preko postojeće aplikacije da zadržiš svoje odabire.</p>
+<p align="center">Nastava, ispiti i tvoji događaji na jednom mjestu.</p>
+<p align="center"><a href="https://github.com/KTihana/FERIT-raspored/releases/latest"><img src="docs/download-android.svg" width="244" height="56" alt="Preuzmi za Android"></a></p>
+<p align="center">Android 7.0+ · Instaliraj preko postojeće aplikacije da zadržiš svoje odabire.</p>
 
-## Raspored na početnom zaslonu
+## Sve što trebaš za svoj raspored
 
-**Widget FERIT · Danas** prikazuje trenutačnu nastavu, preostalo vrijeme i sljedeće termine. Strelicama pregledaj **danas i sljedećih šest dana**, jedan dan odjednom; dodir naslova vraća na danas. Traka napretka prati vrijeme mobitela: osvježava se svake minute dok je zaslon uključen i usklađuje se pri ponovnom uključivanju zaslona.
+- **Tvoj raspored** — Odaberi studij i godinu, pregledaj dan ili cijeli tjedan te brzo pronađi datum u kalendaru.
+- **LV grupe i ponavljački predmeti** — Postavi LV grupu za svaki predmet i dodaj predmete s prethodne godine uz odabir vrsta nastave.
+- **Ispiti i provjere** — Nadolazeći termini, najskoriji prvi, s filtrima i prečacem do rasporeda.
+- **Osobni događaji** — Dodaj događaj, boju, lokaciju i napomenu; po želji ga uključi i u provjere.
+- **Osobne izmjene** — Pomakni ili ukloni termin samo u svojem rasporedu i po potrebi vrati izvorni.
+- **Bez interneta** — Preuzeti tjedni, tvoji događaji i odabiri dostupni su i izvan mreže.
+- **Izgled i pregled** — Svijetla i tamna tema, vodoravni tjedni prikaz, pauze, nastavni tjedan i detalji termina.
+- **Android widget** — Danas i sljedećih šest dana, tijek nastave, preostalo vrijeme i sljedeći termini.
+- **Ažuriranja** — Provjeri i preuzmi novu verziju iz aplikacije te otvori izvorni FERIT raspored.
 
-<img src="docs/24-widget.png" width="420" alt="Widget FERIT Danas s nastavom u tijeku, trakom napretka, preostalim vremenom i sljedećim terminima">
+## Cijeli tjedan na jednom zaslonu
 
-Dodaj ga kroz **Postavke → Widget na početnom zaslonu**, iznad ažuriranja aplikacije. Pretpregled prikazuje stvarni widget u veličini **4×4**, s nastavom u tijeku, trakom napretka i sljedećim terminima. Raspored se provjerava približno svakih sat vremena; dodir ikone za osvježavanje traži novu provjeru. Android može odgoditi pozadinsko preuzimanje dok je mobitel u dubokom mirovanju ili bez interneta. Spremljeni raspored ostaje dostupan.
+<img src="docs/week.png" width="760" alt="Tjedni raspored">
 
 ## Pogled u aplikaciju
 
-**Cijeli tjedan** — nastava, pauze i tvoji događaji na jednom mjestu.
-
-<img src="docs/07-week.jpg" width="700" height="323" alt="Tjedni raspored sa svih sedam dana, nastavom, pauzama i osobnim događajem">
-
-**Detalji termina** — dodirni termin za predmet, vrijeme, lokaciju i nastavnika.
-
-<img src="docs/08-week-details.jpg" width="700" height="323" alt="Tjedni raspored s otvorenim detaljima termina u bočnom panelu">
-
 <table>
-  <tr><th>Dnevni raspored</th><th>Kalendar</th></tr>
-  <tr>
-    <td><img src="docs/01-day.jpg" width="280" height="606" alt="Dnevni raspored s vremenima, lokacijama i osobnim konzultacijama"></td>
-    <td><img src="docs/15-calendar.jpg" width="280" height="606" alt="Mjesečni kalendar za odabir dana"></td>
-  </tr>
-  <tr><th>Ispiti i provjere</th><th>Tvoji događaji i napomene</th></tr>
-  <tr>
-    <td><img src="docs/19-upcoming-exams-loaded.png" width="280" height="606" alt="Potpuno učitan popis provjera s datumima, vremenima i lokacijama"></td>
-    <td><img src="docs/21-add-to-assessments.png" width="280" height="606" alt="Osobni događaj s bojom, napomenom i opcijom za dodavanje u provjere"></td>
-  </tr>
-  <tr><th>LV grupa za svaki predmet</th><th>Tamna tema</th></tr>
-  <tr>
-    <td><img src="docs/03-lv-groups.jpg" width="280" height="606" alt="Odabir vlastite laboratorijske grupe zasebno za svaki predmet"></td>
-    <td><img src="docs/12-dark-mode.jpg" width="280" height="606" alt="Dnevni raspored u tamnoj temi"></td>
-  </tr>
-  <tr><th>Osobne izmjene termina</th><th>Odabir vremena</th></tr>
-  <tr>
-    <td><img src="docs/06-changed-class.jpg" width="280" height="606" alt="Pomaknuti termin s oznakom Osobna izmjena i izvornim vremenom nastave"></td>
-    <td><img src="docs/13-time-wheels.jpg" width="280" height="606" alt="Odabir sati i minuta za vlastiti događaj"></td>
-  </tr>
+<tr><th>Dnevni raspored</th><th>Tamna tema</th></tr>
+<tr><td><img src="docs/day.png" width="320" alt="Dnevni raspored"></td><td><img src="docs/dark.png" width="320" alt="Tamna tema"></td></tr>
+<tr><th>LV grupe po predmetu</th><th>Ponavljački predmeti i vrste nastave</th></tr>
+<tr><td><img src="docs/groups.png" width="320" alt="LV grupe po predmetu"></td><td><img src="docs/repeating.png" width="320" alt="Ponavljački predmeti i vrste nastave"></td></tr>
+<tr><th>Ispiti i provjere</th><th>Događaji, boje i napomene</th></tr>
+<tr><td><img src="docs/exams.png" width="320" alt="Ispiti i provjere"></td><td><img src="docs/personal.png" width="320" alt="Događaji, boje i napomene"></td></tr>
 </table>
 
-**Raspored bez interneta** — preuzeti tjedni ostaju na mobitelu.
+## Raspored na početnom zaslonu
 
-<img src="docs/17-offline-week.jpg" width="700" height="323" alt="Spremljeni tjedni raspored dostupan bez interneta, s oznakom nastavnog tjedna">
+Pregledaj sedam dana i otvori odabrani datum u aplikaciji. Widget dodaj kroz **Postavke → Widget na početnom zaslonu**.
 
-**Ponavljački predmeti** — označi predmet s godine neposredno ispod tvoje i odaberi njegove objavljene vrste nastave: samo predavanja, samo vježbe ili željenu kombinaciju.
+<img src="docs/widget.png" width="420" alt="Android widget sa sedmodnevnom navigacijom">
 
-<img src="docs/22-repeating-subjects.png" width="280" height="606" alt="Odabir ponavljačkih predmeta iz prethodne godine"> <img src="docs/23-repeating-in-schedule.png" width="280" height="606" alt="Programiranje u Javi prikazano uz treću godinu">
-
-[Vodič za korištenje](docs/guide.md) · [Izvorni projekt](phone-app/README.md)
+[Vodič za korištenje](docs/guide.md) · [Najnovije izdanje](https://github.com/KTihana/FERIT-raspored/releases/latest) · [Izvorni projekt](phone-app/README.md)
