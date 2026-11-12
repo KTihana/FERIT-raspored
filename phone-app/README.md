@@ -1,5 +1,25 @@
 # FERIT raspored
 
+## Android 1.0.23 — Overlapping personal events (local review)
+
+Personal events may share their time with classes or other personal events. The editor shows a small informational notice naming the existing event; Save remains available. Warnings follow the selected date and times, exclude the event being edited, and use the visible timetable, including selected LV groups, personal changes and repeating subjects. Adjacent events do not trigger a warning. A missing title or an end time at or before the start still requires correction.
+
+Day and week views keep every overlapping card in a separate column, including brief overlaps at the end of a long class. Day cards stack their time and room in narrow columns. Saved events remain available after refresh and offline restart. Android version **1.0.23**, build **29**, is a local, unpublished build that can be installed over the existing APK.
+
+Verified with TypeScript, all 125 app tests and browser checks in light/dark themes at narrow portrait and landscape week sizes. The browser checks cover adding two overlapping personal events, editing, exact and brief overlaps, adjacent times, changing dates, invalid-duration validation, refresh and offline restart.
+
+## Android 1.0.22 — Schedule colors and smaller widget sizes (local review)
+
+This build is **local and unpublished**, awaiting approval. The default stays **4×4**, including the square in-class launcher preview. Resize handles now allow smaller dimensions down to **180×140 dp**, as well as larger ones; the launcher determines the corresponding home-screen cell counts.
+
+Class accents now use the timetable palette: LV/lab orange, PR/lectures green, other exercise types blue, and personal events their selected purple/orange/green/blue color. Main markers, status badges, progress bars, group labels and upcoming-event dots follow the event. Light/dark palette resources are generated directly from `app/globals.css` by `node scripts/widget-resources.mjs`; a parity check prevents them drifting from the schedule.
+
+Short cards collapse the branding into the day/navigation row, retain refresh there, and progressively hide secondary rows. At the smallest sizes, the class title, time/progress and remaining time take priority. The selected date uses a compact numeric heading when narrow; tapping it still returns to today. Free days can also be shrunk. Resizing adds no jobs, downloads or timers, and the existing screen-off behavior remains in place.
+
+Android version **1.0.22**, build **28**, uses the same signing identity as the existing APK and can be installed over it for review. GitHub remains on **1.0.21** until approval.
+
+Verified with TypeScript, 121 app tests, 19 native unit tests and all 7 Android widget instrumentation tests. Checks include exact light/dark event colors, personal-color choices, 180×140 dp and wide short layouts, shrinking and growing an installed widget, live minute progress, screen-off/wake behavior, seven-day cached navigation and week boundaries. The final launcher preview remains a complete square 4×4 card with in-class progress; Android lint has no errors. Physical-phone battery consumption has not been measured.
+
 ## Android 1.0.21 — Settings order and the actual 4×4 widget preview
 
 Settings now list **Studij i godina → LV grupe → Ispiti i provjere → Ponavljački predmeti → Vrati izvorni raspored → Izvorni FERIT raspored → Widget na početnom zaslonu → Ažuriranja aplikacije**. The appearance controls remain above the list.

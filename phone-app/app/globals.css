@@ -69,10 +69,13 @@ a { color: var(--accent); }
 .lesson.personal, .lesson.personal.color-purple { --event-fill: var(--personal); --event-rail: var(--personal-rail); }
 .lesson.personal.color-peach { --event-fill: var(--lab); --event-rail: var(--lab-rail); }
 .lesson-top-row { display: flex; align-items: baseline; justify-content: space-between; gap: 6px; min-width: 0; }
+.lesson.parallel:not(.compact) .lesson-top-row { flex-direction: column; align-items: flex-start; gap: 2px; }
+.lesson.parallel:not(.compact) .lesson-room { text-align: left; font-size: 12px; }
 .lesson-time { font-size: 12px; font-weight: 500; white-space: nowrap; }
 .lesson-room { min-width: 0; font-size: 15px; font-weight: 700; line-height: 1.2; text-align: right; overflow-wrap: anywhere; }
 .lesson-room svg { display: none; }
 .lesson .lesson-title { font-size: 18px; font-weight: 600; line-height: 1.28; letter-spacing: -.3px; overflow-wrap: break-word; }
+.lesson.parallel:not(.compact) .lesson-title { font-size: 15px; line-height: 1.25; }
 .lesson-group { align-self: flex-start; font-size: 14px; line-height: 1.3; font-weight: 700; color: var(--event-rail); }
 .lesson-teacher { margin-top: 7px; font-size: 11px; font-weight: 500; color: var(--muted); line-height: 1.35; }
 .lesson-meta { font-size: 11px; color: var(--muted); line-height: 1.3; }
@@ -107,6 +110,9 @@ a { color: var(--accent); }
 .error-banner { flex-shrink: 0; display: flex; align-items: center; flex-wrap: wrap; gap: 6px 12px; padding: 11px 12px; margin-bottom: 8px; background: var(--error-bg); border-left: 3px solid #a76e21; border-radius: 3px; color: var(--error-ink); font-size: 12px; line-height: 1.5; }
 .error-banner button { color: var(--accent); font-size: 12px; font-weight: 600; }
 .error-text { padding-top: 12px; font-size: 12px; color: var(--danger); }
+.overlap-notice { display: flex; align-items: flex-start; gap: 8px; padding: 10px 12px; margin-top: 12px; border-radius: 4px; background: var(--exercise); color: var(--ink); font-size: 12px; line-height: 1.5; }
+.overlap-notice > svg { flex-shrink: 0; margin-top: 1px; color: var(--exercise-rail); }
+.overlap-notice small { display: block; margin-top: 3px; color: var(--muted); font-size: 11px; overflow-wrap: anywhere; }
 .week-mode { max-width: 1200px; min-height: 0; padding: 10px 18px 0; }
 .week-mode .app-header { position: absolute; top: 10px; left: 260px; right: 172px; border: 0; z-index: 2; }
 .week-mode .app-header .study-switch { min-height: 34px; font-size: 11px; padding: 4px 0; }
@@ -496,3 +502,46 @@ textarea { resize: vertical; min-height: 78px; font-size: 13px; font-weight: 400
 
 .assessment-opt-in { display: flex; align-items: center; gap: 10px; min-height: 44px; margin-top: 8px; font-size: 13px; line-height: 1.5; cursor: pointer; }
 .assessment-opt-in input { appearance: auto; flex-shrink: 0; width: 18px; height: 18px; min-height: 18px; margin: 0; padding: 0; accent-color: var(--action); }
+
+/* Teacher contacts and directory */
+.details-teacher-block { margin-bottom: 10px; }
+.details-teacher { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+.details-teacher-contact { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; font-size: 12px; color: var(--muted); }
+.teacher-mail-link { display: inline-flex; align-items: center; gap: 5px; color: var(--accent); font-weight: 500; text-decoration: none; word-break: break-all; }
+.teacher-mail-link:hover, .teacher-mail-link:focus-visible { text-decoration: underline; }
+.details-teacher-room, .details-teacher-tel { display: inline-flex; align-items: center; gap: 4px; color: var(--muted); }
+
+.lesson-teacher-email { color: var(--event-rail); text-decoration: none; word-break: break-all; }
+.assessment-teacher-contact { display: flex; flex-direction: column; gap: 3px; margin-top: 4px; }
+.assessment-teacher-room { font-size: 11px; color: var(--muted); }
+
+.teacher-list { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
+.teacher-card { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px; border: 1px solid var(--line); border-radius: 6px; background: var(--page); }
+.teacher-info { display: flex; flex-direction: column; gap: 4px; min-width: 0; flex: 1; }
+.teacher-info strong { font-size: 14px; line-height: 1.3; overflow-wrap: anywhere; }
+.teacher-meta-row { display: flex; flex-wrap: wrap; gap: 8px 12px; font-size: 11px; color: var(--muted); }
+.teacher-room, .teacher-tel { display: inline-flex; align-items: center; gap: 3px; }
+.teacher-card-email-btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 12px; background: var(--accent-surface); color: var(--accent); border: 1px solid var(--line); border-radius: 4px; font-size: 12px; font-weight: 600; text-decoration: none; flex-shrink: 0; min-height: 38px; }
+.teacher-card-email-btn:hover, .teacher-card-email-btn:focus-visible { background: var(--action); color: #fff; }
+
+.teacher-tabs { display: flex; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 3px; gap: 4px; margin-bottom: 12px; }
+.teacher-tab { flex: 1; padding: 8px 10px; font-size: 13px; font-weight: 600; border-radius: 4px; border: none; background: transparent; color: var(--muted); cursor: pointer; text-align: center; transition: all 0.15s ease; }
+.teacher-tab.active { background: var(--page); color: var(--text); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.teacher-mine-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+.add-teacher-trigger { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 6px 12px; background: var(--accent-surface); color: var(--accent); border: 1px solid var(--line); border-radius: 4px; font-size: 12px; font-weight: 600; cursor: pointer; }
+.add-teacher-trigger:hover, .add-teacher-trigger:focus-visible { background: var(--action); color: #fff; }
+.teacher-course-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 2px; }
+.teacher-course-tag { display: inline-flex; align-items: center; padding: 2px 6px; background: var(--surface); border: 1px solid var(--line); border-radius: 4px; font-size: 11px; font-weight: 500; color: var(--text); }
+.teacher-course-tag.repeating { background: rgba(220, 100, 30, 0.1); border-color: rgba(220, 100, 30, 0.3); color: #c85a17; }
+.teacher-course-tag.custom { background: rgba(100, 80, 200, 0.1); border-color: rgba(100, 80, 200, 0.3); color: var(--accent); }
+.teacher-card-actions { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+.teacher-card-email-btn.icon-only { padding: 8px; }
+.teacher-card-email-text { max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.teacher-card-toggle { display: inline-flex; align-items: center; gap: 4px; padding: 6px 10px; border-radius: 4px; border: 1px solid var(--line); background: var(--surface); color: var(--text); font-size: 12px; font-weight: 600; cursor: pointer; min-height: 36px; }
+.teacher-card-toggle:hover { background: var(--line); }
+.teacher-card-toggle.added { background: rgba(46, 125, 50, 0.12); border-color: rgba(46, 125, 50, 0.3); color: #2e7d32; }
+.teacher-card-toggle.can-remove:hover { background: rgba(211, 47, 47, 0.1); border-color: rgba(211, 47, 47, 0.3); color: #d32f2f; }
+.teacher-remove-btn { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 4px; border: 1px solid var(--line); background: transparent; color: var(--muted); cursor: pointer; }
+.teacher-remove-btn:hover { color: #d32f2f; background: rgba(211, 47, 47, 0.08); border-color: rgba(211, 47, 47, 0.3); }
+.empty-teachers { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 24px 12px; text-align: center; }
+.modal-back-row { display: flex; justify-content: center; margin-top: 16px; }

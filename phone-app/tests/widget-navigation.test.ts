@@ -37,3 +37,16 @@ test('widget launch listeners make no native calls on web or iPhone',()=>{
   const r=runtime(platform);r.api.onWidgetOpen(()=>assert.fail('Unexpected widget launch'))();assert.equal(r.calls(),0);
  }
 });
+
+test('native widget colors match the light and dark timetable palettes exactly',()=>{
+ const css=readFileSync(new URL('../app/globals.css',import.meta.url),'utf8');
+ const native=readFileSync(new URL('../android/app/src/main/res/values/widget_palette.xml',import.meta.url),'utf8');
+ const themes=[css.match(/:root\s*\{([^}]+)\}/)?.[1],css.match(/:root\[data-theme='dark'\]\s*\{([^}]+)\}/)?.[1]];
+ for(const [index,theme] of ['light','dark'].entries())for(const type of ['lab','lecture','exercise','personal']){
+  for(const [suffix,variable] of [['fill',type],['rail',type+'-rail']]){
+   const expected=themes[index]?.match(new RegExp('--'+variable+':\\s*(#[a-fA-F0-9]{6})'))?.[1];
+   assert(expected,'Missing timetable color '+variable);
+   assert(native.includes(`<color name="widget_${type}_${theme}_${suffix}">${expected}</color>`),`${type} ${theme} must match schedule ${variable}`);
+  }
+ }
+});

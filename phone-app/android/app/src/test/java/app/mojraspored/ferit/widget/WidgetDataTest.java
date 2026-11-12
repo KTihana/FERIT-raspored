@@ -16,6 +16,15 @@ public class WidgetDataTest {
     private List<JSONObject> day() throws Exception{return Arrays.asList(lesson("a","10:00","12:00"),lesson("b","12:15","13:00"),lesson("c","13:15","15:00"));}
     private long at(String clock){return WidgetData.time("2026-10-20",clock);}
     private JSONObject prefs() throws Exception{return new JSONObject().put("selection",new JSONObject().put("key","3-53"));}
+    @Test public void widgetUsesTheSameTypesAndPersonalColorsAsScheduleCards() throws Exception{
+        JSONObject l=lesson("a","10:00","12:00");
+        assertEquals("lab",WidgetData.palette(l));
+        l.put("type","PR");assertEquals("lecture",WidgetData.palette(l));
+        for(String type:new String[]{"AV","KV","OSTALO",""}){l.put("type",type);assertEquals("exercise",WidgetData.palette(l));}
+        l.put("personal",true);
+        String[][] cases={{"purple","personal"},{"green","lecture"},{"peach","lab"},{"blue","exercise"},{"pink","personal"},{"","personal"}};
+        for(String[] pair:cases){l.put("color",pair[0]);assertEquals(pair[1],WidgetData.palette(l));}
+    }
     @Test public void progressIsDerivedFromWallTimeNotTickCount() throws Exception{
         WidgetData.State s=WidgetData.state(day(),at("11:15"));
         assertTrue(s.active);assertEquals(6250,s.progress);assertEquals(45,s.remaining);assertEquals(2,s.next.size());
@@ -116,6 +125,10 @@ public class WidgetDataTest {
         assertEquals(Arrays.asList("b","other-week","mine"),ids(list));
         p.getJSONObject("groups").put("3-53:SR5-02:LV","SR-LV1");
         assertEquals(Collections.singletonList("mine"),ids(WidgetData.personalLessons(p,Arrays.asList(a,b),"2026-10-20")));
+        p.getJSONObject("groups").put("3-53:SR5-02:LV","SR-LV1, SR-LV3");
+        assertEquals(Arrays.asList("b","other-week","mine"),ids(WidgetData.personalLessons(p,Arrays.asList(a,b),"2026-10-20")));
+        p.getJSONObject("groups").put("3-53:SR5-02:LV",new JSONArray().put("SR-LV1").put("SR-LV3"));
+        assertEquals(Arrays.asList("b","other-week","mine"),ids(WidgetData.personalLessons(p,Arrays.asList(a,b),"2026-10-20")));
     }
     @Test public void repeatingRespectsTypeAndSourceIdentity() throws Exception{
         JSONObject p=prefs();

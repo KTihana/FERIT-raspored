@@ -22,7 +22,7 @@ public final class WidgetStore {
     }
     public static final class Snapshot {
         public WidgetData.State state;
-        public boolean configured, available, partial, refreshing;
+        public boolean configured, available, partial, refreshing, dark;
         public String notice = "";
     }
     public static Snapshot read(Context context, long now) {
@@ -31,6 +31,7 @@ public final class WidgetStore {
     public static Snapshot read(Context context, long now, String selectedDate) {
         Snapshot result = new Snapshot();
         JSONObject prefs = preferences(context);
+        result.dark = prefs.optString("theme").equals("dark");
         String primary = WidgetData.selection(prefs), date = WidgetData.displayDate(selectedDate,now);
         result.configured = primary.matches("\\d+-\\d+");
         List<JSONObject> source = new ArrayList<>();

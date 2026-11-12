@@ -1,4 +1,14 @@
 import {minutes,type Lesson} from './ferit.ts';
+import {normalizeTimeEntry} from './time-entry.ts';
+
+// Conflicts are informational. Use the visible schedule so hidden lessons and
+// other LV groups do not warn, and repeating subjects still do.
+export function overlappingLessons(candidate:Lesson,lessons:Lesson[]):Lesson[]{
+ const start=normalizeTimeEntry(candidate.start),end=normalizeTimeEntry(candidate.end);
+ if(!start||!end||minutes(end)<=minutes(start))return [];
+ return lessons.filter(other=>other.id!==candidate.id&&other.date===candidate.date&&
+  minutes(other.end)>minutes(other.start)&&minutes(other.start)<minutes(end)&&minutes(other.end)>minutes(start));
+}
 
 // The week fits its available viewport while preserving relative durations and gaps.
 // The day retains its readable, scrollable scale.
@@ -30,7 +40,7 @@ export function freeTimeIntervals(lessons:Lesson[],minimumMinutes=30):FreeTimeIn
  return gaps;
 }
 
-export function lessonLanes(lessons:Lesson[],compact=false){
+export function lessonLanes(lessons:Lesson[]){
  const slots=new Map<string,{lane:number,count:number,span:number}>();let cluster:Lesson[]=[];let until=0;
  const finish=()=>{
   const ends:number[]=[];
@@ -39,9 +49,9 @@ export function lessonLanes(lessons:Lesson[],compact=false){
    const slot=slots.get(l.id)!;slot.count=ends.length;
    for(let next=slot.lane+1;next<slot.count;next++){
     const overlaps=cluster.filter(other=>slots.get(other.id)!.lane===next&&minutes(other.start)<minutes(l.end)&&minutes(other.end)>minutes(l.start));
-    // A late overlap of at most 30 minutes can sit over the empty lower part of
-    // the earlier card. Keep simultaneous or substantial overlaps in separate lanes.
-    if((compact&&overlaps.length>0)||overlaps.some(other=>minutes(other.start)-minutes(l.start)<150||Math.min(minutes(other.end),minutes(l.end))-minutes(other.start)>30))break;
+    // Only expand into genuinely empty lanes. Even a brief overlap must stay
+    // beside the earlier card, with both events available to read and edit.
+    if(overlaps.length>0)break;
     slot.span++;
    }
   }

@@ -87,20 +87,28 @@ public class WidgetInstrumentedTest {
                 TextView footer=view.findViewById(R.id.widget_footer);
                 int bottom=footer.getBottom();ViewParent parent=footer.getParent();
                 while(parent instanceof View && parent!=view){bottom+=((View)parent).getTop();parent=parent.getParent();}
-                assertTrue("Footer has no height at "+width+"x"+height,footer.getHeight()>0);
-                assertTrue("Footer clipped at "+width+"x"+height+": "+bottom+" > "+h,bottom<=h);
+                if(view.findViewById(R.id.widget_footer_container).getVisibility()==View.VISIBLE)assertTrue("Footer has no height at "+width+"x"+height,footer.getHeight()>0);
+                if(view.findViewById(R.id.widget_footer_container).getVisibility()==View.VISIBLE)assertTrue("Footer clipped at "+width+"x"+height+": "+bottom+" > "+h,bottom<=h);
                 View calendar=view.findViewById(R.id.widget_open);
                 int calendarBottom=calendar.getBottom();ViewParent calendarParent=calendar.getParent();
                 while(calendarParent instanceof View && calendarParent!=view){calendarBottom+=((View)calendarParent).getTop();calendarParent=calendarParent.getParent();}
-                assertTrue("Calendar clipped at "+width+"x"+height,calendarBottom<=h-view.getPaddingBottom());
+                if(view.findViewById(R.id.widget_footer_container).getVisibility()==View.VISIBLE)assertTrue("Calendar clipped at "+width+"x"+height,calendarBottom<=h-view.getPaddingBottom());
                 if(snapshot.state.active){
                     assertEquals(snapshot.state.progress,((ProgressBar)view.findViewById(R.id.widget_progress)).getProgress());
                     assertEquals("Još "+WidgetData.duration(snapshot.state.remaining),((TextView)view.findViewById(R.id.widget_remaining)).getText().toString());
                 }
+                if(snapshot.state.hero!=null){
+                    for(int id:new int[]{R.id.widget_title,R.id.widget_time,R.id.widget_room,R.id.widget_progress_row}){
+                        View child=view.findViewById(id);if(child.getVisibility()!=View.VISIBLE)continue;
+                        Rect bounds=new Rect();child.getDrawingRect(bounds);((ViewGroup)view).offsetDescendantRectToMyCoords(child,bounds);
+                        assertTrue(name+": class or progress clipped at "+width+"×"+height+"; "+bounds,bounds.bottom<=h-view.getPaddingBottom()&&bounds.right<=w-view.getPaddingRight());
+                    }
+                }
                 TextView dateText=view.findViewById(R.id.widget_date);
-                assertEquals("Date clipped at "+width+"x"+height+": "+snapshot.state.dateLabel,0,dateText.getLayout().getEllipsisCount(0));
+                if(dateText.getVisibility()==View.VISIBLE)assertEquals("Date clipped at "+width+"x"+height+": "+snapshot.state.dateLabel,0,dateText.getLayout().getEllipsisCount(0));
+                else assertEquals(java.time.LocalDate.parse(snapshot.state.date).format(java.time.format.DateTimeFormatter.ofPattern("d.M.",WidgetData.HR)),((TextView)view.findViewById(R.id.widget_day)).getText().toString());
                 if(snapshot.state.future){
-                    assertEquals(snapshot.state.dayLabel,((TextView)view.findViewById(R.id.widget_day)).getText().toString());
+                    if(dateText.getVisibility()==View.VISIBLE)assertEquals(snapshot.state.dayLabel,((TextView)view.findViewById(R.id.widget_day)).getText().toString());
                     assertEquals(View.GONE,view.findViewById(R.id.widget_progress_row).getVisibility());
                     assertTrue(view.findViewById(R.id.widget_previous).isEnabled());
                     assertEquals(snapshot.state.dayIndex<WidgetData.VISIBLE_DAYS-1,view.findViewById(R.id.widget_next_day).isEnabled());
@@ -126,6 +134,91 @@ public class WidgetInstrumentedTest {
         });
         if(failure.get()!=null)throw new AssertionError(failure.get());
     }
+    private int imageCenterColor(ImageView image){
+        Bitmap bitmap=Bitmap.createBitmap(20,20,Bitmap.Config.ARGB_8888);
+        android.graphics.drawable.Drawable drawable=image.getDrawable();drawable.setBounds(0,0,20,20);
+        drawable.draw(new Canvas(bitmap));int color=bitmap.getPixel(10,10);bitmap.recycle();return color;
+    }
+    @Test public void scheduleColorsAndSmallLayoutsKeepTheirMeaning()throws Exception{
+        long now=WidgetData.time("2026-10-20","11:15");
+        String[] types={"LV","PR","AV","OSOBNO"};
+        int[][] accents={{0xffffe1cc,0xffd9edde,0xffdce7ff,0xffe8dcff},{0xfff5b288,0xff9ad1ac,0xffa5bbf8,0xffcaa9f7}};
+        for(int mode=0;mode<2;mode++)for(int n=0;n<types.length;n++){
+            List<JSONObject> lessons=sample("2026-10-20");
+            lessons.get(0).put("type",types[n]).put("personal",n==3).put("group",n==3?"":"SR-"+types[n]);
+            if(n==3)lessons.get(1).put("color","green");
+            lessons.get(2).put("type","AV");
+            WidgetStore.Snapshot snapshot=new WidgetStore.Snapshot();snapshot.available=true;snapshot.configured=true;snapshot.dark=mode==1;
+            snapshot.state=WidgetData.state(lessons,now);
+            final int expected=accents[mode][n],nextAccent=accents[mode][n==3?1:3];
+            ins.runOnMainSync(()->{
+                View view=WidgetRenderer.views(context,snapshot,now,options(350,350)).apply(context,new FrameLayout(context));
+                assertEquals(expected,((ProgressBar)view.findViewById(R.id.widget_progress)).getProgressTintList().getDefaultColor());
+                assertEquals(expected,imageCenterColor(view.findViewById(R.id.widget_marker)));
+                assertEquals(nextAccent,imageCenterColor(view.findViewById(R.id.widget_dot1)));
+                WidgetPalette palette=new WidgetPalette(context,snapshot.state.hero,snapshot.dark);
+                assertEquals(palette.rail,((TextView)view.findViewById(R.id.widget_status)).getCurrentTextColor());
+                assertEquals(palette.fill,((android.graphics.drawable.GradientDrawable)view.findViewById(R.id.widget_status).getBackground()).getColor().getDefaultColor());
+            });
+            render(snapshot,now,350,350,"widget-palette-"+types[n]+"-"+mode);
+            if(mode==0&&n==1){
+                render(snapshot,now,350,170,"widget-short-progress");
+                render(snapshot,now,180,140,"widget-minimum-progress");
+                render(snapshot,now,250,220,"widget-medium-progress");
+            }
+        }
+        WidgetStore.Snapshot empty=new WidgetStore.Snapshot();empty.available=true;empty.configured=true;
+        empty.state=WidgetData.state(Collections.emptyList(),now);
+        render(empty,now,350,170,"widget-short-free-day");render(empty,now,180,140,"widget-minimum-free-day");
+        String later="2026-10-26";
+        empty.state=WidgetData.state(sample(later),now,later);
+        render(empty,now,180,140,"widget-minimum-weekday");
+    }
+    @Test public void installedWidgetCanShrinkThenGrowWithoutLosingProgressOrRefresh()throws Exception{
+        SharedPreferences shared=WidgetStore.shared(context),status=WidgetStore.status(context);
+        Map<String,?> oldShared=new HashMap<>(shared.getAll()),oldStatus=new HashMap<>(status.getAll());
+        AtomicReference<AppWidgetHost> host=new AtomicReference<>();AtomicReference<AppWidgetHostView> hosted=new AtomicReference<>();
+        AtomicInteger widgetId=new AtomicInteger(-1);
+        try{
+            long now=System.currentTimeMillis();String today=WidgetData.today(now);
+            shared.edit().putString(WidgetData.PREFS_KEY,new JSONObject().put("selection",new JSONObject().put("key","3-53")).toString()).commit();
+            for(String week:WidgetData.weeks(now)){
+                List<JSONObject> lessons=sample(today);lessons.get(0).put("start","00:00").put("end","23:59");
+                shared.edit().putString(WidgetData.cacheKey("3-53",week),schedule(week,week.equals(WidgetData.monday(today))?lessons:Collections.emptyList()).toString()).commit();
+            }
+            shell("input keyevent 224");shell("wm dismiss-keyguard");
+            ins.getUiAutomation().adoptShellPermissionIdentity("android.permission.BIND_APPWIDGET");
+            ins.runOnMainSync(()->{
+                AppWidgetHost h=new AppWidgetHost(context,9878);host.set(h);h.startListening();
+                int id=h.allocateAppWidgetId();widgetId.set(id);
+                assertTrue(AppWidgetManager.getInstance(context).bindAppWidgetIdIfAllowed(id,new ComponentName(context,ScheduleWidgetProvider.class),options(350,350)));
+                hosted.set(h.createView(context,id,AppWidgetManager.getInstance(context).getAppWidgetInfo(id)));
+                WidgetRuntime.start(context);WidgetRuntime.render(context);
+            });
+            ins.getUiAutomation().dropShellPermissionIdentity();
+            for(int[] size:new int[][]{{350,350},{350,170},{180,140},{350,350}}){
+                ins.runOnMainSync(()->{
+                    AppWidgetManager manager=AppWidgetManager.getInstance(context);
+                    manager.updateAppWidgetOptions(widgetId.get(),options(size[0],size[1]));
+                    new ScheduleWidgetProvider().onAppWidgetOptionsChanged(context,manager,widgetId.get(),manager.getAppWidgetOptions(widgetId.get()));
+                });
+                Thread.sleep(500);ins.waitForIdleSync();
+                ins.runOnMainSync(()->{
+                    View view=hosted.get();boolean small=size[1]<270;
+                    assertEquals(small?View.GONE:View.VISIBLE,view.findViewById(R.id.widget_branding).getVisibility());
+                    assertEquals(small?View.VISIBLE:View.GONE,view.findViewById(R.id.widget_refresh_compact).getVisibility());
+                    assertTrue(view.findViewById(small?R.id.widget_refresh_compact:R.id.widget_refresh).hasOnClickListeners());
+                    assertEquals(View.VISIBLE,view.findViewById(R.id.widget_progress_row).getVisibility());
+                    assertTrue(((TextView)view.findViewById(R.id.widget_remaining)).getText().toString().startsWith("Još "));
+                    assertTrue(view.findViewById(R.id.widget_next_day).isEnabled());
+                });
+            }
+        }finally{
+            ins.getUiAutomation().dropShellPermissionIdentity();
+            ins.runOnMainSync(()->{if(host.get()!=null){if(widgetId.get()!=-1)host.get().deleteAppWidgetId(widgetId.get());host.get().stopListening();}if(!ScheduleWidgetProvider.hasWidgets(context))WidgetRuntime.stop(context);});
+            restore(shared,oldShared);restore(status,oldStatus);
+        }
+    }
     private static class CountingView extends AppWidgetHostView{
         int updates;
         CountingView(Context c){super(c);}
@@ -148,6 +241,9 @@ public class WidgetInstrumentedTest {
         assertNotNull(provider.loadPreviewImage(context,context.getResources().getDisplayMetrics().densityDpi));
         if(Build.VERSION.SDK_INT>=31){
             assertEquals(4,provider.targetCellWidth);assertEquals(4,provider.targetCellHeight);
+            assertTrue(provider.minResizeWidth<provider.minWidth);assertTrue(provider.minResizeHeight<provider.minHeight);
+            float d=context.getResources().getDisplayMetrics().density;
+            assertEquals(180,Math.round(provider.minResizeWidth/d));assertEquals(140,Math.round(provider.minResizeHeight/d));
             assertEquals(R.layout.widget_pin_preview,provider.previewLayout);
         }
         Bundle extras=WidgetPreview.pinExtras(context);

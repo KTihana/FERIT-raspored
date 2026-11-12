@@ -1,13 +1,14 @@
 'use client';
 import {useEffect,useRef,useState,useMemo,useCallback,useId,type ReactNode,type FormEvent,type CSSProperties,type RefObject} from 'react';
-import {ChevronDown,ChevronLeft,ChevronRight,Check,Plus,X,SlidersHorizontal,Menu,RefreshCw,Download,RotateCcw,Trash2,Sun,Moon,Search,Keyboard,ChevronsUpDown} from 'lucide-react';
+import {ChevronDown,ChevronLeft,ChevronRight,Check,Plus,X,SlidersHorizontal,Menu,RefreshCw,Download,RotateCcw,Trash2,Sun,Moon,Search,Keyboard,ChevronsUpDown,Info,Mail,MapPin,Phone} from 'lucide-react';
 import {addDays,monday,dateToday,minutes,courseGroupKey,filterCourseGroups,studyChoices,mergeLabCourses,swipeDirection,type LabCourse,type Study,type Lesson,type Schedule,type Override} from '../lib/ferit';
+import {getTeacherEmail,findTeacher,searchTeachers,extractScheduleTeachers,FERIT_TEACHERS,type FeritTeacher} from '../lib/ferit-teachers';
 import {scheduleClient,isPhoneApp,phoneOrientation,onPhoneResume,onWidgetOpen,phoneTheme,readPhonePreferences,savePhonePreferences,phonePreferenceKeys,supportsHomeWidget,addHomeWidget} from '../lib/phone-runtime';
 import backup from '../lib/catalogue-backup.json';
 import {createLongPress} from '../lib/long-press';
 import {storedTheme,type Theme} from '../lib/theme';
 import {PERSONAL_COLORS,personalColor} from '../lib/event-colors';
-import {timetableScale,lessonLanes,freeTimeIntervals} from '../lib/timetable-layout';
+import {timetableScale,lessonLanes,freeTimeIntervals,overlappingLessons} from '../lib/timetable-layout';
 import {useAppUpdates} from '../lib/use-app-updates';
 import {resetPersonalSchedule} from '../lib/reset-schedule';
 import {createOfflineScheduleLoader,ScheduleUnavailableError,teachingWeekLabel,type SavedWeek} from '../lib/offline-schedule';
@@ -17,8 +18,8 @@ import {readUpcomingWeeks,assessmentCountdown,assessmentWeekRange,type UpcomingS
 import {LaunchScreen} from '../mobile/launch-screen';
 import {EMPTY_REPEATING,repeatingYearOptions,repeatingCourseId,mergeRepeatingCourses,activeRepeatingCourses,combinedPersonalSchedule,type RepeatingCourse,type RepeatingSettings} from '../lib/repeating-courses';
 type Selection={study:string,key:string};
-type Preferences={theme:Theme;selection:Selection|null;groups:Record<string,string>;overrides:Record<string,Override>;personal:Lesson[];repeating:Record<string,RepeatingSettings>};
-const EMPTY:Preferences={theme:'light',selection:null,groups:{},overrides:{},personal:[],repeating:{}};
+type Preferences={theme:Theme;selection:Selection|null;groups:Record<string,string>;overrides:Record<string,Override>;personal:Lesson[];repeating:Record<string,RepeatingSettings>;customTeachers?:string[]};
+const EMPTY:Preferences={theme:'light',selection:null,groups:{},overrides:{},personal:[],repeating:{},customTeachers:[]};
 const STORAGE='ferit-personal-v1';
 const savedSchedules=createOfflineScheduleLoader(scheduleClient.schedule,{get:readPhonePreferences,set:savePhonePreferences,keys:phonePreferenceKeys});
 const fallback:Study[]=backup.programmes.map(p=>({name:p.name,options:p.options.map(o=>({label:o.label,key:`${o.year}-${o.scheduleId}`,year:o.year??1,code:o.label.replace(/\b\d+\s*\.\s*g\./,'').replace(/\([^)]*\)/g,'').trim(),exam:o.label.includes('ispiti'),legacy:o.legacy}))}));
@@ -82,10 +83,223 @@ function GroupPicker({courses,groups,loading,error,study,onSave,onClose}:{course
  const [values,setValues]=useState(groups);
  return <Modal title="LV grupe" onClose={onClose} actions={<button className="primary full" disabled={loading&&!courses.length} onClick={()=>{onSave(values);onClose();}}>Spremi grupe</button>}>
   <p className="group-context">{study}</p>
-  <p className="hint group-hint">Grupa se bira zasebno za svaki predmet.</p>
+  <p className="hint group-hint">Odaberi jednu ili više grupa za svaki predmet (npr. LV1 i LV3), ili Sve grupe.</p>
   {loading&&<p className="hint group-status" role="status">Provjeravam dostupne grupe…</p>}{error&&<p className="hint group-status" role="status">{error}</p>}
   {!loading&&courses.length===0&&<p className="hint group-status">U objavljenim terminima nema LV grupa za ovaj raspored.</p>}
-  {courses.map(c=>{const selected=values[c.id]??'';const options=[...new Set([...c.groups,...(selected?[selected]:[])])].sort((a,b)=>a.localeCompare(b,'hr',{numeric:true}));return <fieldset className="group-field" key={c.id}><legend><strong>{c.title}</strong><small>{c.courseCode} · laboratorijske vježbe</small></legend><div className="group-options"><button type="button" aria-pressed={!selected} className={!selected?'selected':''} onClick={()=>setValues({...values,[c.id]:''})}>Sve grupe</button>{options.map(g=><button type="button" key={g} aria-label={c.title+' · '+g} aria-pressed={selected===g} className={selected===g?'selected':''} onClick={()=>setValues({...values,[c.id]:g})}>{g}{selected===g&&<Check size={14}/>}</button>)}</div></fieldset>;})}
+  {courses.map(c=>{
+   const selected=values[c.id]??'';
+   const selectedList=selected?selected.split(',').map(s=>s.trim()).filter(Boolean):[];
+   const options=[...new Set([...c.groups,...selectedList])].sort((a,b)=>a.localeCompare(b,'hr',{numeric:true}));
+   const toggleGroup=(g:string)=>{
+    const next=selectedList.includes(g)?selectedList.filter(x=>x!==g):[...selectedList,g].sort((a,b)=>a.localeCompare(b,'hr',{numeric:true}));
+    setValues({...values,[c.id]:next.join(', ')});
+   };
+   return <fieldset className="group-field" key={c.id}>
+    <legend><strong>{c.title}</strong><small>{c.courseCode} · laboratorijske vježbe</small></legend>
+    <div className="group-options">
+     <button type="button" aria-pressed={!selectedList.length} className={!selectedList.length?'selected':''} onClick={()=>setValues({...values,[c.id]:''})}>Sve grupe</button>
+     {options.map(g=>{
+      const isSelected=selectedList.includes(g);
+      return <button type="button" key={g} aria-label={c.title+' · '+g} aria-pressed={isSelected} className={isSelected?'selected':''} onClick={()=>toggleGroup(g)}>
+       {g}{isSelected&&<Check size={14}/>}
+      </button>;
+     })}
+    </div>
+   </fieldset>;
+  })}
+ </Modal>;
+}
+function TeacherDirectoryModal({
+ lessons,
+ keyStudy,
+ repeatingCourses,
+ overrides,
+ personal,
+ groups,
+ customTeachers,
+ onSaveCustomTeachers,
+ onClose
+}:{
+ lessons:Lesson[];
+ keyStudy?:string;
+ repeatingCourses:RepeatingCourse[];
+ overrides:Record<string,Override>;
+ personal:Lesson[];
+ groups:Record<string,string|string[]>;
+ customTeachers:string[];
+ onSaveCustomTeachers:(slugs:string[])=>void;
+ onClose:()=>void;
+}){
+ const [tab,setTab]=useState<'mine'|'all'>('mine');
+ const [searchMine,setSearchMine]=useState('');
+ const [searchAll,setSearchAll]=useState('');
+ const [allLessons,setAllLessons]=useState<Lesson[]>(lessons);
+
+ useEffect(()=>{
+  let active=true;
+  async function scanCachedWeeks(){
+   try{
+    if(!keyStudy)return;
+    const keys=await phonePreferenceKeys();
+    const relevantPrefixes=[`ferit-week:${keyStudy}:`,...repeatingCourses.map(c=>`ferit-week:${c.scheduleKey}:`)];
+    const cached:Lesson[]=[];
+    for(const k of keys){
+     if(relevantPrefixes.some(p=>k.startsWith(p))){
+      const raw=await readPhonePreferences(k);
+      if(raw){
+       try{
+        const parsed=JSON.parse(raw);
+        if(Array.isArray(parsed?.lessons))cached.push(...parsed.lessons);
+       }catch{}
+      }
+     }
+    }
+    if(active&&cached.length>0){
+     const combined=filterCourseGroups(combinedPersonalSchedule(cached,overrides,personal,keyStudy,repeatingCourses),groups);
+     setAllLessons(cur=>{
+      const seen=new Set(cur.map(l=>l.id));
+      const additions=combined.filter(l=>!seen.has(l.id));
+      return additions.length>0?[...cur,...additions]:cur;
+     });
+    }
+   }catch{}
+  }
+  void scanCachedWeeks();
+  return()=>{active=false;};
+ },[keyStudy,repeatingCourses,overrides,personal,groups]);
+
+ const myTeachers=useMemo(()=>extractScheduleTeachers(allLessons,customTeachers),[allLessons,customTeachers]);
+ const customSet=useMemo(()=>new Set(customTeachers),[customTeachers]);
+
+ const filteredMine=useMemo(()=>{
+  if(!searchMine.trim())return myTeachers;
+  const q=searchMine.toLowerCase();
+  return myTeachers.filter(entry=>{
+   const matchName=entry.teacher.name.toLowerCase().includes(q);
+   const matchEmail=entry.teacher.email?.toLowerCase().includes(q);
+   const matchRoom=entry.teacher.room?.toLowerCase().includes(q);
+   const matchCourse=entry.courses.some(c=>c.title.toLowerCase().includes(q));
+   return matchName||matchEmail||matchRoom||matchCourse;
+  });
+ },[myTeachers,searchMine]);
+
+ const fullDirectory=useMemo(()=>searchTeachers(searchAll),[searchAll]);
+
+ const myTeacherKeys=useMemo(()=>{
+  const s=new Set<string>();
+  for(const m of myTeachers){
+   if(m.teacher.slug)s.add(m.teacher.slug.toLowerCase());
+   if(m.teacher.name)s.add(m.teacher.name.toLowerCase());
+  }
+  return s;
+ },[myTeachers]);
+
+ const toggleTeacher=(t:FeritTeacher)=>{
+  const slug=t.slug||t.name;
+  if(customSet.has(slug)){
+   onSaveCustomTeachers(customTeachers.filter(s=>s!==slug));
+  }else{
+   onSaveCustomTeachers([...customTeachers,slug]);
+  }
+ };
+
+ const removeTeacher=(slug:string)=>{
+  onSaveCustomTeachers(customTeachers.filter(s=>s!==slug));
+ };
+
+ return <Modal title="Imenik nastavnika" onClose={onClose}>
+  <div className="teacher-tabs" role="tablist">
+   <button type="button" role="tab" aria-selected={tab==='mine'} className={`teacher-tab ${tab==='mine'?'active':''}`} onClick={()=>setTab('mine')}>Moji nastavnici ({myTeachers.length})</button>
+   <button type="button" role="tab" aria-selected={tab==='all'} className={`teacher-tab ${tab==='all'?'active':''}`} onClick={()=>setTab('all')}>Cijeli imenik ({FERIT_TEACHERS.length})</button>
+  </div>
+  {tab==='mine'?(
+   <>
+    <p className="hint">Nastavnici iz tvog rasporeda i odabranih ponavljačkih predmeta.</p>
+    <div className="search-wrap"><Search size={18} aria-hidden="true"/><input className="search" aria-label="Pretraži moje nastavnike" placeholder="Pretraži po imenu, kolegiju ili uredu..." value={searchMine} onChange={e=>setSearchMine(e.target.value)}/></div>
+    <div className="teacher-mine-toolbar">
+     <span className="study-count">{filteredMine.length} {searchMine?'pronađeno':'nastavnika na tvom popisu'}</span>
+     <button type="button" className="add-teacher-trigger" onClick={()=>setTab('all')}><Plus size={15}/>Dodaj nastavnika</button>
+    </div>
+    <div className="teacher-list">
+     {filteredMine.map(entry=>{
+      const t=entry.teacher;
+      const slug=t.slug||t.name;
+      const isCustom=entry.isCustom||customSet.has(slug);
+      return <div className="teacher-card" key={entry.key}>
+       <div className="teacher-info">
+        <strong>{t.name}</strong>
+        {entry.courses.length>0&&(
+         <div className="teacher-course-tags">
+          {entry.courses.map((c,i)=>(
+           <span key={i} className={`teacher-course-tag ${c.repeatingYear?'repeating':''}`}>
+            {c.repeatingYear?`Ponavljački · ${c.repeatingYear}. god: `:''}{c.title}{c.types.length?` (${c.types.join(', ')})`:''}
+           </span>
+          ))}
+         </div>
+        )}
+        {isCustom&&!entry.courses.length&&(
+         <div className="teacher-course-tags">
+          <span className="teacher-course-tag custom">Dodano ručno</span>
+         </div>
+        )}
+        <div className="teacher-meta-row">
+         {t.room&&<span className="teacher-room"><MapPin size={13}/>Ured {t.room}</span>}
+         {t.tel&&<a href={`tel:${t.tel}`} className="teacher-tel"><Phone size={13}/>{t.tel}</a>}
+        </div>
+       </div>
+       <div className="teacher-card-actions">
+        {t.email?<a href={`mailto:${t.email}`} className="teacher-card-email-btn" aria-label={`Pošalji e-mail: ${t.email}`} title={t.email}><Mail size={15}/><span className="teacher-card-email-text">{t.email}</span></a>:<span className="hint">Nema e-maila</span>}
+        {isCustom&&<button type="button" className="teacher-remove-btn" onClick={()=>removeTeacher(slug)} title="Ukloni s mog popisa" aria-label={`Ukloni ${t.name}`}><Trash2 size={16}/></button>}
+       </div>
+      </div>;
+     })}
+     {!filteredMine.length&&(
+      <div className="empty-teachers">
+       <p className="hint">{searchMine?`Nema rezultata za pretragu „${searchMine}”.`:'U rasporedu trenutačno nema pronađenih nastavnika.'}</p>
+       <button type="button" className="add-teacher-trigger" onClick={()=>setTab('all')}><Plus size={16}/>Pretraži cijeli imenik FERIT-a</button>
+      </div>
+     )}
+    </div>
+   </>
+  ):(
+   <>
+    <p className="hint">Pretraži sve nastavnike i suradnike FERIT-a i dodaj ih na svoj popis.</p>
+    <div className="search-wrap"><Search size={18} aria-hidden="true"/><input className="search" aria-label="Pretraži cijeli imenik" placeholder="Ime, prezime, ured (npr. K3-11), email..." value={searchAll} onChange={e=>setSearchAll(e.target.value)} autoFocus/></div>
+    <p className="study-count">{fullDirectory.length} {searchAll?'pronađeno':'nastavnika i suradnika'}</p>
+    <div className="teacher-list">
+     {fullDirectory.map(t=>{
+      const slug=t.slug||t.name;
+      const isOnList=myTeacherKeys.has(t.slug.toLowerCase())||myTeacherKeys.has(t.name.toLowerCase())||customSet.has(slug);
+      const isCustom=customSet.has(slug);
+      return <div className="teacher-card" key={slug}>
+       <div className="teacher-info">
+        <strong>{t.name}</strong>
+        <div className="teacher-meta-row">
+         {t.room&&<span className="teacher-room"><MapPin size={13}/>Ured {t.room}</span>}
+         {t.tel&&<a href={`tel:${t.tel}`} className="teacher-tel"><Phone size={13}/>{t.tel}</a>}
+        </div>
+       </div>
+       <div className="teacher-card-actions">
+        {t.email&&<a href={`mailto:${t.email}`} className="teacher-card-email-btn icon-only" aria-label={`Pošalji e-mail: ${t.email}`} title={t.email}><Mail size={15}/></a>}
+        {isOnList?(
+         <button type="button" className={`teacher-card-toggle added ${isCustom?'can-remove':''}`} onClick={()=>isCustom?removeTeacher(slug):undefined} title={isCustom?'Klikni za uklanjanje s popisa':'Uključen iz tvog rasporeda'}>
+          <Check size={14}/>Na popisu
+         </button>
+        ):(
+         <button type="button" className="teacher-card-toggle" onClick={()=>toggleTeacher(t)}>
+          <Plus size={14}/>Dodaj
+         </button>
+        )}
+       </div>
+      </div>;
+     })}
+     {!fullDirectory.length&&<p className="hint">Nema rezultata za pretragu „{searchAll}”.</p>}
+    </div>
+    <div className="modal-back-row">
+     <button type="button" className="text-action" onClick={()=>setTab('mine')}><ChevronLeft size={16}/>Natrag na moje nastavnike</button>
+    </div>
+   </>
+  )}
  </Modal>;
 }
 function RepeatingPicker({studies,scheduleKey,settings,week,onSave,onClose}:{studies:Study[];scheduleKey:string;settings:RepeatingSettings;week:string;onSave:(settings:RepeatingSettings)=>void;onClose:()=>void}){
@@ -199,17 +413,19 @@ function SourceTags({lesson}:{lesson:Lesson}){
  const tags=lessonTags(lesson);
  return tags.length?<span className="lesson-tags" title="Oznake iz FERIT rasporeda">{tags.map(tag=><span key={tag}>{tag}</span>)}</span>:null;
 }
-function LessonEditor({lesson,original,onSave,onDelete,onRestore,onClose}:{lesson:Lesson;original?:Lesson;onSave:(l:Lesson)=>void;onDelete:()=>void;onRestore?:()=>void;onClose:()=>void}){
+function LessonEditor({lesson,original,lessons,onSave,onDelete,onRestore,onClose}:{lesson:Lesson;original?:Lesson;lessons:Lesson[];onSave:(l:Lesson)=>void;onDelete:()=>void;onRestore?:()=>void;onClose:()=>void}){
  const [value,setValue]=useState(lesson);const [error,setError]=useState('');const [confirmDelete,setConfirmDelete]=useState(false);const formId=useId();const source=original??lesson;
+ const overlaps=overlappingLessons(value,lessons);
  const set=(field:keyof Lesson,v:string)=>{setError('');setValue(current=>({...current,[field]:v}));};
  const submit=(e:FormEvent)=>{e.preventDefault();const start=normalizeTimeEntry(value.start),end=normalizeTimeEntry(value.end);if(!start||!end){setError('Unesi sate od 00 do 23 i minute od 00 do 59.');return;}if(!value.title.trim()||minutes(end)<=minutes(start)){setError('Unesi naziv i završetak nakon početka.');return;}onSave({...value,title:value.title.trim(),start,end,...(value.personal?{color:personalColor(value.color)}:{})});onClose();};
  const actions=<>{!lesson.personal&&<button type="button" className="text-action restore-action" onClick={()=>{if(onRestore){onRestore();onClose();}else{setValue({...source});setError('');}}}><RotateCcw size={15}/>Vrati izvorni termin</button>}{(!lesson.personal||lesson.title)&&<button type="button" className="text-action danger" onClick={()=>setConfirmDelete(true)}><Trash2 size={15}/>{lesson.personal?'Izbriši događaj':'Ukloni iz mog rasporeda'}</button>}<button type="submit" form={formId} className="primary full">Spremi {lesson.personal?'događaj':'izmjenu'}</button></>;
  return <><Modal title={lesson.personal?(lesson.title?'Uredi događaj':'Novi događaj'):'Uredi termin'} onClose={onClose} actions={actions} actionsClassName="editor-actions">
-  {!lesson.personal&&<div className="editor-summary"><p className="editor-designation">Osobna izmjena</p><h3>{lesson.title}</h3><SourceTags lesson={lesson}/><div className="editor-summary-row"><span>{lessonTypeLabel(lesson,true)}{lesson.group&&' · '+lesson.group}</span><strong>{lesson.room||'Lokacija nije navedena'}</strong></div>{lesson.teacher&&<p>{lesson.teacher}</p>}<p className="lesson-meta">{lesson.courseCode}{lesson.progress&&' · '+lesson.progress}</p>{lesson.sourceChanged&&<p className="source-change-notice" role="status">FERIT je ažurirao termin. Osobna izmjena ostaje spremljena.</p>}</div>}
+  {!lesson.personal&&<div className="editor-summary"><p className="editor-designation">Osobna izmjena</p><h3>{lesson.title}</h3><SourceTags lesson={lesson}/><div className="editor-summary-row"><span>{lessonTypeLabel(lesson,true)}{lesson.group&&' · '+lesson.group}</span><strong>{lesson.room||'Lokacija nije navedena'}</strong></div>{lesson.teacher&&<p>{lesson.teacher}{(() => { const em = getTeacherEmail(lesson.teacher); return em ? ` · ${em}` : ''; })()}</p>}<p className="lesson-meta">{lesson.courseCode}{lesson.progress&&' · '+lesson.progress}</p>{lesson.sourceChanged&&<p className="source-change-notice" role="status">FERIT je ažurirao termin. Osobna izmjena ostaje spremljena.</p>}</div>}
   <form id={formId} className="lesson-editor" onSubmit={submit}>
    {lesson.personal&&<label className="field-label">Naziv<input required value={value.title} onChange={e=>set('title',e.target.value)}/></label>}
    <DateEntry value={value.date} onChange={v=>set('date',v)}/>
    <div className="two-fields"><TimeEntry label="Početak" value={value.start} onChange={v=>set('start',v)}/><TimeEntry label="Kraj" value={value.end} onChange={v=>set('end',v)}/></div>
+   {overlaps.length>0&&<p className="overlap-notice" role="status"><Info size={16} aria-hidden="true"/><span>Već imaš termin u ovo vrijeme. Svejedno možeš spremiti {lesson.personal?'događaj':'izmjenu'}.<small>{overlaps[0].title} · {overlaps[0].start} – {overlaps[0].end}{overlaps.length>1&&` · i još ${overlaps.length-1}`}</small></span></p>}
    {!lesson.personal&&<div className="source-comparison"><span>Izvorni FERIT termin</span><strong>{fmt(source.date,{day:'numeric',month:'numeric'})} · {source.start} – {source.end}{source.room&&' · '+source.room}</strong></div>}
    <label className="field-label">Lokacija<input value={value.room} onChange={e=>set('room',e.target.value)}/></label>
    {lesson.personal&&<fieldset className="color-field"><legend>Boja</legend><div className="color-options">{PERSONAL_COLORS.map(c=><button key={c.value} type="button" className={'color-option color-'+c.value+' '+(personalColor(value.color)===c.value?'selected':'')} aria-pressed={personalColor(value.color)===c.value} onClick={()=>set('color',c.value)}><span className="color-swatch">{personalColor(value.color)===c.value&&<Check size={17}/>}</span><span>{c.label}</span></button>)}</div></fieldset>}
@@ -232,7 +448,20 @@ function LessonDetails({lesson,rotated,onClose}:{lesson:Lesson;rotated:boolean;o
     <p className="details-date">{fmt(lesson.date,{weekday:'short',day:'numeric',month:'long'})}</p>
     <strong className="details-time">{lesson.start} – {lesson.end}</strong>
     <div className="details-facts"><div><span>Lokacija</span><strong>{lesson.room||'Lokacija nije navedena'}</strong></div>{!lesson.personal&&<div><span>Vrsta · grupa</span><strong className={'details-group '+(lesson.type==='LV'?'lab':lesson.type==='PR'?'lecture':'exercise')}>{lessonTypeLabel(lesson,true)+(lesson.group?' · '+lesson.group:'')}</strong></div>}</div>
-    {lesson.teacher&&<p className="details-teacher">{lesson.teacher}</p>}
+    {lesson.teacher&&(() => {
+     const teacherInfo = findTeacher(lesson.teacher);
+     const teacherEmail = teacherInfo?.email ?? getTeacherEmail(lesson.teacher);
+     return <div className="details-teacher-block">
+      <p className="details-teacher">{lesson.teacher}</p>
+      {teacherEmail&&<div className="details-teacher-contact">
+       <a href={`mailto:${teacherEmail}`} className="teacher-mail-link" aria-label={`Pošalji e-mail: ${teacherEmail}`}>
+        <Mail size={14}/><span>{teacherEmail}</span>
+       </a>
+       {teacherInfo?.room&&<span className="details-teacher-room"><MapPin size={13}/>Ured {teacherInfo.room}</span>}
+       {teacherInfo?.tel&&<span className="details-teacher-tel"><Phone size={13}/>{teacherInfo.tel}</span>}
+      </div>}
+     </div>;
+    })()}
     {(lesson.courseCode||lesson.progress)&&<p className="lesson-meta">{lesson.courseCode}{lesson.progress&&' · '+lesson.progress}</p>}
     {lesson.note&&<p className="details-note">{lesson.note}</p>}
     {!lesson.personal&&<p className="details-source">{lesson.edited?'Osobna izmjena':'Izvorni FERIT termin'}</p>}
@@ -266,14 +495,14 @@ function TimeGrid({date,lessons,week,rotated,onLesson,onDetails,onDay,onSwipe}:{
   {week&&<div className="week-head"><div/>{dates.map(d=><button key={d} onClick={()=>onDay(d)} className={d===dateToday()?'is-today':''}><span>{fmt(d,{weekday:'short'}).replace('.','')}</span><strong>{Number(d.slice(-2))}</strong></button>)}</div>}
   <div className="time-grid" style={{height}}><div className="time-axis">{Array.from({length:(end-start)/60+1},(_,i)=>i).filter(i=>!week||i%2===0||i===(end-start)/60).map(i=><span key={i} style={{top:i*hour}}>{String((start+i*60)/60).padStart(2,'0')}:00</span>)}</div>
    <div className="day-columns" style={{gridTemplateColumns:`repeat(${dates.length}, minmax(0,1fr))`}}>{dates.map(d=>{
-    const events=visible.filter(l=>l.date===d);const lanes=lessonLanes(events,week);const breaks=week?[]:freeTimeIntervals(events);
+    const events=visible.filter(l=>l.date===d);const lanes=lessonLanes(events);const breaks=week?[]:freeTimeIntervals(events);
     return <div key={d} className={`day-column ${week&&d===dateToday()?'today-column':''}`} style={{backgroundSize:`100% ${hour}px`}}>
      {!week&&breaks.map(b=><div className="break-label" key={b.start} style={{top:(b.start-start)/60*hour,height:b.duration/60*hour}}><span>{Math.floor(b.duration/60)>0?`${Math.floor(b.duration/60)} h `:''}{b.duration%60?`${b.duration%60} min `:''}slobodno</span></div>)}
-     {events.map(l=>{const lane=lanes.get(l.id)!;const duration=minutes(l.end)-minutes(l.start);return <LessonButton key={l.id} lesson={l} onHold={holdLesson} onTap={week?onDetails:undefined} className={`lesson ${l.personal?`personal color-${personalColor(l.color)}`:l.type==='LV'?'lab':l.type==='PR'?'lecture':'exercise'} ${week?'compact':''} ${lessonTags(l).length?'has-tags':''} ${duration<=60?'short':''} ${duration<=30?'brief':''}`} style={{zIndex:lane.lane+1,top:(minutes(l.start)-start)/60*hour,height:duration/60*hour,paddingBlock:duration/60*hour<8?0:undefined,left:`calc(${lane.lane/lane.count*100}% + ${week?2:5}px)`,width:`calc(${lane.span*100/lane.count}% - ${week?4:10}px)`}}>
+     {events.map(l=>{const lane=lanes.get(l.id)!;const duration=minutes(l.end)-minutes(l.start);return <LessonButton key={l.id} lesson={l} onHold={holdLesson} onTap={week?onDetails:undefined} className={`lesson ${l.personal?`personal color-${personalColor(l.color)}`:l.type==='LV'?'lab':l.type==='PR'?'lecture':'exercise'} ${week?'compact':''} ${lane.count>1?'parallel':''} ${lessonTags(l).length?'has-tags':''} ${duration<=60?'short':''} ${duration<=30?'brief':''}`} style={{zIndex:lane.lane+1,top:(minutes(l.start)-start)/60*hour,height:duration/60*hour,paddingBlock:duration/60*hour<8?0:undefined,left:`calc(${lane.lane/lane.count*100}% + ${week?2:5}px)`,width:`calc(${lane.span*100/lane.count}% - ${week?4:10}px)`}}>
       {!week&&<span className="lesson-top-row"><span className="lesson-time">{l.start} – {l.end}</span><strong className="lesson-room">{l.room||'Lokacija nije navedena'}</strong></span>}
       <SourceTags lesson={l}/>
       <strong className="lesson-title" style={week?{'WebkitLineClamp':Math.max(1,Math.floor((duration/60*hour-(lessonTags(l).length?12:10))/(lessonTags(l).length?11:14)))}:undefined}>{l.title}{l.repeatingYear&&<small className="lesson-year"> · {l.repeatingYear}. g.</small>}</strong>
-      {!week&&<>{l.personal&&l.note&&<span className="lesson-note" style={{WebkitLineClamp:Math.max(1,Math.floor((duration/60*hour-57)/17))}}>{l.note}</span>}{!l.personal&&<span className="lesson-group">{lessonTypeLabel(l)}{l.group&&' · '+l.group}</span>}{l.teacher&&<span className="lesson-teacher">{l.teacher}</span>}{(l.courseCode||l.progress)&&<span className="lesson-meta">{l.courseCode}{l.progress&&` · ${l.progress}`}</span>}{!l.personal&&l.note&&<span className="lesson-note">{l.note}</span>}{l.edited&&<span className="edited-marker">Osobna izmjena{l.sourceChanged?' · FERIT je ažurirao termin':''}</span>}</>}
+      {!week&&<>{l.personal&&l.note&&<span className="lesson-note" style={{WebkitLineClamp:Math.max(1,Math.floor((duration/60*hour-57)/17))}}>{l.note}</span>}{!l.personal&&<span className="lesson-group">{lessonTypeLabel(l)}{l.group&&' · '+l.group}</span>}{l.teacher&&<span className="lesson-teacher">{l.teacher}{(() => { const em = getTeacherEmail(l.teacher); return em ? ` · ${em}` : ''; })()}</span>}{(l.courseCode||l.progress)&&<span className="lesson-meta">{l.courseCode}{l.progress&&` · ${l.progress}`}</span>}{!l.personal&&l.note&&<span className="lesson-note">{l.note}</span>}{l.edited&&<span className="edited-marker">Osobna izmjena{l.sourceChanged?' · FERIT je ažurirao termin':''}</span>}</>}
      </LessonButton>;})}
      {!events.length&&!week&&<div className="empty-day"><h3>Nema termina</h3><p>{fmt(d,{weekday:'long',day:'numeric',month:'long'})}</p></div>}
     </div>;
@@ -311,7 +540,11 @@ function UpcomingAssessments({scheduleKey,repeatingCourses,study,groups,override
    <div className="assessment-card-facts"><span>{lesson.start} – {lesson.end}</span><strong>{lesson.room||'Lokacija nije navedena'}</strong></div>
    <dl className="assessment-card-details">
     {!lesson.personal&&<div><dt>Vrsta · grupa</dt><dd>{lessonTypeLabel(lesson,true)+(lesson.group?' · '+lesson.group:'')}</dd></div>}
-    {lesson.teacher&&<div><dt>Nastavnik</dt><dd>{lesson.teacher}</dd></div>}
+    {lesson.teacher&&(() => {
+     const teacherInfo = findTeacher(lesson.teacher);
+     const teacherEmail = teacherInfo?.email ?? getTeacherEmail(lesson.teacher);
+     return <div><dt>Nastavnik</dt><dd><span>{lesson.teacher}</span>{teacherEmail&&<div className="assessment-teacher-contact"><a href={`mailto:${teacherEmail}`} className="teacher-mail-link"><Mail size={13}/><span>{teacherEmail}</span></a>{teacherInfo?.room&&<span className="assessment-teacher-room"> · Ured {teacherInfo.room}</span>}</div>}</dd></div>;
+    })()}
     {lesson.courseCode&&<div><dt>Šifra predmeta</dt><dd>{lesson.courseCode}</dd></div>}
     {lesson.progress&&<div><dt>Termin</dt><dd>{lesson.progress}</dd></div>}
     {lesson.note&&<div><dt>Napomena</dt><dd className="assessment-card-note">{lesson.note}</dd></div>}
@@ -345,10 +578,10 @@ export default function ScheduleApp(){
  const [lastSavedWeek,setLastSavedWeek]=useState<SavedWeek|null>(null);
  const [details,setDetails]=useState<Lesson|null>(null);
  const [repeatingData,setRepeatingData]=useState<{context:string;schedules:Record<string,Schedule>;offline:string[];failed:string[];loading:boolean}>({context:'',schedules:{},offline:[],failed:[],loading:false});
- const [ready,setReady]=useState(false);const [prefs,setPrefs]=useState<Preferences>(EMPTY);const [studies,setStudies]=useState(fallback);const [date,setDate]=useState('');const [mode,setMode]=useState<'day'|'week'>('day');const [data,setData]=useState<Schedule|null>(null);const [loading,setLoading]=useState(false);const [error,setError]=useState('');const [offline,setOffline]=useState(false);const [modal,setModal]=useState<'study'|'date'|'groups'|'settings'|'reset'|'assessments'|'repeating'|null>(null);const [edit,setEdit]=useState<Lesson|null>(null);const [refresh,setRefresh]=useState(0);const [toast,setToast]=useState('');const [undo,setUndo]=useState<Preferences|null>(null);const [landscape,setLandscape]=useState(false);const [viewportWidth,setViewportWidth]=useState(400);const [groupCourses,setGroupCourses]=useState<LabCourse[]>([]);const [groupLoading,setGroupLoading]=useState(false);const [groupError,setGroupError]=useState('');
+ const [ready,setReady]=useState(false);const [prefs,setPrefs]=useState<Preferences>(EMPTY);const [studies,setStudies]=useState(fallback);const [date,setDate]=useState('');const [mode,setMode]=useState<'day'|'week'>('day');const [data,setData]=useState<Schedule|null>(null);const [loading,setLoading]=useState(false);const [error,setError]=useState('');const [offline,setOffline]=useState(false);const [modal,setModal]=useState<'study'|'date'|'groups'|'settings'|'reset'|'assessments'|'repeating'|'teachers'|null>(null);const [edit,setEdit]=useState<Lesson|null>(null);const [refresh,setRefresh]=useState(0);const [toast,setToast]=useState('');const [undo,setUndo]=useState<Preferences|null>(null);const [landscape,setLandscape]=useState(false);const [viewportWidth,setViewportWidth]=useState(400);const [groupCourses,setGroupCourses]=useState<LabCourse[]>([]);const [groupLoading,setGroupLoading]=useState(false);const [groupError,setGroupError]=useState('');
  useEffect(()=>{
   let mounted=true;let widgetDate:string|null=null;
-  readPhonePreferences(STORAGE).then(value=>{if(!mounted)return;try{const saved=JSON.parse(value??'null');setPrefs({...EMPTY,...(saved&&typeof saved==='object'?saved:{}),theme:storedTheme(saved?.theme,matchMedia('(prefers-color-scheme: dark)').matches)});}catch{setPrefs({...EMPTY,theme:storedTheme(null,matchMedia('(prefers-color-scheme: dark)').matches)});}setDate(widgetDate??dateToday());setReady(true);}).catch(()=>{if(mounted){setDate(widgetDate??dateToday());setReady(true);}});
+  readPhonePreferences(STORAGE).then(value=>{if(!mounted)return;try{const saved=JSON.parse(value??'null');setPrefs({...EMPTY,...(saved&&typeof saved==='object'?saved:{}),customTeachers:Array.isArray(saved?.customTeachers)?saved.customTeachers:[],theme:storedTheme(saved?.theme,matchMedia('(prefers-color-scheme: dark)').matches)});}catch{setPrefs({...EMPTY,theme:storedTheme(null,matchMedia('(prefers-color-scheme: dark)').matches)});}setDate(widgetDate??dateToday());setReady(true);}).catch(()=>{if(mounted){setDate(widgetDate??dateToday());setReady(true);}});
   const media=matchMedia('(orientation: landscape)');
   const actualLandscape=()=>isPhoneApp()&&screen.orientation?.type?screen.orientation.type.startsWith('landscape'):media.matches;
   const phoneSized=()=>isPhoneApp()||(Math.min(innerWidth,innerHeight)<600&&Math.max(innerWidth,innerHeight)<1000);
@@ -466,6 +699,7 @@ export default function ScheduleApp(){
    <div className="settings-list">
     <button className="settings-row" onClick={()=>setModal('study')}><span><strong>Studij i godina</strong><small>{selectedStudy?.name??prefs.selection.study} · {selectedOption?.label??key}</small></span><ChevronRight size={18}/></button>
     <button className="settings-row" disabled={!prefs.selection} onClick={()=>setModal('groups')}><span><strong>LV grupe</strong><small>{groupSummary}</small></span><ChevronRight size={18}/></button>
+    <button className="settings-row" onClick={()=>setModal('teachers')}><span><strong>Imenik nastavnika</strong><small>E-mail adrese, uredi i kontakti profesora</small></span><ChevronRight size={18}/></button>
     <button className="settings-row" onClick={()=>setModal('assessments')}><span><strong>Ispiti i provjere</strong><small>Nadolazeći termini i oznake iz rasporeda</small></span><ChevronRight size={18}/></button>
     <button className="settings-row" onClick={()=>setModal('repeating')}><span><strong>Ponavljački predmeti</strong><small>{repeatingCourses.length?repeatingCourses.map(c=>c.title).join(' · '):'Dodaj predmete s godine ispod tvoje'}</small></span><ChevronRight size={18}/></button>
     <button className="settings-row reset-schedule-row" onClick={()=>setModal('reset')}><span><strong>Vrati izvorni raspored</strong><small>Poništi osobne izmjene i događaje</small></span><RotateCcw size={18}/></button>
@@ -476,11 +710,12 @@ export default function ScheduleApp(){
   </Modal>}
   {modal==='repeating'&&key&&<RepeatingPicker key={key} studies={studies} scheduleKey={key} settings={prefs.repeating?.[key]??EMPTY_REPEATING} week={week} onSave={settings=>{setDetails(null);setPrefs(p=>({...p,repeating:{...p.repeating,[key]:settings}}));}} onClose={()=>setModal('settings')}/>}
   {modal==='assessments'&&key&&<UpcomingAssessments key={key} scheduleKey={key} repeatingCourses={repeatingCourses} study={(selectedStudy?.name??prefs.selection.study)+' · '+(selectedOption?.label??key)} groups={prefs.groups} overrides={prefs.overrides} personal={prefs.personal} onClose={()=>setModal(null)} onShowSchedule={lesson=>{setModal(null);setDate(lesson.date);switchDay();}}/>}
+  {modal==='teachers'&&<TeacherDirectoryModal lessons={lessons} keyStudy={key} repeatingCourses={repeatingCourses} overrides={prefs.overrides} personal={prefs.personal} groups={prefs.groups} customTeachers={prefs.customTeachers??[]} onSaveCustomTeachers={customTeachers=>setPrefs(p=>({...p,customTeachers}))} onClose={()=>setModal('settings')}/>}
   {modal==='reset'&&<Modal title="Vrati izvorni raspored?" variant="confirmation" onClose={()=>setModal('settings')} actionsClassName="reset-actions" actions={<><button type="button" className="text-action" onClick={()=>setModal('settings')}>Odustani</button><button type="button" className="primary" onClick={resetSchedule}><RotateCcw size={16}/>Vrati raspored</button></>}>
    <p className="reset-explanation">Uklonit će se osobni događaji i sve izmjene termina iz svih tvojih rasporeda. Pomaknuti i uklonjeni termini vratit će se prema FERIT rasporedu.</p>
    <p className="hint reset-preserved">Studij, godina, ponavljački predmeti, LV grupe i tema ostaju spremljeni.</p>
   </Modal>}
-  {edit&&<LessonEditor lesson={edit} original={edit.personal?undefined:sourceLessons.find(l=>l.id===edit.id)??prefs.overrides[edit.id]?.original} onSave={saveLesson} onDelete={()=>removeLesson(edit)} onRestore={edit.edited?()=>restore(edit.id):undefined} onClose={()=>setEdit(null)}/>}
+  {edit&&<LessonEditor lesson={edit} original={edit.personal?undefined:sourceLessons.find(l=>l.id===edit.id)??prefs.overrides[edit.id]?.original} lessons={lessons} onSave={saveLesson} onDelete={()=>removeLesson(edit)} onRestore={edit.edited?()=>restore(edit.id):undefined} onClose={()=>setEdit(null)}/>}
   {toast&&<div className="toast" role="status"><span>{toast}</span>{undo&&<button onClick={()=>{setPrefs(undo);setUndo(null);setToast('Promjena je poništena.');}}>Poništi</button>}</div>}
  </main>;
 }

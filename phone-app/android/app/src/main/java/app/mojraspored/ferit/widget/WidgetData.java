@@ -32,6 +32,19 @@ public final class WidgetData {
         return result;
     }
     public static String selection(JSONObject prefs) { return obj(prefs, "selection").optString("key"); }
+    /** Same class/type and personal-color mapping as the timetable's lesson cards. */
+    public static String palette(JSONObject lesson) {
+        if(lesson!=null && lesson.optBoolean("personal")) {
+            switch(lesson.optString("color")) {
+                case "peach":return "lab";
+                case "green":return "lecture";
+                case "blue":return "exercise";
+                default:return "personal";
+            }
+        }
+        String type=lesson==null?"LV":lesson.optString("type");
+        return type.equals("LV")?"lab":type.equals("PR")?"lecture":"exercise";
+    }
     public static String today(long now) { return Instant.ofEpochMilli(now).atZone(ZONE).toLocalDate().toString(); }
     public static String tomorrow(long now) { return LocalDate.parse(today(now)).plusDays(1).toString(); }
     public static final int VISIBLE_DAYS = 7;
@@ -159,8 +172,29 @@ public final class WidgetData {
                 JSONObject c = courses.get(course(original.length() == 0 ? l : original));
                 if (c == null || !typeSelected(l, c)) continue;
             }
-            String selectedGroup = groups.optString(course(l) + ":" + l.optString("type"));
-            if (!l.optBoolean("personal") && !selectedGroup.isEmpty() && !selectedGroup.equals(l.optString("group"))) continue;
+            Object groupVal = groups.opt(course(l) + ":" + l.optString("type"));
+            if (!l.optBoolean("personal") && groupVal != null) {
+                String lessonGroup = l.optString("group");
+                if (groupVal instanceof JSONArray) {
+                    JSONArray arr = (JSONArray) groupVal;
+                    if (arr.length() > 0) {
+                        boolean match = false;
+                        for (int i = 0; i < arr.length(); i++) {
+                            if (arr.optString(i).trim().equals(lessonGroup)) { match = true; break; }
+                        }
+                        if (!match) continue;
+                    }
+                } else {
+                    String str = groupVal.toString().trim();
+                    if (!str.isEmpty()) {
+                        boolean match = false;
+                        for (String g : str.split(",")) {
+                            if (g.trim().equals(lessonGroup)) { match = true; break; }
+                        }
+                        if (!match) continue;
+                    }
+                }
+            }
             try { if (time(date, l.getString("end")) <= time(date, l.getString("start"))) continue; }
             catch (Exception e) { continue; }
             result.add(l);

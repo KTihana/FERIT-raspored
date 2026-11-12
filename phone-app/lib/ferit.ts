@@ -104,4 +104,13 @@ export function swipeDirection(x:number,y:number,rotated=false):number{
  const horizontal=rotated?y:x,vertical=rotated?x:y;
  return Math.abs(horizontal)>65&&Math.abs(horizontal)>Math.abs(vertical)*1.5?(horizontal<0?1:-1):0;
 }
-export function filterCourseGroups(lessons:Lesson[],groups:Record<string,string>):Lesson[]{return lessons.filter(l=>l.personal||!groups[courseGroupKey(l)]||l.group===groups[courseGroupKey(l)]);}
+export function filterCourseGroups(lessons:Lesson[],groups:Record<string,string|string[]>):Lesson[]{
+ return lessons.filter(l=>{
+  if(l.personal)return true;
+  const sel=groups[courseGroupKey(l)];
+  if(!sel)return true;
+  const list=Array.isArray(sel)?sel:sel.split(',').map(s=>s.trim()).filter(Boolean);
+  if(!list.length)return true;
+  return list.includes(l.group);
+ });
+}

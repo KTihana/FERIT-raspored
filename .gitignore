@@ -1,0 +1,32 @@
+# Local OS files
+.DS_Store
+
+# Android & build artifacts
+*.apk
+*.zip
+*.tar.gz
+*.log
+release-*
+publish-*
+site-publish/
+*-proof.*
+docs/*-proof.*
+
+# Local release drafts and download inventories
+draft-release-*.json
+published-release-*.json
+published-update-selection-*.json
+public-releases-*.json
+release-metadata-*.json
+source-files-*.json
+download-release-inventory.json
+github-*-proof.*
+github-README-*.md
+github-docs-*.json
+remove-*.png
+remove-*.jpg
+
+# Web previews and deprecated root apps (phone-app is the source of truth)
+app/
+app-preview/
+design/

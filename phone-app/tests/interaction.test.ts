@@ -116,11 +116,11 @@ test('empty compact week keeps the full baseline and invalid viewport measuremen
 });
 
 
-test('a brief late overlap does not squeeze the whole earlier class, while real parallel classes keep separate lanes',async()=>{
+test('even a brief late personal event stays beside the earlier class',async()=>{
  const {lessonLanes}=await import('../lib/timetable-layout.ts');
  const base={id:'lecture',scheduleKey:'3-60',date:'2026-10-12',title:'Arhitektura računala',courseCode:'',start:'08:00',end:'11:15',room:'K2-12',type:'PR',typeLabel:'',teacher:'',group:'',progress:''};
  const short={...base,id:'personal',start:'11:00',end:'11:30',personal:true};
- let slots=lessonLanes([base,short]);assert.deepEqual(slots.get('lecture'),{lane:0,count:2,span:2});assert.deepEqual(slots.get('personal'),{lane:1,count:2,span:1});
+ let slots=lessonLanes([base,short]);assert.deepEqual(slots.get('lecture'),{lane:0,count:2,span:1});assert.deepEqual(slots.get('personal'),{lane:1,count:2,span:1});
  slots=lessonLanes([base,{...short,start:'08:00',end:'09:00'}]);assert.equal(slots.get('lecture')!.span,1);
  slots=lessonLanes([base,{...short,start:'10:00',end:'13:00'}]);assert.equal(slots.get('lecture')!.span,1);
  slots=lessonLanes([base,{...short,start:'11:15',end:'11:30'}]);assert.equal(slots.get('lecture')!.count,1);
@@ -131,7 +131,7 @@ test('compact week keeps even brief overlapping classes in separate lanes',async
  const base={id:'lecture',scheduleKey:'3-60',date:'2026-10-12',title:'Arhitektura računala',courseCode:'',start:'08:00',end:'11:15',room:'K2-12',type:'PR',typeLabel:'',teacher:'',group:'',progress:''};
  const short={...base,id:'personal',start:'11:00',end:'11:30',personal:true};
  const next={...base,id:'next',start:'11:30',end:'12:30'};
- const slots=lessonLanes([next,short,base],true);
+ const slots=lessonLanes([next,short,base]);
  assert.deepEqual(slots.get('lecture'),{lane:0,count:2,span:1});
  assert.deepEqual(slots.get('personal'),{lane:1,count:2,span:1});
  assert.deepEqual(slots.get('next'),{lane:0,count:1,span:1});

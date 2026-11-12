@@ -31,25 +31,26 @@ const layout=`<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
  android:id="@+id/widget_root" android:layout_width="match_parent" android:layout_height="match_parent"
  android:orientation="vertical" android:background="@drawable/widget_glass" android:padding="16dp">
- <LinearLayout android:layout_width="match_parent" android:layout_height="28dp" android:gravity="center_vertical">
+ <LinearLayout android:id="@+id/widget_branding" android:layout_width="match_parent" android:layout_height="36dp" android:gravity="center_vertical">
   <ImageView android:layout_width="27dp" android:layout_height="29dp" android:src="@drawable/widget_ferit_logo" android:contentDescription="FERIT"/>
   ${text('','FERIT',16,'android:layout_marginStart="8dp" android:textStyle="bold"').replace('#BDD3F2','#FFFFFF')}
   ${text('','\\u0020raspored',16,'android:layout_weight="1"').replace('layout_width="wrap_content"','layout_width="0dp"')}
-  <ImageView android:id="@+id/widget_refresh" android:layout_width="40dp" android:layout_height="40dp" android:padding="8dp" android:src="@drawable/widget_refresh" android:contentDescription="@string/widget_refresh"/>
+  <ImageView android:id="@+id/widget_refresh" android:layout_width="44dp" android:layout_height="44dp" android:padding="10dp" android:scaleType="centerInside" android:src="@drawable/widget_refresh" android:contentDescription="@string/widget_refresh"/>
  </LinearLayout>
- <LinearLayout android:layout_width="match_parent" android:layout_height="32dp" android:gravity="center_vertical" android:layout_marginTop="4dp" android:layout_marginBottom="4dp">
-  <ImageView android:id="@+id/widget_previous" android:layout_width="28dp" android:layout_height="match_parent" android:padding="5dp" android:layout_marginEnd="6dp" android:src="@drawable/widget_previous" android:contentDescription="@string/widget_previous"/>
+ <LinearLayout android:layout_width="match_parent" android:layout_height="40dp" android:gravity="center_vertical" android:layout_marginTop="2dp" android:layout_marginBottom="2dp">
+  <ImageView android:id="@+id/widget_previous" android:layout_width="44dp" android:layout_height="match_parent" android:padding="10dp" android:scaleType="centerInside" android:layout_marginEnd="4dp" android:src="@drawable/widget_previous" android:contentDescription="@string/widget_previous"/>
   ${text('widget_day','Danas',24,'android:textStyle="bold"').replace('#BDD3F2','#FFFFFF')}
   ${text('widget_date','20. listopada',17,'android:layout_marginStart="8dp" android:maxLines="1" android:ellipsize="end" android:layout_weight="1"').replace('layout_width="wrap_content"','layout_width="0dp"')}
-  <ImageView android:id="@+id/widget_next_day" android:layout_width="28dp" android:layout_height="match_parent" android:padding="5dp" android:src="@drawable/widget_next_day" android:contentDescription="@string/widget_next_day"/>
+  <ImageView android:id="@+id/widget_next_day" android:layout_width="44dp" android:layout_height="match_parent" android:padding="10dp" android:scaleType="centerInside" android:src="@drawable/widget_next_day" android:contentDescription="@string/widget_next_day"/>
+  <ImageView android:id="@+id/widget_refresh_compact" android:layout_width="40dp" android:layout_height="match_parent" android:padding="8dp" android:scaleType="centerInside" android:src="@drawable/widget_refresh" android:contentDescription="@string/widget_refresh" android:visibility="gone"/>
  </LinearLayout>
  ${divider}
  <LinearLayout android:id="@+id/widget_hero" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:layout_marginBottom="8dp">
-  <ImageView android:layout_width="6dp" android:layout_height="match_parent" android:src="@drawable/widget_marker" android:scaleType="fitXY" android:importantForAccessibility="no"/>
+  <ImageView android:id="@+id/widget_marker" android:layout_width="6dp" android:layout_height="match_parent" android:src="@drawable/widget_marker" android:scaleType="fitXY" android:importantForAccessibility="no"/>
   <LinearLayout android:layout_width="0dp" android:layout_weight="1" android:layout_height="wrap_content" android:layout_marginStart="12dp" android:orientation="vertical">
    ${text('widget_status','U tijeku',13,'android:background="@drawable/widget_pill" android:textStyle="bold"').replace('#BDD3F2','#19222A')}
    ${text('widget_title','Programsko inženjerstvo',20,'android:layout_marginTop="6dp" android:textStyle="bold" android:maxLines="2" android:ellipsize="end"').replace('#BDD3F2','#FFFFFF').replace('layout_width="wrap_content"','layout_width="match_parent"')}
-   <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:gravity="center_vertical">
+   <LinearLayout android:id="@+id/widget_time_row" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:gravity="center_vertical">
     ${text('widget_time','10:00 – 12:00',15,'android:layout_weight="1"').replace('layout_width="wrap_content"','layout_width="0dp"')}
     ${text('widget_room','K3-12',15,'android:maxWidth="100dp" android:maxLines="1" android:ellipsize="end"')}
    </LinearLayout>
@@ -59,7 +60,7 @@ const layout=`<?xml version="1.0" encoding="utf-8"?>
     ${text('widget_tomorrow_start','Počinje sutra u 09:00',12,'android:layout_weight="1" android:maxLines="1" android:ellipsize="end"').replace('layout_width="wrap_content"','layout_width="0dp"')}
    </LinearLayout>
    <LinearLayout android:id="@+id/widget_progress_row" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:gravity="center_vertical">
-    <ProgressBar android:id="@+id/widget_progress" style="?android:attr/progressBarStyleHorizontal" android:layout_width="0dp" android:layout_weight="1" android:layout_height="6dp" android:max="10000" android:progress="6250" android:indeterminate="false" android:progressDrawable="@drawable/widget_progress" android:progressTint="#FFB987" android:progressBackgroundTint="#4D9BB1CA"/>
+    <FrameLayout android:id="@+id/widget_progress_container" android:layout_width="0dp" android:layout_weight="1" android:layout_height="6dp"><include layout="@layout/widget_progress_lab_light"/></FrameLayout>
     ${text('widget_remaining','Još 45 min',13,'android:layout_marginStart="10dp"')}
    </LinearLayout>
   </LinearLayout>
@@ -70,10 +71,12 @@ const layout=`<?xml version="1.0" encoding="utf-8"?>
  </LinearLayout>
  ${next(1)}${next(2)}
  <LinearLayout android:id="@+id/widget_space" android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" android:orientation="vertical"/>
+ <LinearLayout android:id="@+id/widget_footer_container" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical">
  ${divider}
  <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:paddingTop="4dp">
   ${text('widget_footer','Još 2 termina nakon ovog',12,'android:layout_weight="1" android:maxLines="2" android:ellipsize="end"').replace('layout_width="wrap_content"','layout_width="0dp"')}
   <ImageView android:id="@+id/widget_open" android:layout_width="30dp" android:layout_height="24dp" android:paddingStart="7dp" android:src="@drawable/widget_calendar" android:contentDescription="@string/widget_open"/>
+ </LinearLayout>
  </LinearLayout>
 </LinearLayout>`;
 await mkdir(join(res,'layout'),{recursive:true});
@@ -81,3 +84,23 @@ await writeFile(join(res,'layout/schedule_widget.xml'),layout+'\n');
 await mkdir(join(res,'layout-v26'),{recursive:true});
 await writeFile(join(res,'layout-v26/schedule_widget.xml'),layout.replaceAll('android:includeFontPadding="false"','android:includeFontPadding="false" android:fontFamily="@font/widget_inter"')+'\n');
 console.log('Widget layout and exact FERIT vector resources generated.');
+
+// Exact schedule colors; do not maintain a second widget-only event palette.
+const css=await readFile(join(root,'app/globals.css'),'utf8');
+const blocks=[css.match(/:root\s*\{([^}]+)\}/)?.[1],css.match(/:root\[data-theme='dark'\]\s*\{([^}]+)\}/)?.[1]];
+const colorEntries=[];
+for(const [index,theme] of ['light','dark'].entries()){
+ const block=blocks[index];if(!block)throw new Error('Schedule theme block missing');
+ for(const type of ['lab','lecture','exercise','personal']){
+  const name=type+'_'+theme;
+  for(const [suffix,variable] of [['fill',type],['rail',type+'-rail']]){
+   const value=block.match(new RegExp('--'+variable+':\\s*(#[a-fA-F0-9]{6})'))?.[1];
+   if(!value)throw new Error('Missing schedule color: '+variable);
+   colorEntries.push('    <color name="widget_'+name+'_'+suffix+'">'+value+'</color>');
+  }
+  await writeFile(join(res,'drawable/widget_pill_'+name+'.xml'),`<shape xmlns:android="http://schemas.android.com/apk/res/android"><solid android:color="@color/widget_${name}_fill"/><corners android:radius="13dp"/><padding android:left="12dp" android:right="12dp" android:top="3dp" android:bottom="3dp"/></shape>\n`);
+  await writeFile(join(res,'layout/widget_progress_'+name+'.xml'),`<ProgressBar xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/widget_progress" style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="6dp" android:max="10000" android:progress="6250" android:indeterminate="false" android:progressDrawable="@drawable/widget_progress" android:progressTint="@color/widget_${name}_${theme==='dark'?'rail':'fill'}" android:progressBackgroundTint="#4D9BB1CA"/>\n`);
+ }
+}
+await writeFile(join(res,'values/widget_palette.xml'),'<resources>\n'+colorEntries.join('\n')+'\n</resources>\n');
+console.log('Widget event colors synchronized with light/dark schedule colors.');
