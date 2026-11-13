@@ -27,6 +27,6 @@ remove-*.png
 remove-*.jpg
 
 # Web previews and deprecated root apps (phone-app is the source of truth)
-app/
-app-preview/
-design/
+/app/
+/app-preview/
+/design/

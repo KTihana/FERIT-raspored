@@ -1,0 +1,18 @@
+<resources>
+    <color name="widget_lab_light_fill">#ffe1cc</color>
+    <color name="widget_lab_light_rail">#a64713</color>
+    <color name="widget_lecture_light_fill">#d9edde</color>
+    <color name="widget_lecture_light_rail">#245c36</color>
+    <color name="widget_exercise_light_fill">#dce7ff</color>
+    <color name="widget_exercise_light_rail">#254fb3</color>
+    <color name="widget_personal_light_fill">#e8dcff</color>
+    <color name="widget_personal_light_rail">#7148b3</color>
+    <color name="widget_lab_dark_fill">#372c24</color>
+    <color name="widget_lab_dark_rail">#f5b288</color>
+    <color name="widget_lecture_dark_fill">#23382c</color>
+    <color name="widget_lecture_dark_rail">#9ad1ac</color>
+    <color name="widget_exercise_dark_fill">#23314d</color>
+    <color name="widget_exercise_dark_rail">#a5bbf8</color>
+    <color name="widget_personal_dark_fill">#30253e</color>
+    <color name="widget_personal_dark_rail">#caa9f7</color>
+</resources>

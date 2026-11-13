@@ -1,5 +1,15 @@
 # FERIT raspored
 
+## Android 1.0.24 — Imenik nastavnika, više LV grupa i osjetljivost widgeta
+
+- **Više LV grupa:** Mogućnost istovremenog odabira više grupa laboratorijskih vježbi za svaki predmet (npr. LV1 i LV3 istovremeno).
+- **Imenik nastavnika:** Prikaz službenih e-mail adresa (@ferit.hr), ureda i telefona nastavnika na karticama rasporeda, u detaljima termina i nadolazećim provjerama.
+- **Moji nastavnici:** Imenik automatski prikazuje profesore i asistente iz tvog rasporeda i odabranih ponavljačkih predmeta uz oznaku kolegija.
+- **Cijeli imenik i dodavanje:** Pretraživanje svih 268 djelatnika FERIT-a i dodavanje na svoj popis uz trajno spremanje u postavke.
+- **Osjetljivost widgeta:** Uklonjeno slučajno pokretanje aplikacije pri dodiru kontrola na widgetu; povećane dodirne površine strelica i osvježavanja na 44dp.
+
+Android verzija **1.0.24**, build **30**.
+
 ## Android 1.0.23 — Overlapping personal events (local review)
 
 Personal events may share their time with classes or other personal events. The editor shows a small informational notice naming the existing event; Save remains available. Warnings follow the selected date and times, exclude the event being edited, and use the visible timetable, including selected LV groups, personal changes and repeating subjects. Adjacent events do not trigger a warning. A missing title or an end time at or before the start still requires correction.
