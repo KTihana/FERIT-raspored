@@ -1,6 +1,6 @@
 'use client';
 import {useEffect,useRef,useState,useMemo,useCallback,useId,type ReactNode,type FormEvent,type CSSProperties,type RefObject} from 'react';
-import {ChevronDown,ChevronLeft,ChevronRight,Check,Plus,X,SlidersHorizontal,Menu,RefreshCw,Download,RotateCcw,Trash2,Sun,Moon,Search,Keyboard,ChevronsUpDown,Info,Mail,MapPin,Phone} from 'lucide-react';
+import {ChevronDown,ChevronLeft,ChevronRight,Check,Plus,X,SlidersHorizontal,Menu,RefreshCw,Download,RotateCcw,Trash2,Sun,Moon,Search,Keyboard,ChevronsUpDown,Info,Mail,MapPin,Phone,Copy} from 'lucide-react';
 import {addDays,monday,dateToday,minutes,courseGroupKey,filterCourseGroups,studyChoices,mergeLabCourses,swipeDirection,type LabCourse,type Study,type Lesson,type Schedule,type Override} from '../lib/ferit';
 import {getTeacherEmail,findTeacher,searchTeachers,extractScheduleTeachers,FERIT_TEACHERS,type FeritTeacher} from '../lib/ferit-teachers';
 import {scheduleClient,isPhoneApp,phoneOrientation,onPhoneResume,onWidgetOpen,phoneTheme,readPhonePreferences,savePhonePreferences,phonePreferenceKeys,supportsHomeWidget,addHomeWidget} from '../lib/phone-runtime';
@@ -134,6 +134,41 @@ function TeacherDirectoryModal({
  const [searchMine,setSearchMine]=useState('');
  const [searchAll,setSearchAll]=useState('');
  const [allLessons,setAllLessons]=useState<Lesson[]>(lessons);
+ const [copiedEmail,setCopiedEmail]=useState<string|null>(null);
+ const copyTimerRef=useRef<ReturnType<typeof setTimeout>|null>(null);
+
+ useEffect(()=>()=>{if(copyTimerRef.current)clearTimeout(copyTimerRef.current);},[]);
+
+ const copyEmail=useCallback((email:string)=>{
+  const done=()=>{
+   setCopiedEmail(email);
+   if(copyTimerRef.current)clearTimeout(copyTimerRef.current);
+   copyTimerRef.current=setTimeout(()=>setCopiedEmail(c=>c===email?null:c),1800);
+  };
+  if(navigator.clipboard?.writeText){
+   navigator.clipboard.writeText(email).then(done).catch(()=>{
+    const el=document.createElement('textarea');
+    el.value=email;
+    el.style.position='fixed';
+    el.style.opacity='0';
+    document.body.appendChild(el);
+    el.select();
+    try{document.execCommand('copy');}catch{}
+    document.body.removeChild(el);
+    done();
+   });
+  }else{
+   const el=document.createElement('textarea');
+   el.value=email;
+   el.style.position='fixed';
+   el.style.opacity='0';
+   document.body.appendChild(el);
+   el.select();
+   try{document.execCommand('copy');}catch{}
+   document.body.removeChild(el);
+   done();
+  }
+ },[]);
 
  useEffect(()=>{
   let active=true;
@@ -226,31 +261,37 @@ function TeacherDirectoryModal({
       const slug=t.slug||t.name;
       const isCustom=entry.isCustom||customSet.has(slug);
       return <div className="teacher-card" key={entry.key}>
-       <div className="teacher-info">
-        <strong>{t.name}</strong>
-        {entry.courses.length>0&&(
-         <div className="teacher-course-tags">
-          {entry.courses.map((c,i)=>(
-           <span key={i} className={`teacher-course-tag ${c.repeatingYear?'repeating':''}`}>
-            {c.repeatingYear?`Ponavljački · ${c.repeatingYear}. god: `:''}{c.title}{c.types.length?` (${c.types.join(', ')})`:''}
-           </span>
-          ))}
-         </div>
-        )}
-        {isCustom&&!entry.courses.length&&(
-         <div className="teacher-course-tags">
-          <span className="teacher-course-tag custom">Dodano ručno</span>
-         </div>
-        )}
-        <div className="teacher-meta-row">
-         {t.room&&<span className="teacher-room"><MapPin size={13}/>Ured {t.room}</span>}
-         {t.tel&&<a href={`tel:${t.tel}`} className="teacher-tel"><Phone size={13}/>{t.tel}</a>}
+       <div className="teacher-card-header">
+        <strong className="teacher-name">{t.name}</strong>
+        {isCustom&&<button type="button" className="teacher-remove-btn" onClick={()=>removeTeacher(slug)} title="Ukloni s mog popisa" aria-label={`Ukloni ${t.name}`}><Trash2 size={15}/></button>}
+       </div>
+       {t.email?(
+        <button type="button" className={`teacher-email-copy ${copiedEmail===t.email?'copied':''}`} onClick={()=>copyEmail(t.email!)} aria-label={`Kopiraj e-mail: ${t.email}`}>
+         <Mail size={13} aria-hidden="true"/>
+         <span className="teacher-email-value">{t.email}</span>
+         <span className="teacher-copy-pill">{copiedEmail===t.email?<><Check size={12}/>Kopirano</>:<><Copy size={12}/>Kopiraj</>}</span>
+        </button>
+       ):<span className="hint teacher-no-email">Nema e-maila</span>}
+       {entry.courses.length>0&&(
+        <div className="teacher-course-tags">
+         {entry.courses.map((c,i)=>(
+          <span key={i} className={`teacher-course-tag ${c.repeatingYear?'repeating':''}`}>
+           {c.repeatingYear?`Ponavljački · ${c.repeatingYear}. god: `:''}{c.title}{c.types.length?` (${c.types.join(', ')})`:''}
+          </span>
+         ))}
         </div>
-       </div>
-       <div className="teacher-card-actions">
-        {t.email?<a href={`mailto:${t.email}`} className="teacher-card-email-btn" aria-label={`Pošalji e-mail: ${t.email}`} title={t.email}><Mail size={15}/><span className="teacher-card-email-text">{t.email}</span></a>:<span className="hint">Nema e-maila</span>}
-        {isCustom&&<button type="button" className="teacher-remove-btn" onClick={()=>removeTeacher(slug)} title="Ukloni s mog popisa" aria-label={`Ukloni ${t.name}`}><Trash2 size={16}/></button>}
-       </div>
+       )}
+       {isCustom&&!entry.courses.length&&(
+        <div className="teacher-course-tags">
+         <span className="teacher-course-tag custom">Dodano ručno</span>
+        </div>
+       )}
+       {(t.room||t.tel)&&(
+        <div className="teacher-meta-row">
+         {t.room&&<span className="teacher-room"><MapPin size={12}/>Ured {t.room}</span>}
+         {t.tel&&<a href={`tel:${t.tel}`} className="teacher-tel"><Phone size={12}/>{t.tel}</a>}
+        </div>
+       )}
       </div>;
      })}
      {!filteredMine.length&&(
@@ -272,25 +313,31 @@ function TeacherDirectoryModal({
       const isOnList=myTeacherKeys.has(t.slug.toLowerCase())||myTeacherKeys.has(t.name.toLowerCase())||customSet.has(slug);
       const isCustom=customSet.has(slug);
       return <div className="teacher-card" key={slug}>
-       <div className="teacher-info">
-        <strong>{t.name}</strong>
-        <div className="teacher-meta-row">
-         {t.room&&<span className="teacher-room"><MapPin size={13}/>Ured {t.room}</span>}
-         {t.tel&&<a href={`tel:${t.tel}`} className="teacher-tel"><Phone size={13}/>{t.tel}</a>}
-        </div>
-       </div>
-       <div className="teacher-card-actions">
-        {t.email&&<a href={`mailto:${t.email}`} className="teacher-card-email-btn icon-only" aria-label={`Pošalji e-mail: ${t.email}`} title={t.email}><Mail size={15}/></a>}
+       <div className="teacher-card-header">
+        <strong className="teacher-name">{t.name}</strong>
         {isOnList?(
          <button type="button" className={`teacher-card-toggle added ${isCustom?'can-remove':''}`} onClick={()=>isCustom?removeTeacher(slug):undefined} title={isCustom?'Klikni za uklanjanje s popisa':'Uključen iz tvog rasporeda'}>
-          <Check size={14}/>Na popisu
+          <Check size={13}/>Na popisu
          </button>
         ):(
          <button type="button" className="teacher-card-toggle" onClick={()=>toggleTeacher(t)}>
-          <Plus size={14}/>Dodaj
+          <Plus size={13}/>Dodaj
          </button>
         )}
        </div>
+       {t.email&&(
+        <button type="button" className={`teacher-email-copy ${copiedEmail===t.email?'copied':''}`} onClick={()=>copyEmail(t.email!)} aria-label={`Kopiraj e-mail: ${t.email}`}>
+         <Mail size={13} aria-hidden="true"/>
+         <span className="teacher-email-value">{t.email}</span>
+         <span className="teacher-copy-pill">{copiedEmail===t.email?<><Check size={12}/>Kopirano</>:<><Copy size={12}/>Kopiraj</>}</span>
+        </button>
+       )}
+       {(t.room||t.tel)&&(
+        <div className="teacher-meta-row">
+         {t.room&&<span className="teacher-room"><MapPin size={12}/>Ured {t.room}</span>}
+         {t.tel&&<a href={`tel:${t.tel}`} className="teacher-tel"><Phone size={12}/>{t.tel}</a>}
+        </div>
+       )}
       </div>;
      })}
      {!fullDirectory.length&&<p className="hint">Nema rezultata za pretragu „{searchAll}”.</p>}
@@ -420,7 +467,7 @@ function LessonEditor({lesson,original,lessons,onSave,onDelete,onRestore,onClose
  const submit=(e:FormEvent)=>{e.preventDefault();const start=normalizeTimeEntry(value.start),end=normalizeTimeEntry(value.end);if(!start||!end){setError('Unesi sate od 00 do 23 i minute od 00 do 59.');return;}if(!value.title.trim()||minutes(end)<=minutes(start)){setError('Unesi naziv i završetak nakon početka.');return;}onSave({...value,title:value.title.trim(),start,end,...(value.personal?{color:personalColor(value.color)}:{})});onClose();};
  const actions=<>{!lesson.personal&&<button type="button" className="text-action restore-action" onClick={()=>{if(onRestore){onRestore();onClose();}else{setValue({...source});setError('');}}}><RotateCcw size={15}/>Vrati izvorni termin</button>}{(!lesson.personal||lesson.title)&&<button type="button" className="text-action danger" onClick={()=>setConfirmDelete(true)}><Trash2 size={15}/>{lesson.personal?'Izbriši događaj':'Ukloni iz mog rasporeda'}</button>}<button type="submit" form={formId} className="primary full">Spremi {lesson.personal?'događaj':'izmjenu'}</button></>;
  return <><Modal title={lesson.personal?(lesson.title?'Uredi događaj':'Novi događaj'):'Uredi termin'} onClose={onClose} actions={actions} actionsClassName="editor-actions">
-  {!lesson.personal&&<div className="editor-summary"><p className="editor-designation">Osobna izmjena</p><h3>{lesson.title}</h3><SourceTags lesson={lesson}/><div className="editor-summary-row"><span>{lessonTypeLabel(lesson,true)}{lesson.group&&' · '+lesson.group}</span><strong>{lesson.room||'Lokacija nije navedena'}</strong></div>{lesson.teacher&&<p>{lesson.teacher}{(() => { const em = getTeacherEmail(lesson.teacher); return em ? ` · ${em}` : ''; })()}</p>}<p className="lesson-meta">{lesson.courseCode}{lesson.progress&&' · '+lesson.progress}</p>{lesson.sourceChanged&&<p className="source-change-notice" role="status">FERIT je ažurirao termin. Osobna izmjena ostaje spremljena.</p>}</div>}
+  {!lesson.personal&&<div className="editor-summary"><p className="editor-designation">Osobna izmjena</p><h3>{lesson.title}</h3><SourceTags lesson={lesson}/><div className="editor-summary-row"><span>{lessonTypeLabel(lesson,true)}{lesson.group&&' · '+lesson.group}</span><strong>{lesson.room||'Lokacija nije navedena'}</strong></div>{lesson.teacher&&(() => { const em = getTeacherEmail(lesson.teacher); return <div className="editor-summary-teacher"><p>{lesson.teacher}</p>{em&&<p className="editor-summary-email">{em}</p>}</div>; })()}<p className="lesson-meta">{lesson.courseCode}{lesson.progress&&' · '+lesson.progress}</p>{lesson.sourceChanged&&<p className="source-change-notice" role="status">FERIT je ažurirao termin. Osobna izmjena ostaje spremljena.</p>}</div>}
   <form id={formId} className="lesson-editor" onSubmit={submit}>
    {lesson.personal&&<label className="field-label">Naziv<input required value={value.title} onChange={e=>set('title',e.target.value)}/></label>}
    <DateEntry value={value.date} onChange={v=>set('date',v)}/>
@@ -502,7 +549,7 @@ function TimeGrid({date,lessons,week,rotated,onLesson,onDetails,onDay,onSwipe}:{
       {!week&&<span className="lesson-top-row"><span className="lesson-time">{l.start} – {l.end}</span><strong className="lesson-room">{l.room||'Lokacija nije navedena'}</strong></span>}
       <SourceTags lesson={l}/>
       <strong className="lesson-title" style={week?{'WebkitLineClamp':Math.max(1,Math.floor((duration/60*hour-(lessonTags(l).length?12:10))/(lessonTags(l).length?11:14)))}:undefined}>{l.title}{l.repeatingYear&&<small className="lesson-year"> · {l.repeatingYear}. g.</small>}</strong>
-      {!week&&<>{l.personal&&l.note&&<span className="lesson-note" style={{WebkitLineClamp:Math.max(1,Math.floor((duration/60*hour-57)/17))}}>{l.note}</span>}{!l.personal&&<span className="lesson-group">{lessonTypeLabel(l)}{l.group&&' · '+l.group}</span>}{l.teacher&&<span className="lesson-teacher">{l.teacher}{(() => { const em = getTeacherEmail(l.teacher); return em ? ` · ${em}` : ''; })()}</span>}{(l.courseCode||l.progress)&&<span className="lesson-meta">{l.courseCode}{l.progress&&` · ${l.progress}`}</span>}{!l.personal&&l.note&&<span className="lesson-note">{l.note}</span>}{l.edited&&<span className="edited-marker">Osobna izmjena{l.sourceChanged?' · FERIT je ažurirao termin':''}</span>}</>}
+      {!week&&<>{l.personal&&l.note&&<span className="lesson-note" style={{WebkitLineClamp:Math.max(1,Math.floor((duration/60*hour-57)/17))}}>{l.note}</span>}{!l.personal&&<span className="lesson-group">{lessonTypeLabel(l)}{l.group&&' · '+l.group}</span>}{l.teacher&&(() => { const em = getTeacherEmail(l.teacher); return <span className="lesson-teacher"><span className="lesson-teacher-name">{l.teacher}</span>{em&&<span className="lesson-teacher-email">{em}</span>}</span>; })()}{(l.courseCode||l.progress)&&<span className="lesson-meta">{l.courseCode}{l.progress&&` · ${l.progress}`}</span>}{!l.personal&&l.note&&<span className="lesson-note">{l.note}</span>}{l.edited&&<span className="edited-marker">Osobna izmjena{l.sourceChanged?' · FERIT je ažurirao termin':''}</span>}</>}
      </LessonButton>;})}
      {!events.length&&!week&&<div className="empty-day"><h3>Nema termina</h3><p>{fmt(d,{weekday:'long',day:'numeric',month:'long'})}</p></div>}
     </div>;

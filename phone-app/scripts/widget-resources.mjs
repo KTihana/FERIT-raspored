@@ -85,10 +85,14 @@ await mkdir(join(res,'layout-v26'),{recursive:true});
 await writeFile(join(res,'layout-v26/schedule_widget.xml'),layout.replaceAll('android:includeFontPadding="false"','android:includeFontPadding="false" android:fontFamily="@font/widget_inter"')+'\n');
 console.log('Widget layout and exact FERIT vector resources generated.');
 
-// Exact schedule colors; do not maintain a second widget-only event palette.
+// Exact schedule colors plus bright accents for high-contrast legibility on the dark widget glass.
+const brightAccents={lab:'#FF9248',lecture:'#52E082',exercise:'#60A5FA',personal:'#C084FC'};
 const css=await readFile(join(root,'app/globals.css'),'utf8');
 const blocks=[css.match(/:root\s*\{([^}]+)\}/)?.[1],css.match(/:root\[data-theme='dark'\]\s*\{([^}]+)\}/)?.[1]];
 const colorEntries=[];
+for(const type of ['lab','lecture','exercise','personal']){
+ colorEntries.push('    <color name="widget_'+type+'_bright">'+brightAccents[type]+'</color>');
+}
 for(const [index,theme] of ['light','dark'].entries()){
  const block=blocks[index];if(!block)throw new Error('Schedule theme block missing');
  for(const type of ['lab','lecture','exercise','personal']){
@@ -98,8 +102,8 @@ for(const [index,theme] of ['light','dark'].entries()){
    if(!value)throw new Error('Missing schedule color: '+variable);
    colorEntries.push('    <color name="widget_'+name+'_'+suffix+'">'+value+'</color>');
   }
-  await writeFile(join(res,'drawable/widget_pill_'+name+'.xml'),`<shape xmlns:android="http://schemas.android.com/apk/res/android"><solid android:color="@color/widget_${name}_fill"/><corners android:radius="13dp"/><padding android:left="12dp" android:right="12dp" android:top="3dp" android:bottom="3dp"/></shape>\n`);
-  await writeFile(join(res,'layout/widget_progress_'+name+'.xml'),`<ProgressBar xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/widget_progress" style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="6dp" android:max="10000" android:progress="6250" android:indeterminate="false" android:progressDrawable="@drawable/widget_progress" android:progressTint="@color/widget_${name}_${theme==='dark'?'rail':'fill'}" android:progressBackgroundTint="#4D9BB1CA"/>\n`);
+  await writeFile(join(res,'drawable/widget_pill_'+name+'.xml'),`<shape xmlns:android="http://schemas.android.com/apk/res/android"><solid android:color="@color/widget_${type}_light_fill"/><corners android:radius="13dp"/><padding android:left="12dp" android:right="12dp" android:top="3dp" android:bottom="3dp"/></shape>\n`);
+  await writeFile(join(res,'layout/widget_progress_'+name+'.xml'),`<ProgressBar xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/widget_progress" style="?android:attr/progressBarStyleHorizontal" android:layout_width="match_parent" android:layout_height="6dp" android:max="10000" android:progress="6250" android:indeterminate="false" android:progressDrawable="@drawable/widget_progress" android:progressTint="@color/widget_${type}_bright" android:progressBackgroundTint="#4D9BB1CA"/>\n`);
  }
 }
 await writeFile(join(res,'values/widget_palette.xml'),'<resources>\n'+colorEntries.join('\n')+'\n</resources>\n');

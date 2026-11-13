@@ -91,7 +91,7 @@ public final class WidgetRenderer {
             WidgetPalette palette=new WidgetPalette(c,h,snapshot.dark);
             v.setInt(R.id.widget_marker,"setColorFilter",palette.accent);
             v.setInt(R.id.widget_status,"setBackgroundResource",palette.pill);
-            v.setTextColor(R.id.widget_status,palette.rail);
+            v.setTextColor(R.id.widget_status,palette.pillText);
             v.setTextColor(R.id.widget_group,palette.accent);
             // A small native fragment keeps ProgressBar tint compatible with Android 7+.
             v.removeAllViews(R.id.widget_progress_container);

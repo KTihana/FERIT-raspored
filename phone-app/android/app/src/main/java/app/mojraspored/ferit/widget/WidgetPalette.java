@@ -5,14 +5,14 @@ import org.json.JSONObject;
 
 /** Resources are generated from the timetable CSS, including the selected theme. */
 public final class WidgetPalette {
-    public final int accent, fill, rail, pill, progressLayout;
+    public final int accent, fill, rail, pillText, pill, progressLayout;
     public WidgetPalette(Context context,JSONObject lesson,boolean dark) {
-        String name=WidgetData.palette(lesson)+(dark?"_dark":"_light");
+        String type=WidgetData.palette(lesson);
+        String name=type+(dark?"_dark":"_light");
         fill=context.getColor(resource(context,"color","widget_"+name+"_fill"));
         rail=context.getColor(resource(context,"color","widget_"+name+"_rail"));
-        // The light schedule's card fill stays legible against the dark glass;
-        // the dark schedule already supplies a light event rail.
-        accent=dark?rail:fill;
+        accent=context.getColor(resource(context,"color","widget_"+type+"_bright"));
+        pillText=context.getColor(resource(context,"color","widget_"+type+"_light_rail"));
         pill=resource(context,"drawable","widget_pill_"+name);
         progressLayout=resource(context,"layout","widget_progress_"+name);
     }

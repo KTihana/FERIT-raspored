@@ -1,4 +1,8 @@
 <resources>
+    <color name="widget_lab_bright">#FF9248</color>
+    <color name="widget_lecture_bright">#52E082</color>
+    <color name="widget_exercise_bright">#60A5FA</color>
+    <color name="widget_personal_bright">#C084FC</color>
     <color name="widget_lab_light_fill">#ffe1cc</color>
     <color name="widget_lab_light_rail">#a64713</color>
     <color name="widget_lecture_light_fill">#d9edde</color>

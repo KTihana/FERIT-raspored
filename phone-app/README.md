@@ -1,5 +1,13 @@
 # FERIT raspored
 
+## Android 1.0.25 — Svjetlije boje na widgetu i poboljšani Imenik nastavnika
+
+- **Svjetlije boje widgeta:** Oznake predmeta na widgetu (LV narančasta, Predavanja zelena, Vježbe plava, Osobni događaji ljubičasta) sada koriste življe i kontrastnije boje na tamnoj staklenoj podlozi.
+- **Poboljšani Imenik nastavnika:** Preglednije kartice s punom e-mail adresom odmah ispod imena nastavnika i brzim kopiranjem e-maila jednim dodirom (`✓ Kopirano`).
+- **E-mailovi ispod imena:** Na karticama rasporeda i u sažetku uređivanja e-mail adresa profesora prikazuje se u zasebnom retku ispod imena.
+
+Android verzija **1.0.25**, build **31**.
+
 ## Android 1.0.24 — Imenik nastavnika, više LV grupa i osjetljivost widgeta
 
 - **Više LV grupa:** Mogućnost istovremenog odabira više grupa laboratorijskih vježbi za svaki predmet (npr. LV1 i LV3 istovremeno).
